@@ -1,0 +1,6 @@
+*.aux
+*.log
+*.blg
+*.xdv
+*.out
+tectonic*.log

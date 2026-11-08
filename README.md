@@ -46,6 +46,7 @@
 │   ├── 02_计划与清单/     # 20 天计划、操作 checklist
 │   ├── 03_进度与执行/     # 时间线、执行记录、运行快照、最终总结
 │   └── 04_论文稿件/       # 完整初稿、分章 md、图
+├── doc_latex/             # ACL LaTeX 版本（main.tex / main.pdf / references.bib）
 └── environment.yml
 ```
 
@@ -115,6 +116,15 @@ python -m experiments.eval.make_figures
 - 图：`docs/04_论文稿件/figures/`
 - 结果登记：`docs/03_进度与执行/论文可用结果_2026-11-07.md`
 - 最终总结：`docs/03_进度与执行/项目最终总结_2026-11-09.md`
+
+### LaTeX 版本
+
+- `doc_latex/main.tex`：ACL 模板（`[review]` 模式）
+- `doc_latex/main.pdf`：已编译版本（15 页）
+- `doc_latex/references.bib`：参考文献
+- `doc_latex/tables/`、`doc_latex/figures/`：表格与图
+- 编译：`cd doc_latex && tectonic main.tex`（或 `pdflatex` + `bibtex`）
+- 说明：`body_final.tex` 由 `build_md.py` + `assemble.py` 从 `docs/04_论文稿件/chapters/` 生成；改正文请改 chapters 后重跑脚本。
 
 ---
 

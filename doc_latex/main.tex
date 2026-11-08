@@ -1,0 +1,50 @@
+\documentclass[11pt]{article}
+\usepackage[review]{acl}
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+\usepackage{inconsolata}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{longtable}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{url}
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+\title{From Prompting to Structured Alignment: Individual, Population, and Temporal Boundaries of LLM Survey Simulation}
+\author{Anonymous ACL submission}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Large language models are increasingly used as virtual survey respondents, but
+most evaluations treat surveys as one-shot prompting tasks. We present a
+data-centric pipeline that reconstructs voter--candidate interactions from
+ANES, aligns a compact 8B model with survey distributions via LoRA, and
+evaluates both individual-level prediction and population-level simulation. On
+unseen respondents in the same era, the fine-tuned model reaches an MAE of
+20.84, a correlation of 0.679, and a choice accuracy of 0.518 against a chance
+level of 0.163; a gradient-boosted baseline on the same features reaches 20.58,
+0.714, and 0.534, and paired bootstrap shows no significant MAE or choice
+difference. On GSS policy attitudes, fine-tuning reduces marginal and joint
+Jensen--Shannon divergence by 91\% and 86\% on the EDC configuration. We then
+show a sharp temporal boundary: across the 2019--2024 waves, individual-level
+correlation decays from 0.722 to near zero, and both the LLM and the tabular
+baseline collapse in 2024. Structured alignment is necessary but not sufficient
+for social simulation, and temporal distribution shift should be treated as a
+first-class evaluation axis.
+\end{abstract}
+
+\input{body_final}
+
+\bibliographystyle{acl_natbib}
+\bibliography{references}
+
+\end{document}

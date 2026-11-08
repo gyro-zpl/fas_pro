@@ -1,0 +1,26 @@
+\begin{table*}[t]
+\centering
+\small
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{llcccc}
+\toprule
+Config & Run & $n$ & Coverage & Marginal JS & Joint JS \\
+\midrule
+\multirow{6}{*}{EDC} & Base & 400 & 1.000 & 0.0552 & 0.1181 \\
+ & SFT & 381 & 0.953 & 0.0048 & 0.0160 \\
+ & SFT (v3) & 400 & 1.000 & \textbf{0.0040} & 0.0215 \\
+ & RAG & 376 & 0.940 & 0.0473 & 0.1096 \\
+ & RAG + SFT & 381 & 0.953 & 0.0054 & 0.0176 \\
+ & Quota & 395 & 0.988 & 0.0091 & 0.0216 \\
+\midrule
+\multirow{6}{*}{EHC} & Base & 351 & 0.877 & 0.0319 & 0.1001 \\
+ & SFT & 400 & 1.000 & 0.0167 & 0.0470 \\
+ & SFT (v3) & 400 & 1.000 & \textbf{0.0077} & \textbf{0.0363} \\
+ & RAG & 379 & 0.948 & 0.0404 & 0.1095 \\
+ & RAG + SFT & 380 & 0.950 & 0.0152 & 0.0427 \\
+ & Quota & 400 & 1.000 & 0.0175 & 0.0522 \\
+\bottomrule
+\end{tabular}}
+\caption{FAS distributional alignment on GSS (JS divergence, lower is better). Coverage is the fraction of the 400 requested rows returned.}
+\label{tab:fas}
+\end{table*}
