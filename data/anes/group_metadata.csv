@@ -1,0 +1,10 @@
+group_name,group_variable,category,ideology_7,valence,political_lean,social_liberal,economic_liberal,description,is_party,is_race,is_ideology,is_social_movement,ideology_5
+Democratic Party,ftdemocraticparty,party,2.5,political,1,1,2,民主党（美国两大政党之一）,1,0,0,0,2.0
+Republican Party,ftrepublicanparty,party,5.5,political,2,4,5,共和党（美国两大政党之一）,1,0,0,0,4.0
+Black Americans,ftblack,race,3.0,demographic,1,3,2,黑人/非裔美国人,0,1,0,0,2.3
+White Americans,ftwhite,race,4.5,demographic,0,3,3,白人/欧裔美国人,0,1,0,0,3.3
+Hispanic Americans,fthisp,race,3.5,demographic,1,3,2,西班牙裔/拉丁裔美国人,0,1,0,0,2.7
+Asian Americans,ftasian,race,3.8,demographic,1,3,3,亚裔美国人,0,1,0,0,2.9
+Socialists,ftsocialists,ideology,1.0,political,1,1,1,社会主义者（支持社会主义经济政策）,0,0,1,0,1.0
+Capitalists,ftcapitalists,ideology,6.5,political,2,4,5,资本家/资本主义者,0,0,1,0,4.7
+Feminists,ftfeminists,social_movement,2.0,political,1,1,2,女权主义者/女性主义运动支持者,0,0,0,1,1.7

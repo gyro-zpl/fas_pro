@@ -1,0 +1,151 @@
+{
+  "n_rows": 132948,
+  "year_counts": {
+    "2016": 13200,
+    "2018": 22500,
+    "2019": 31650,
+    "2020": 55440,
+    "2022": 6340,
+    "2024": 3818
+  },
+  "n_respondents": 3165,
+  "respondents_in_multiple_years": 3080,
+  "max_years_per_respondent": 6,
+  "train_test_respondent_overlap": 1909,
+  "test_only_respondents": 0,
+  "candidate_name_issues": {
+    "trailing_dot_rows": 8165,
+    "whitespace_rows": 0,
+    "uppercase_rows": 0,
+    "group_like_rows": 23060
+  },
+  "target_issues": {
+    "missing": 1550,
+    "out_of_range": 2106
+  },
+  "duplicate_rows_same_key": 0,
+  "duplicate_keys": 0,
+  "candidates_per_year_raw": {
+    "2016": [
+      "black",
+      "carson",
+      "cruz",
+      "fiorina",
+      "hrc",
+      "jeb",
+      "obama",
+      "rubio",
+      "sanders",
+      "trump",
+      "white"
+    ],
+    "2018": [
+      "black",
+      "hrc",
+      "hrc.",
+      "kavanaugh",
+      "mueller",
+      "obama",
+      "obama.",
+      "trump",
+      "white"
+    ],
+    "2019": [
+      "biden",
+      "black",
+      "buttigieg",
+      "harris",
+      "obama",
+      "obama.",
+      "sanders",
+      "trump",
+      "warren",
+      "white"
+    ],
+    "2020": [
+      "biden",
+      "black",
+      "buttigieg",
+      "fauci",
+      "haley",
+      "harris",
+      "klobuchar",
+      "obama",
+      "ocasioc",
+      "pelosi",
+      "pence",
+      "rubio",
+      "sanders",
+      "thomas",
+      "trump",
+      "warren",
+      "white",
+      "yang"
+    ],
+    "2022": [
+      "biden",
+      "dem",
+      "rep",
+      "trump"
+    ],
+    "2024": [
+      "biden",
+      "trump"
+    ]
+  },
+  "candidates_per_year_clean": {
+    "2016": [
+      "carson",
+      "cruz",
+      "fiorina",
+      "hrc",
+      "jeb",
+      "obama",
+      "rubio",
+      "sanders",
+      "trump"
+    ],
+    "2018": [
+      "hrc",
+      "kavanaugh",
+      "mueller",
+      "obama",
+      "trump"
+    ],
+    "2019": [
+      "biden",
+      "buttigieg",
+      "harris",
+      "obama",
+      "sanders",
+      "trump",
+      "warren"
+    ],
+    "2020": [
+      "biden",
+      "buttigieg",
+      "fauci",
+      "haley",
+      "harris",
+      "klobuchar",
+      "obama",
+      "ocasioc",
+      "pelosi",
+      "pence",
+      "rubio",
+      "sanders",
+      "thomas",
+      "trump",
+      "warren",
+      "yang"
+    ],
+    "2022": [
+      "biden",
+      "trump"
+    ],
+    "2024": [
+      "biden",
+      "trump"
+    ]
+  }
+}

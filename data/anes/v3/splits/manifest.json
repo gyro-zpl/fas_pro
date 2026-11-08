@@ -1,0 +1,95 @@
+{
+  "splits": {
+    "train_t": {
+      "path": "/home/jpzhao_team/cyyuan/FAS_PRO/data/anes/v3/splits/train_t.jsonl",
+      "n": 6516,
+      "md5": "3d59629aeb8505bb2e21d6c11199189c",
+      "years": {
+        "2016": 806,
+        "2018": 892,
+        "2019": 1580,
+        "2020": 3238
+      },
+      "n_respondents": 2720,
+      "n_candidates": 23
+    },
+    "val_t": {
+      "path": "/home/jpzhao_team/cyyuan/FAS_PRO/data/anes/v3/splits/val_t.jsonl",
+      "n": 2501,
+      "md5": "0f62560831b776512c36bd2bc19ae554",
+      "years": {
+        "2022": 2501
+      },
+      "n_respondents": 1251,
+      "n_candidates": 2
+    },
+    "test_t": {
+      "path": "/home/jpzhao_team/cyyuan/FAS_PRO/data/anes/v3/splits/test_t.jsonl",
+      "n": 3421,
+      "md5": "991de73f250fa8c27ab7d59b0d4bd505",
+      "years": {
+        "2024": 3421
+      },
+      "n_respondents": 1712,
+      "n_candidates": 2
+    },
+    "train_r": {
+      "path": "/home/jpzhao_team/cyyuan/FAS_PRO/data/anes/v3/splits/train_r.jsonl",
+      "n": 5094,
+      "md5": "3e870b563bc739c93bdd422650074e98",
+      "years": {
+        "2016": 629,
+        "2018": 691,
+        "2019": 1229,
+        "2020": 2545
+      },
+      "n_respondents": 2131,
+      "n_candidates": 23
+    },
+    "test_r": {
+      "path": "/home/jpzhao_team/cyyuan/FAS_PRO/data/anes/v3/splits/test_r.jsonl",
+      "n": 6014,
+      "md5": "f63fc55b5d9dbf4c3b2f8038c77ecfee",
+      "years": {
+        "2016": 697,
+        "2018": 727,
+        "2019": 1302,
+        "2020": 2868,
+        "2022": 194,
+        "2024": 226
+      },
+      "n_respondents": 192,
+      "n_candidates": 23
+    },
+    "test_tr": {
+      "path": "/home/jpzhao_team/cyyuan/FAS_PRO/data/anes/v3/splits/test_tr.jsonl",
+      "n": 226,
+      "md5": "2eb0b8a97f7f082cafc7c2291e96a336",
+      "years": {
+        "2024": 226
+      },
+      "n_respondents": 113,
+      "n_candidates": 2
+    }
+  },
+  "train_source": "/home/jpzhao_team/cyyuan/FAS_PRO/data/anes/finetune/train_dataset_fixed.jsonl",
+  "checks": {
+    "train_test_year_overlap": [],
+    "train_r_test_r_respondent_overlap": 0,
+    "within_protocol_row_overlap": {
+      "train_t__val_t": 0,
+      "train_t__test_t": 0,
+      "train_r__test_r": 0,
+      "train_r__test_tr": 0
+    },
+    "cross_protocol_test_t__test_r_rows": 226,
+    "test_tr_is_subset_of_test_r": true,
+    "prompts_with_conflicting_targets": 715,
+    "test_t_candidates": [
+      "biden",
+      "trump"
+    ],
+    "sampled_rows_matched": 7015,
+    "sampled_rows_unmatched_after_cleaning": 1712
+  }
+}

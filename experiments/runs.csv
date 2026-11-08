@@ -1,0 +1,30 @@
+run_id,task,model,lora,split,prompt_mode,readout,status,started,log,output
+r001,tabular,histgb+ridge,,val_t+test_t+test_r+test_tr,,,done,2026-11-05 16:04,experiments/results/logs/tabular_20261105_1604.log,experiments/results/01_tabular.json
+r002,llm_base,qwen3-8b,,test_t,zero,generate,done,2026-11-05 16:01,experiments/results/logs/qwen3_base_test_t_zero.log,experiments/results/preds/qwen3_test_t_zero
+r003,llm_base,qwen3-8b,,test_t,few,generate,done_legacy,2026-11-05 16:07,experiments/results/logs/qwen3_test_t_few.log,experiments/results/preds/qwen3_test_t_few
+r004,llm_base,qwen3-8b,,test_tr,zero,generate,done_legacy,2026-11-05 16:14,experiments/results/logs/qwen3_test_tr_zero.log,experiments/results/preds/qwen3_test_tr_zero
+r005,llm_base,qwen3-8b,,test_tr,few,generate,done_legacy,2026-11-05 16:14,experiments/results/logs/qwen3_test_tr_few.log,experiments/results/preds/qwen3_test_tr_few
+r006,llm_base,qwen3-8b,,test_r,zero,generate,cancelled,,experiments/results/logs/qwen3_test_r_zero.log,
+r007,llm_base,qwen3-8b,,test_r,few,generate,cancelled,,experiments/results/logs/qwen3_test_r_few.log,
+r008,llm_base,qwen3-8b,,val_t,zero,generate,cancelled,,experiments/results/logs/qwen3_val_t_zero.log,
+r009,llm_base,qwen3-8b,,val_t,few,generate,cancelled,,,
+r010,llm_base,qwen3-8b,,test_t,zero,anchor,diagnostic,2026-11-05 16:09,experiments/results/logs/anchor_diag.log,experiments/results/anchor_diag.jsonl
+r011,train_smoke,qwen3-8b,final_model,train_t(8),,,done,2026-11-05 16:10,experiments/results/logs/train_smoke.log,sft/sft_models/_train_smoke
+r012,train_t,qwen3-8b,,train_t,,,done,2026-11-05 16:22,experiments/results/logs/train_resume.log,sft/sft_models/qwen3_8b_t_seed42
+r013,train_t,qwen3-8b,,train_t,,,done,2026-11-05 17:05,experiments/results/logs/train_resume.log,sft/sft_models/qwen3_8b_t_seed43
+r014,train_t,qwen3-8b,,train_t,,,done,,,sft/sft_models/qwen3_8b_t_seed44
+r015,readout_compare,qwen3-8b,seed42,test_t(100),zero,generate+anchor,done,2026-11-05 18:19,experiments/results/logs/readout_compare_seed42.log,
+r016,eval,qwen3-8b,seed42,test_t,zero,anchor,done,2026-11-07 22:13,experiments/results/logs/eval_gpu1.log,experiments/results/preds/qwen3_t_seed42_test_t_anchor
+r017,eval,qwen3-8b,seed42,test_tr,zero,anchor,cancelled,,,experiments/results/preds/qwen3_t_seed42_test_tr_anchor
+r018,eval,qwen3-8b,seed42,test_r,zero,anchor,done,2026-11-07 22:13,experiments/results/logs/eval_gpu1.log,experiments/results/preds/qwen3_t_seed42_test_r_anchor
+r019,eval,qwen3-8b,seed42,test_t,zero,generate,done,2026-11-07 22:13,experiments/results/logs/eval_gpu3.log,experiments/results/preds/qwen3_t_seed42_test_t_generate
+r020,eval,qwen3-8b,seed42,test_r,zero,generate,done,2026-11-07 22:13,experiments/results/logs/eval_gpu1.log,experiments/results/preds/qwen3_t_seed42_test_r_generate
+r021,eval,qwen3-8b,seed43,test_t,zero,generate,done,2026-11-07 22:13,experiments/results/logs/eval_gpu3.log,experiments/results/preds/qwen3_t_seed43_test_t_generate
+r022,eval,qwen3-8b,seed44,test_t,zero,generate,done,,experiments/results/logs/eval_gpu3.log,experiments/results/preds/qwen3_t_seed44_test_t_generate
+r023,eval,qwen3-8b,seed43,test_r,zero,generate,done,,experiments/results/logs/eval_gpu3.log,experiments/results/preds/qwen3_t_seed43_test_r_generate
+r024,eval,qwen3-8b,seed44,test_r,zero,generate,done,,experiments/results/logs/eval_gpu3.log,experiments/results/preds/qwen3_t_seed44_test_r_generate
+r025,eval,qwen3-8b,seed43,test_t,zero,anchor,cancelled,,experiments/results/logs/eval_gpu1.log,experiments/results/preds/qwen3_t_seed43_test_t_anchor
+r026,train_eval,qwen3-8b,,train_t+2022,,,done,2026-11-07 23:20,experiments/results/logs/t2022.log,sft/sft_models/qwen3_8b_t2022_seed42
+r027,train_eval,qwen3-8b,,a1_random,,,done,2026-11-07 23:21,experiments/results/logs/ablations.log,sft/sft_models/qwen3_8b_a1_random
+r028,train_eval,qwen3-8b,,a2_minimal,,,done,,experiments/results/logs/ablations.log,sft/sft_models/qwen3_8b_a2_minimal
+r029,train_eval,qwen3-8b,,a3_name_only,,,done,,experiments/results/logs/ablations.log,sft/sft_models/qwen3_8b_a3_name_only

@@ -1,0 +1,27 @@
+[
+  {
+    "type": "single",
+    "attr": "natenvir",
+    "value": "1",
+    "target": 0.70,
+    "tolerance": 0.06,
+    "priority": 4
+  },
+  {
+    "type": "single",
+    "attr": "natheal",
+    "value": "1",
+    "target": 0.68,
+    "tolerance": 0.06,
+    "priority": 4
+  },
+  {
+    "type": "single",
+    "attr": "natcity",
+    "value": "1",
+    "target": 0.55,
+    "tolerance": 0.06,
+    "priority": 4
+  }
+]
+

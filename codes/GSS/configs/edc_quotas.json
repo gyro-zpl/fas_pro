@@ -1,0 +1,37 @@
+[
+  {
+    "type": "single",
+    "attr": "nateduc",
+    "value": "3",
+    "target": 0.18,
+    "tolerance": 0.05,
+    "priority": 5
+  },
+  {
+    "type": "single",
+    "attr": "natdrug",
+    "value": "2",
+    "target": 0.30,
+    "tolerance": 0.05,
+    "priority": 3
+  },
+  {
+    "type": "single",
+    "attr": "natcrime",
+    "value": "1",
+    "target": 0.55,
+    "tolerance": 0.06,
+    "priority": 4
+  },
+  {
+    "type": "multi",
+    "dimensions": {
+      "nateduc": "3",
+      "natdrug": "2"
+    },
+    "target": 0.08,
+    "tolerance": 0.03,
+    "priority": 4
+  }
+]
+

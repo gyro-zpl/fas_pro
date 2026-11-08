@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.venv/
+venv/
+
+# Model weights / adapters / quantized models
+sft/sft_models/
+sft/merged_model/
+sft/ollama_export/
+outlines/
+*.safetensors
+*.gguf
+*.bin
+*.pt
+*.pth
+*.ckpt
+
+# Raw survey data (download separately)
+data/anes/raw_data/
+data/anes/processed/*.csv
+data/gss/GSS20*.csv
+
+# Large generated prediction files
+experiments/results/preds/
+experiments/results/logs/
+
+# Misc
+.DS_Store
+Thumbs.db
+*.log

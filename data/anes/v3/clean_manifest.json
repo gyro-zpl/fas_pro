@@ -1,0 +1,74 @@
+{
+  "source": "/home/jpzhao_team/cyyuan/FAS_PRO/data/anes/processed/anes_all_years_with_features.csv",
+  "output": "/home/jpzhao_team/cyyuan/FAS_PRO/data/anes/v3/anes_candidates_clean.csv",
+  "rows_before": 132948,
+  "rows_dropped_group_targets": 23060,
+  "rows_dropped_bad_score": 3588,
+  "rows_dropped_duplicates": 8141,
+  "duplicate_groups_with_disagreeing_scores": 0,
+  "rows_after": 98159,
+  "respondents_after": 3165,
+  "years_after": {
+    "2016": 10727,
+    "2018": 12161,
+    "2019": 21347,
+    "2020": 47334,
+    "2022": 3169,
+    "2024": 3421
+  },
+  "candidates_after": {
+    "2016": [
+      "carson",
+      "cruz",
+      "fiorina",
+      "hrc",
+      "jeb",
+      "obama",
+      "rubio",
+      "sanders",
+      "trump"
+    ],
+    "2018": [
+      "hrc",
+      "kavanaugh",
+      "mueller",
+      "obama",
+      "trump"
+    ],
+    "2019": [
+      "biden",
+      "buttigieg",
+      "harris",
+      "obama",
+      "sanders",
+      "trump",
+      "warren"
+    ],
+    "2020": [
+      "biden",
+      "buttigieg",
+      "fauci",
+      "haley",
+      "harris",
+      "klobuchar",
+      "obama",
+      "ocasioc",
+      "pelosi",
+      "pence",
+      "rubio",
+      "sanders",
+      "thomas",
+      "trump",
+      "warren",
+      "yang"
+    ],
+    "2022": [
+      "biden",
+      "trump"
+    ],
+    "2024": [
+      "biden",
+      "trump"
+    ]
+  }
+}

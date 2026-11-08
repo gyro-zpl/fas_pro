@@ -1,0 +1,530 @@
+{
+  "total_iterations": 15,
+  "converged": false,
+  "total_samples": 400,
+  "final_deviation": 0.35999999999999976,
+  "all_quotas_satisfied": false,
+  "final_satisfaction": {
+    "natenvir=1": {
+      "target": 0.7,
+      "actual": 0.68,
+      "deviation": 0.019999999999999907,
+      "satisfied": true,
+      "tolerance": 0.06,
+      "priority": 4
+    },
+    "natheal=1": {
+      "target": 0.68,
+      "actual": 0.75,
+      "deviation": 0.06999999999999995,
+      "satisfied": false,
+      "tolerance": 0.06,
+      "priority": 4
+    },
+    "natcity=1": {
+      "target": 0.55,
+      "actual": 0.82,
+      "deviation": 0.2699999999999999,
+      "satisfied": false,
+      "tolerance": 0.06,
+      "priority": 4
+    }
+  },
+  "history": [
+    {
+      "iteration": 1,
+      "prompt": "Mission: ehc. Generate batch No.0. Sample batch size is 50.",
+      "generated": 36,
+      "total_samples": 36,
+      "total_deviation": 1.93,
+      "satisfaction": {
+        "natenvir=1": {
+          "target": 0.7,
+          "actual": 0.0,
+          "deviation": 0.7,
+          "satisfied": false,
+          "tolerance": 0.06,
+          "priority": 4
+        },
+        "natheal=1": {
+          "target": 0.68,
+          "actual": 0.0,
+          "deviation": 0.68,
+          "satisfied": false,
+          "tolerance": 0.06,
+          "priority": 4
+        },
+        "natcity=1": {
+          "target": 0.55,
+          "actual": 0.0,
+          "deviation": 0.55,
+          "satisfied": false,
+          "tolerance": 0.06,
+          "priority": 4
+        }
+      }
+    },
+    {
+      "iteration": 2,
+      "prompt": "Mission: ehc. Generate batch No.1. Sample batch size is 50.",
+      "generated": 39,
+      "total_samples": 75,
+      "total_deviation": 0.4866666666666667,
+      "satisfaction": {
+        "natenvir=1": {
+          "target": 0.7,
+          "actual": 0.75,
+          "deviation": 0.050000000000000044,
+          "satisfied": true,
+          "tolerance": 0.06,
+          "priority": 4
+        },
+        "natheal=1": {
+          "target": 0.68,
+          "actual": 0.8611111111111112,
+          "deviation": 0.1811111111111111,
+          "satisfied": false,
+          "tolerance": 0.06,
+          "priority": 4
+        },
+        "natcity=1": {
+          "target": 0.55,
+          "actual": 0.8055555555555556,
+          "deviation": 0.25555555555555554,
+          "satisfied": false,
+          "tolerance": 0.06,
+          "priority": 4
+        }
+      }
+    },
+    {
+      "iteration": 3,
+      "prompt": "Mission: ehc. Generate batch No.2. Sample batch size is 50.",
+      "generated": 40,
+      "total_samples": 115,
+      "total_deviation": 0.2833333333333332,
+      "satisfaction": {
+        "natenvir=1": {
+          "target": 0.7,
+          "actual": 0.7333333333333333,
+          "deviation": 0.033333333333333326,
+          "satisfied": true,
+          "tolerance": 0.06,
+          "priority": 4
+        },
+        "natheal=1": {
+          "target": 0.68,
+          "actual": 0.72,
+          "deviation": 0.039999999999999925,
+          "satisfied": true,
+          "tolerance": 0.06,
+          "priority": 4
+        },
+        "natcity=1": {
+          "target": 0.55,
+          "actual": 0.76,
+          "deviation": 0.20999999999999996,
+          "satisfied": false,
+          "tolerance": 0.06,
+          "priority": 4
+        }
+      }
+    },
+    {
+      "iteration": 4,
+      "prompt": "Mission: ehc. Generate batch No.3. Sample batch size is 50.",
+      "generated": 43,
+      "total_samples": 158,
+      "total_deviation": 0.3482608695652174,
+      "satisfaction": {
+        "natenvir=1": {
+          "target": 0.7,
+          "actual": 0.7217391304347827,
+          "deviation": 0.021739130434782705,
+          "satisfied": true,
+          "tolerance": 0.06,
+          "priority": 4
+        },
+        "natheal=1": {
+          "target": 0.68,
+          "actual": 0.7565217391304347,
+          "deviation": 0.0765217391304347,
+          "satisfied": false,
+          "tolerance": 0.06,
+          "priority": 4
+        },
+        "natcity=1": {
+          "target": 0.55,
+          "actual": 0.8,
+          "deviation": 0.25,
+          "satisfied": false,
+          "tolerance": 0.06,
+          "priority": 4
+        }
+      }
+    },
+    {
+      "iteration": 5,
+      "prompt": "Mission: ehc. Generate batch No.4. Sample batch size is 50.",
+      "generated": 43,
+      "total_samples": 201,
+      "total_deviation": 0.38012658227848095,
+      "satisfaction": {
+        "natenvir=1": {
+          "target": 0.7,
+          "actual": 0.7215189873417721,
+          "deviation": 0.021518987341772156,
+          "satisfied": true,
+          "tolerance": 0.06,
+          "priority": 4
+        },
+        "natheal=1": {
+          "target": 0.68,
+          "actual": 0.7658227848101266,
+          "deviation": 0.0858227848101265,
+          "satisfied": false,
+          "tolerance": 0.06,
+          "priority": 4
+        },
+        "natcity=1": {
+          "target": 0.55,
+          "actual": 0.8227848101265823,
+          "deviation": 0.2727848101265823,
+          "satisfied": false,
+          "tolerance": 0.06,
+          "priority": 4
+        }
+      }
+    },
+    {
+      "iteration": 6,
+      "prompt": "Mission: ehc. Generate batch No.5. Sample batch size is 50.",
+      "generated": 43,
+      "total_samples": 244,
+      "total_deviation": 0.3585572139303481,
+      "satisfaction": {
+        "natenvir=1": {
+          "target": 0.7,
+          "actual": 0.7164179104477612,
+          "deviation": 0.016417910447761197,
+          "satisfied": true,
+          "tolerance": 0.06,
+          "priority": 4
+        },
+        "natheal=1": {
+          "target": 0.68,
+          "actual": 0.7562189054726368,
+          "deviation": 0.07621890547263677,
+          "satisfied": false,
+          "tolerance": 0.06,
+          "priority": 4
+        },
+        "natcity=1": {
+          "target": 0.55,
+          "actual": 0.8159203980099502,
+          "deviation": 0.26592039800995015,
+          "satisfied": false,
+          "tolerance": 0.06,
+          "priority": 4
+        }
+      }
+    },
+    {
+      "iteration": 7,
+      "prompt": "Mission: ehc. Generate batch No.6. Sample batch size is 50.",
+      "generated": 44,
+      "total_samples": 288,
+      "total_deviation": 0.35114754098360634,
+      "satisfaction": {
+        "natenvir=1": {
+          "target": 0.7,
+          "actual": 0.6926229508196722,
+          "deviation": 0.007377049180327777,
+          "satisfied": true,
+          "tolerance": 0.06,
+          "priority": 4
+        },
+        "natheal=1": {
+          "target": 0.68,
+          "actual": 0.7540983606557377,
+          "deviation": 0.0740983606557376,
+          "satisfied": false,
+          "tolerance": 0.06,
+          "priority": 4
+        },
+        "natcity=1": {
+          "target": 0.55,
+          "actual": 0.819672131147541,
+          "deviation": 0.26967213114754096,
+          "satisfied": false,
+          "tolerance": 0.06,
+          "priority": 4
+        }
+      }
+    },
+    {
+      "iteration": 8,
+      "prompt": "Mission: ehc. Generate batch No.7. Sample batch size is 50.",
+      "generated": 43,
+      "total_samples": 331,
+      "total_deviation": 0.3554166666666665,
+      "satisfaction": {
+        "natenvir=1": {
+          "target": 0.7,
+          "actual": 0.6875,
+          "deviation": 0.012499999999999956,
+          "satisfied": true,
+          "tolerance": 0.06,
+          "priority": 4
+        },
+        "natheal=1": {
+          "target": 0.68,
+          "actual": 0.7569444444444444,
+          "deviation": 0.07694444444444437,
+          "satisfied": false,
+          "tolerance": 0.06,
+          "priority": 4
+        },
+        "natcity=1": {
+          "target": 0.55,
+          "actual": 0.8159722222222222,
+          "deviation": 0.26597222222222217,
+          "satisfied": false,
+          "tolerance": 0.06,
+          "priority": 4
+        }
+      }
+    },
+    {
+      "iteration": 9,
+      "prompt": "Mission: ehc. Generate batch No.8. Sample batch size is 50.",
+      "generated": 44,
+      "total_samples": 375,
+      "total_deviation": 0.36728096676737143,
+      "satisfaction": {
+        "natenvir=1": {
+          "target": 0.7,
+          "actual": 0.6797583081570997,
+          "deviation": 0.020241691842900256,
+          "satisfied": true,
+          "tolerance": 0.06,
+          "priority": 4
+        },
+        "natheal=1": {
+          "target": 0.68,
+          "actual": 0.7492447129909365,
+          "deviation": 0.06924471299093649,
+          "satisfied": false,
+          "tolerance": 0.06,
+          "priority": 4
+        },
+        "natcity=1": {
+          "target": 0.55,
+          "actual": 0.8277945619335347,
+          "deviation": 0.2777945619335347,
+          "satisfied": false,
+          "tolerance": 0.06,
+          "priority": 4
+        }
+      }
+    },
+    {
+      "iteration": 10,
+      "prompt": "Mission: ehc. Generate batch No.9. Sample batch size is 25.",
+      "generated": 24,
+      "total_samples": 399,
+      "total_deviation": 0.33666666666666645,
+      "satisfaction": {
+        "natenvir=1": {
+          "target": 0.7,
+          "actual": 0.6933333333333334,
+          "deviation": 0.006666666666666599,
+          "satisfied": true,
+          "tolerance": 0.06,
+          "priority": 4
+        },
+        "natheal=1": {
+          "target": 0.68,
+          "actual": 0.744,
+          "deviation": 0.06399999999999995,
+          "satisfied": false,
+          "tolerance": 0.06,
+          "priority": 4
+        },
+        "natcity=1": {
+          "target": 0.55,
+          "actual": 0.816,
+          "deviation": 0.2659999999999999,
+          "satisfied": false,
+          "tolerance": 0.06,
+          "priority": 4
+        }
+      }
+    },
+    {
+      "iteration": 11,
+      "prompt": "Mission: ehc. Generate batch No.10. Sample batch size is 1.",
+      "generated": 1,
+      "total_samples": 400,
+      "total_deviation": 0.3496992481203005,
+      "satisfaction": {
+        "natenvir=1": {
+          "target": 0.7,
+          "actual": 0.6892230576441103,
+          "deviation": 0.010776942355889663,
+          "satisfied": true,
+          "tolerance": 0.06,
+          "priority": 4
+        },
+        "natheal=1": {
+          "target": 0.68,
+          "actual": 0.7518796992481203,
+          "deviation": 0.07187969924812021,
+          "satisfied": false,
+          "tolerance": 0.06,
+          "priority": 4
+        },
+        "natcity=1": {
+          "target": 0.55,
+          "actual": 0.8170426065162907,
+          "deviation": 0.26704260651629064,
+          "satisfied": false,
+          "tolerance": 0.06,
+          "priority": 4
+        }
+      }
+    },
+    {
+      "iteration": 12,
+      "prompt": "Mission: ehc. Generate batch No.11. Sample batch size is 50.",
+      "generated": 45,
+      "total_samples": 395,
+      "total_deviation": 0.3524999999999998,
+      "satisfaction": {
+        "natenvir=1": {
+          "target": 0.7,
+          "actual": 0.6875,
+          "deviation": 0.012499999999999956,
+          "satisfied": true,
+          "tolerance": 0.06,
+          "priority": 4
+        },
+        "natheal=1": {
+          "target": 0.68,
+          "actual": 0.7525,
+          "deviation": 0.0724999999999999,
+          "satisfied": false,
+          "tolerance": 0.06,
+          "priority": 4
+        },
+        "natcity=1": {
+          "target": 0.55,
+          "actual": 0.8175,
+          "deviation": 0.26749999999999996,
+          "satisfied": false,
+          "tolerance": 0.06,
+          "priority": 4
+        }
+      }
+    },
+    {
+      "iteration": 13,
+      "prompt": "Mission: ehc. Generate batch No.12. Sample batch size is 5.",
+      "generated": 5,
+      "total_samples": 400,
+      "total_deviation": 0.34848101265822773,
+      "satisfaction": {
+        "natenvir=1": {
+          "target": 0.7,
+          "actual": 0.6835443037974683,
+          "deviation": 0.016455696202531622,
+          "satisfied": true,
+          "tolerance": 0.06,
+          "priority": 4
+        },
+        "natheal=1": {
+          "target": 0.68,
+          "actual": 0.7468354430379747,
+          "deviation": 0.06683544303797462,
+          "satisfied": false,
+          "tolerance": 0.06,
+          "priority": 4
+        },
+        "natcity=1": {
+          "target": 0.55,
+          "actual": 0.8151898734177215,
+          "deviation": 0.2651898734177215,
+          "satisfied": false,
+          "tolerance": 0.06,
+          "priority": 4
+        }
+      }
+    },
+    {
+      "iteration": 14,
+      "prompt": "Mission: ehc. Generate batch No.13. Sample batch size is 50.",
+      "generated": 43,
+      "total_samples": 393,
+      "total_deviation": 0.3524999999999998,
+      "satisfaction": {
+        "natenvir=1": {
+          "target": 0.7,
+          "actual": 0.68,
+          "deviation": 0.019999999999999907,
+          "satisfied": true,
+          "tolerance": 0.06,
+          "priority": 4
+        },
+        "natheal=1": {
+          "target": 0.68,
+          "actual": 0.7475,
+          "deviation": 0.0675,
+          "satisfied": false,
+          "tolerance": 0.06,
+          "priority": 4
+        },
+        "natcity=1": {
+          "target": 0.55,
+          "actual": 0.815,
+          "deviation": 0.2649999999999999,
+          "satisfied": false,
+          "tolerance": 0.06,
+          "priority": 4
+        }
+      }
+    },
+    {
+      "iteration": 15,
+      "prompt": "Mission: ehc. Generate batch No.14. Sample batch size is 7.",
+      "generated": 7,
+      "total_samples": 400,
+      "total_deviation": 0.3656743002544528,
+      "satisfaction": {
+        "natenvir=1": {
+          "target": 0.7,
+          "actual": 0.6819338422391857,
+          "deviation": 0.018066157760814217,
+          "satisfied": true,
+          "tolerance": 0.06,
+          "priority": 4
+        },
+        "natheal=1": {
+          "target": 0.68,
+          "actual": 0.7480916030534351,
+          "deviation": 0.06809160305343509,
+          "satisfied": false,
+          "tolerance": 0.06,
+          "priority": 4
+        },
+        "natcity=1": {
+          "target": 0.55,
+          "actual": 0.8295165394402035,
+          "deviation": 0.2795165394402035,
+          "satisfied": false,
+          "tolerance": 0.06,
+          "priority": 4
+        }
+      }
+    }
+  ]
+}

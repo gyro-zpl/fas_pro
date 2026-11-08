@@ -1,0 +1,34 @@
+{
+  "total_iterations": 15,
+  "converged": false,
+  "total_samples": 0,
+  "final_deviation": 1.93,
+  "all_quotas_satisfied": false,
+  "final_satisfaction": {
+    "natenvir=1": {
+      "target": 0.7,
+      "actual": 0.0,
+      "deviation": 0.7,
+      "satisfied": false,
+      "tolerance": 0.06,
+      "priority": 4
+    },
+    "natheal=1": {
+      "target": 0.68,
+      "actual": 0.0,
+      "deviation": 0.68,
+      "satisfied": false,
+      "tolerance": 0.06,
+      "priority": 4
+    },
+    "natcity=1": {
+      "target": 0.55,
+      "actual": 0.0,
+      "deviation": 0.55,
+      "satisfied": false,
+      "tolerance": 0.06,
+      "priority": 4
+    }
+  },
+  "history": []
+}
