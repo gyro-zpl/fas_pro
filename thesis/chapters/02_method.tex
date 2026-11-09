@@ -1,0 +1,80 @@
+\chapter{Data and Methodology}
+\label{ch:method}
+
+\section{Data Construction}
+
+The individual-level corpus is built from the ANES pilot waves of 2016, 2018,
+2019, 2020, 2022, and 2024 (132,948 rows, 3,165 respondents, 29 candidates). The
+population-level component uses the GSS waves of 2004--2022, with 2024 as the
+target year. The raw ANES table contains two defects. Trailing-period duplicates
+(\texttt{obama.} and \texttt{obama}, \texttt{hrc.} and \texttt{hrc}) produce
+8,165 rows; social-group thermometers (\texttt{black}, \texttt{white},
+\texttt{dem}, \texttt{rep}) stored in the candidate column produce 23,060 rows.
+Names are normalized, candidate and group targets are separated, missing or
+out-of-range scores are removed (3,588), and duplicates are dropped (8,141). The
+clean candidate table contains 98,159 rows.
+
+Each observation is represented as a triple $(v_i,c_j,y_{ij}\mid t_i)$, where
+$v_i$ is the voter profile, $c_j$ the target, $y_{ij}\in[0,100]$ the thermometer,
+and $t_i$ the year. Candidate identity is decoupled from attributes: each
+candidate is described by a metadata vector $\mathcal{M}[c]$ containing party,
+ideology, age, position, and incumbent status. Three features encode social
+cognition. Party match is $+1$ for a co-partisan, $-1$ for an independent, and
+$0$ otherwise. Ideological distance is the seven-point distance
+$\lvert\text{lcself}_v-\text{ideology}_c\rvert\in[0,6]$. A similarity index
+combines party, ideology, race, gender, and age with weights
+$0.25,0.25,0.20,0.15,0.15$. Cross-pressure indicators flag same-party but
+ideologically distant pairs (CP1), different-party but ideologically close pairs
+(CP2), and demographically similar but different-party pairs (CP3).
+
+\section{Evaluation Protocols}
+
+ANES is a panel: 3,080 of 3,165 respondents appear in more than one wave, and
+every respondent observed in 2022 or 2024 also appears in 2016--2020. There are
+zero test-only respondents. A temporal split can therefore measure transfer to a
+later wave, but not generalization to unseen individuals. The temporal protocol
+(T) trains on 2016--2020 (6,516 rows), validates on 2022 (2,501), and tests on
+2024 (3,421). The respondent protocol (R) splits respondents 80/20 by a hash of
+the respondent identifier: 5,094 training rows and 6,014 test rows. A strict cell
+(T$\times$R) contains the 226 rows from 2024 whose respondents are held out. R is
+the main in-distribution test; T measures the temporal boundary.
+
+\section{Fine-Tuning and Readouts}
+
+The model is Qwen3-8B. LoRA is applied to all attention and MLP projections with
+rank $r=8$, scaling $\alpha=32$, and dropout $0.1$. Training uses three epochs, a
+learning rate of $10^{-4}$, an effective batch size of 16, and a maximum sequence
+length of 512. The loss is the causal language-modeling loss on the answer tokens
+only; prompt tokens are masked. This yields 21.8M trainable parameters (0.27\% of
+the model), and three seeds (42, 43, 44) are used.
+
+Two readouts are used. \emph{Generation} decodes greedily and parses the first
+integer in $[0,100]$; it preserves individual variation and is the primary readout
+for choice. \emph{Anchor likelihood} scores eleven anchors
+$a\in\{0,10,\dots,100\}$ by their sequence log-probability, normalizes with a
+softmax, and reports the expectation and the argmax. For choice, the candidate
+with the highest predicted score is selected within each respondent--year group;
+accuracy is reported against the rating-induced choice and against chance.
+
+\section{Population-Level Pipeline}
+
+For full attribute simulation (FAS), every univariate and pairwise cell is
+extrapolated with a four-model ensemble,
+\begin{equation}
+\hat p(t^*)=\frac{1.0\hat p_{\text{poly}}+1.0\hat p_{\text{loess}}
++0.6\hat p_{\text{exp}}+0.8\hat p_{\text{lin}}}{3.4}.
+\end{equation}
+The predicted marginals and pairwise tables are combined with iterative
+proportional fitting: starting from the independence approximation,
+multiplicative updates match each pairwise table and marginal, run for 800
+iterations, and are normalized with Laplace smoothing. The resulting joint
+distribution is used to generate five task types: batch generation (50\%),
+prior-constrained sampling (25\%), scenario variation (15\%), subgroup analysis
+(7\%), and iterative correction (3\%).
+
+\section{Metrics}
+
+For PAS, MAE, RMSE, Pearson correlation, a relaxed accuracy (same 20-point bin or
+absolute error $\le10$), rating-induced choice accuracy, and expected calibration
+error (ECE) are reported. For FAS, JS and symmetric KL divergence are computed on
+each marginal and each pairwise joint and averaged over attributes or pairs.

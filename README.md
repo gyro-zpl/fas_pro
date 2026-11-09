@@ -47,6 +47,7 @@
 │   ├── 03_进度与执行/     # 时间线、执行记录、运行快照、最终总结
 │   └── 04_论文稿件/       # 完整初稿、分章 md、图
 ├── doc_latex/             # ACL LaTeX 版本（main.tex / main.pdf / references.bib）
+├── thesis/                # UMAC 英文毕业论文（main.tex / main.pdf，正文 10 页）
 └── environment.yml
 ```
 
@@ -125,6 +126,14 @@ python -m experiments.eval.make_figures
 - `doc_latex/tables/`、`doc_latex/figures/`：表格与图
 - 编译：`cd doc_latex && tectonic main.tex`（或 `pdflatex` + `bibtex`）
 - 说明：`body_final.tex` 由 `build_md.py` + `assemble.py` 从 `docs/04_论文稿件/chapters/` 生成；改正文请改 chapters 后重跑脚本。
+
+### 英文毕业论文（UMAC 模板）
+
+- `thesis/main.tex`：UMAC FST 硕士论文模板（A4、12pt Times、1.5 倍行距）
+- `thesis/main.pdf`：已编译版本（**正文 10 页**，总 25 页）
+- `thesis/chapters/`：5 章正文；`thesis/appendix/`：3 个附录
+- 编译：`cd thesis && tectonic main.tex`
+- 作者：CHENYU YUAN；导师：PENGYANG WANG；日期：April 2027
 
 ---
 

@@ -1,0 +1,66 @@
+\chapter{Limitations and Conclusion}
+\label{ch:conclusion}
+
+\section{Limitations}
+
+\textbf{Model and survey coverage.} All fine-tuning experiments use Qwen3-8B. A
+second model family was not evaluated because the Llama-3.1-8B weights are gated
+and the account used for this project was not authorized. The pipeline is
+model-agnostic, but the empirical claims are conditional on Qwen3-8B. Both ANES
+and GSS are from the United States; cross-national surveys, non-English
+questionnaires, and non-political attitude domains are not tested.
+
+\textbf{Group attitudes.} A nine-group voter--group corpus and two protocols were
+constructed, but the group model was not evaluated. Group coverage is uneven
+across waves (three groups in 2016, nine in 2020, two in 2022), and the 2020 block
+lacks respondent identifiers. The claims are restricted to candidate-level PAS and
+GSS FAS.
+
+\textbf{Panel and choice metric.} ANES is a panel: there are no test-only
+respondents in 2022/2024, and the T$\times$R cell is small (226 rows). No protocol
+isolates a genuinely new respondent observed only in a future wave. Choice is
+rating-induced: it is compared with the highest ground-truth thermometer score,
+not with an observed vote.
+
+\textbf{Ablations and FAS.} The ablations use one seed each; the effects are small
+and the cross-pressure cells are small. FAS covers two three-attribute
+configurations. EDC improves strongly; EHC improves less, and the joint symmetric
+KL moves in the opposite direction for direct SFT. The temporal extrapolation is
+validated only for 2024, and only one mitigation is tested.
+
+\textbf{Ethics.} Synthetic respondents are not a substitute for real participants.
+A model trained on historical data can reproduce and amplify the biases of that
+data, and its outputs can be mistaken for evidence about a population. The
+temporal results are a warning: a simulator that looks accurate in-distribution
+can lose all individual signal four years later. Deployments should report the
+training era, validation protocol, model family, and generated-sample coverage,
+and synthetic results should be clearly labelled.
+
+\section{Conclusion}
+
+This thesis presented a data-centric pipeline for LLM survey simulation and
+evaluated it at the individual, population, and temporal levels. The pipeline
+reconstructs interaction-level ANES data, decouples candidate identity from
+attributes, encodes partisan and ideological structure as explicit features,
+samples the training pool to cover tails and conflict cases, and fine-tunes a
+compact 8B model with LoRA. The same pipeline reconstructs a GSS joint
+distribution and fine-tunes a model to generate a synthetic population.
+
+The individual-level result is deliberately modest. On unseen respondents in the
+same era, the fine-tuned model reaches an MAE of 20.84, a correlation of 0.679,
+and a choice accuracy of 0.518 against chance 0.163. A gradient-boosted baseline
+reaches 20.58, 0.714, and 0.534, and paired bootstrap shows no significant MAE or
+choice difference. The value of the language model is not superior point
+prediction; it is a unified interface that produces a rating distribution and
+extends to population-level generation. The population-level result is stronger
+for EDC: fine-tuning reduces marginal and joint JS divergence by 91\% and 86\%
+(93\% and 82\% for the fully covered run).
+
+The temporal result is the most important negative finding. Individual-level
+correlation falls from 0.722 in 2019 to $-0.056$ in 2024, and the tabular baseline
+collapses in the same way. Adding the most recent wave does not help. Structured
+alignment is necessary but not sufficient for temporal generalization, and
+temporal shift should be treated as a first-class evaluation axis. Future work
+should replicate the pipeline on a second model family, extend it to
+cross-national and group-attitude data, develop temporal adaptation methods, and
+validate rating-induced choice against observed vote choice.

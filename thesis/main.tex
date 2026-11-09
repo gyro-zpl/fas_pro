@@ -1,0 +1,146 @@
+\documentclass[12pt,a4paper]{report}
+
+\usepackage[left=1.5in,right=1in,top=1.5in,bottom=1in]{geometry}
+\usepackage{mathptmx}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{setspace}
+\onehalfspacing
+\usepackage{titlesec}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[font=footnotesize,labelfont=bf]{caption}
+\usepackage[round]{natbib}
+\usepackage[hidelinks]{hyperref}
+
+\titleformat{\chapter}[display]
+  {\normalfont\centering\bfseries\fontsize{14}{17}\selectfont}
+  {CHAPTER \thechapter:}{0.5ex}{\fontsize{14}{17}\selectfont}
+\titlespacing*{\chapter}{0pt}{0pt}{18pt}
+\titleformat{\section}{\normalfont\bfseries\fontsize{12}{15}\selectfont}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalfont\bfseries\fontsize{12}{15}\selectfont}{\thesubsection}{1em}{}
+
+\begin{document}
+
+% ---------------------------------------------------------------------------
+% Title page
+% ---------------------------------------------------------------------------
+\begin{titlepage}
+\thispagestyle{empty}
+\begin{center}
+{\large UNIVERSITY OF MACAU}\\[0.2cm]
+{\large Faculty of Science and Technology}\\[0.2cm]
+{\large Department of Computer Science}\\[1.2cm]
+{\Large\bfseries From Prompting to Structured Alignment:\\[0.2cm]
+Individual, Population, and Temporal Boundaries of\\[0.2cm]
+LLM Survey Simulation}\\[1.2cm]
+by\\[0.3cm]
+{\large CHENYU YUAN}\\[1.2cm]
+A thesis submitted in partial fulfillment of the requirements for the degree of\\[0.3cm]
+{\large Master of Computer Science}\\[1.2cm]
+Thesis Supervisor: PENGYANG WANG\\[1.2cm]
+April 2027
+\end{center}
+\end{titlepage}
+
+% ---------------------------------------------------------------------------
+% Front matter
+% ---------------------------------------------------------------------------
+\pagenumbering{roman}
+\setcounter{page}{2}
+
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+\begin{center}
+{\large University of Macau}\\[0.6cm]
+{\bfseries From Prompting to Structured Alignment: Individual, Population, and Temporal Boundaries of LLM Survey Simulation}\\[0.4cm]
+by\\[0.2cm]
+CHENYU YUAN\\[0.3cm]
+Thesis Supervisor: PENGYANG WANG
+\end{center}
+
+\vspace{0.4cm}
+
+Large language models are increasingly used as virtual survey respondents, but
+most evaluations treat surveys as one-shot prompting tasks. This thesis presents
+a data-centric pipeline that reconstructs voter--candidate interactions from the
+American National Election Studies (ANES), aligns a compact 8B model with survey
+distributions through LoRA fine-tuning, and evaluates the resulting model at the
+individual, population, and temporal levels. On unseen respondents in the
+2016--2019 waves, the fine-tuned model reaches a mean absolute error of 20.84, a
+correlation of 0.679, and a rating-induced choice accuracy of 0.518 against a
+chance level of 0.163. A gradient-boosted baseline on the same features reaches
+20.58, 0.714, and 0.534; paired bootstrap shows no significant difference in MAE
+or choice, while the baseline has a higher correlation. On General Social Survey
+policy attitudes, fine-tuning reduces marginal and joint Jensen--Shannon
+divergence by 91\% and 86\% on the EDC configuration. The thesis then reports a
+sharp temporal boundary: individual-level correlation falls from 0.722 in 2019
+to near zero in 2024, and both the language model and the tabular baseline
+collapse in 2024. Adding the 2022 wave to training does not help. The results
+suggest that structured alignment is necessary but not sufficient for social
+simulation, and that temporal distribution shift should be treated as a
+first-class evaluation axis.
+
+\clearpage
+\tableofcontents
+\clearpage
+\listoffigures
+\clearpage
+\listoftables
+\clearpage
+
+\chapter*{List of Abbreviations}
+\addcontentsline{toc}{chapter}{List of Abbreviations}
+\begin{tabular}{ll}
+ANES & American National Election Studies \\
+ECE & Expected Calibration Error \\
+FAS & Full Attribute Simulation \\
+GSS & General Social Survey \\
+IPF & Iterative Proportional Fitting \\
+JS & Jensen--Shannon divergence \\
+KL & Kullback--Leibler divergence \\
+LLM & Large Language Model \\
+LoRA & Low-Rank Adaptation \\
+MAE & Mean Absolute Error \\
+PAS & Partial Attribute Simulation \\
+RMSE & Root Mean Squared Error \\
+\end{tabular}
+
+% ---------------------------------------------------------------------------
+% Main body
+% ---------------------------------------------------------------------------
+\clearpage
+\pagenumbering{arabic}
+
+\input{chapters/01_intro}
+\input{chapters/02_method}
+\input{chapters/03_results}
+\input{chapters/04_temporal}
+\input{chapters/05_conclusion}
+
+% ---------------------------------------------------------------------------
+% Bibliography and appendices
+% ---------------------------------------------------------------------------
+\clearpage
+\addcontentsline{toc}{chapter}{Bibliography}
+\bibliographystyle{apalike}
+\bibliography{references}
+
+\appendix
+\titleformat{\chapter}[display]
+  {\normalfont\centering\bfseries\fontsize{14}{17}\selectfont}
+  {APPENDIX \thechapter:}{0.5ex}{\fontsize{14}{17}\selectfont}
+\input{appendix/A_data}
+\input{appendix/B_results}
+\input{appendix/C_fas}
+
+\chapter*{Vita}
+\addcontentsline{toc}{chapter}{Vita}
+CHENYU YUAN received the degree of Master of Computer Science from the
+University of Macau in April 2027. Her research interests include large language
+models, computational social science, and survey simulation.
+
+\end{document}

@@ -1,0 +1,16 @@
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{lccc}
+\toprule
+Model & MAE & Correlation & Choice \\
+\midrule
+Fine-tuned LLM (3 seeds) & 20.84 & 0.679 & 0.518 \\
+HistGB & 20.58 & \textbf{0.714} & 0.534 \\
+Ridge & 22.47 & 0.655 & 0.484 \\
+Base LLM & 24.16 & 0.593 & 0.479 \\
+\bottomrule
+\end{tabular}
+\caption{PAS in-distribution results on unseen respondents (2016--2019). Chance choice accuracy is 0.163.}
+\label{tab:pas}
+\end{table}

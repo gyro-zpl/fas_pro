@@ -1,0 +1,80 @@
+\chapter{FAS Details}
+\label{app:fas}
+
+\section{Full FAS Table}
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{llcccc}
+\toprule
+Config & Run & $n$ & Coverage & Marginal JS & Joint JS \\
+\midrule
+\multirow{6}{*}{EDC} & Base & 400 & 1.000 & 0.0552 & 0.1181 \\
+ & SFT & 381 & 0.953 & 0.0048 & 0.0160 \\
+ & SFT (v3) & 400 & 1.000 & \textbf{0.0040} & 0.0215 \\
+ & RAG & 376 & 0.940 & 0.0473 & 0.1096 \\
+ & RAG + SFT & 381 & 0.953 & 0.0054 & 0.0176 \\
+ & Quota & 395 & 0.988 & 0.0091 & 0.0216 \\
+\midrule
+\multirow{6}{*}{EHC} & Base & 351 & 0.877 & 0.0319 & 0.1001 \\
+ & SFT & 400 & 1.000 & 0.0167 & 0.0470 \\
+ & SFT (v3) & 400 & 1.000 & \textbf{0.0077} & \textbf{0.0363} \\
+ & RAG & 379 & 0.948 & 0.0404 & 0.1095 \\
+ & RAG + SFT & 380 & 0.950 & 0.0152 & 0.0427 \\
+ & Quota & 400 & 1.000 & 0.0175 & 0.0522 \\
+\bottomrule
+\end{tabular}
+\caption{FAS distributional alignment on GSS (JS divergence, lower is better).
+Coverage is the fraction of the 400 requested rows returned.}
+\label{tab:fas_full}
+\end{table}
+
+\section{Prompt Templates}
+
+For PAS, the system message defines the task and fixes the output format; the
+user message contains the voter profile, the candidate block, and the interaction
+block. A representative user message is:
+
+\begin{quote}\small
+Predict the support score (0--100) for this voter--candidate pair.
+
+Voter Profile: 45-year-old Female White; Bachelor's degree; Strong Democrat,
+Liberal.
+
+Candidate: Biden; Democrat; President; Age 78.
+
+Key Interactions: Same party; Ideology distance 0.5; Age difference 33 years;
+Year 2020.
+
+Support score (0--100):
+\end{quote}
+
+For FAS, the model is given the target year, the three attributes and their
+levels, and the task type (batch generation, prior sampling, scenario variation,
+subgroup analysis, or iterative correction). The expected output is a list of
+rows, one per synthetic respondent.
+
+\section{Hyperparameters}
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{ll}
+\toprule
+Parameter & Value \\
+\midrule
+Base model & Qwen3-8B \\
+LoRA rank / alpha / dropout & 8 / 32 / 0.1 \\
+Epochs & 3 \\
+Learning rate & $10^{-4}$ \\
+Effective batch size & 16 \\
+Maximum sequence length & 512 \\
+Seeds & 42, 43, 44 \\
+IPF iterations & 800 \\
+FAS target samples & 400 \\
+\bottomrule
+\end{tabular}
+\caption{Training and generation hyperparameters.}
+\label{tab:hyper}
+\end{table}

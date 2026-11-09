@@ -1,0 +1,69 @@
+\chapter{Data Construction Details}
+\label{app:data}
+
+\section{Data Audit}
+
+Table~\ref{tab:audit_full} reports the raw and cleaned row counts and the main
+data defects. The trailing-period duplicates are normalized before deduplication;
+the group-like targets are removed from the candidate table and kept in the group
+corpus. The cleaned table retains the original row index so that every row can be
+traced back to the raw ANES table.
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{lr}
+\toprule
+Item & Count \\
+\midrule
+Raw rows & 132,948 \\
+Trailing-period duplicate rows & 8,165 \\
+Group targets mixed into candidates & 23,060 \\
+Missing or out-of-range scores & 3,588 \\
+Duplicate rows removed after normalization & 8,141 \\
+Clean rows & 98,159 \\
+\bottomrule
+\end{tabular}
+\caption{Raw and cleaned row counts.}
+\label{tab:audit_full}
+\end{table}
+
+\section{Splits}
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{llrr}
+\toprule
+Split & Years & Rows & Respondents \\
+\midrule
+\texttt{train\_t} & 2016--2020 & 6,516 & all \\
+\texttt{val\_t} & 2022 & 2,501 & sampled \\
+\texttt{test\_t} & 2024 & 3,421 & 1,712 \\
+\texttt{train\_r} & 2016--2020 & 5,094 & 80\% \\
+\texttt{test\_r} & 2016--2022 & 6,014 & 192 \\
+\texttt{test\_tr} & 2024 & 226 & 113 \\
+\bottomrule
+\end{tabular}
+\caption{Candidate splits. The two protocols are alternative designs and overlap
+across each other; within each protocol the splits are disjoint.}
+\label{tab:splits}
+\end{table}
+
+\section{Sampling Strategies}
+
+The training pool is drawn with nine complementary strategies: balanced coverage
+of the score range, hard cases near the middle of the scale, party-by-ideology
+cells, similarity-stratified bins, cross-pressure cases, extreme scores,
+incumbent effects, temporal coverage, and candidate-specific balance. The pool
+contains 6,516 rows and is intentionally not a uniform sample; the test sets are
+built from all cleaned rows in the target years so that evaluation is not shaped
+by the same sampling design.
+
+\section{Feature Definitions}
+
+The core features are party match (+1 same party, $-1$ independent, 0 otherwise),
+seven-point ideological distance, a composite demographic similarity index, and
+three cross-pressure indicators: CP1 (same party, ideological distance $\ge3$),
+CP2 (different party, distance $\le1$), and CP3 (similarity $\ge0.7$, different
+party).
