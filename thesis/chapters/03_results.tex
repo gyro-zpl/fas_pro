@@ -28,11 +28,9 @@ consistently negative across seeds. Fine-tuning, by contrast, improves MAE by
 and a choice gain of $+0.081$. The language model therefore adds a unified
 interface and a rating distribution, not superior point prediction.
 
-Performance is best in 2019 (MAE 19.20, correlation 0.722, choice 0.663 against
-chance 0.150) and weaker in 2016 (22.45, 0.588, 0.329 against 0.112). HistGB
-shows the same ordering. Predictions are correlated with the truth but compressed
-toward the middle of the scale, which motivates reporting prediction spread
-alongside calibration.
+Predictions are correlated with the truth but compressed toward the middle of the
+scale, which motivates reporting prediction spread alongside calibration. The
+per-year breakdown is reported in Chapter~\ref{ch:temporal}.
 
 \section{Population-Level Results}
 
@@ -59,10 +57,9 @@ SFT and is not used.
 
 The base model returns 351 of 400 rows on EHC (coverage 0.877), while the SFT runs
 return 399--400. Charging every missing row as maximally wrong raises the base
-model's EHC marginal and joint JS from 0.0319/0.1001 to 0.1168/0.1850, while the
-fully covered v3 run stays at 0.0077/0.0363. On EDC, direct SFT's raw
-0.0048/0.0160 becomes 0.0377/0.0489 under the same penalty; v3, which returns all
-400 rows, is unaffected at 0.0040/0.0215. The v3 run is the cleanest headline
-result. On EHC, the joint symmetric KL increases from 0.4289 to 0.5487 for direct
-SFT even though JS falls; KL is sensitive to near-zero cells, so JS is treated as
-the primary metric.
+model's EHC marginal/joint JS from 0.0319/0.1001 to 0.1168/0.1850, while the
+fully covered v3 run stays at 0.0077/0.0363; on EDC, direct SFT's 0.0048/0.0160
+becomes 0.0377/0.0489, whereas v3 is unaffected at 0.0040/0.0215. The v3 run is
+therefore the cleanest headline result. On EHC the joint symmetric KL increases
+from 0.4289 to 0.5487 for direct SFT even though JS falls, so JS is the primary
+metric.

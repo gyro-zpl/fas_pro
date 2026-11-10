@@ -62,4 +62,5 @@ thesis/
 └── main.pdf
 ```
 
-`archive/` contains the earlier, longer chapter drafts (not compiled).
+`archive/` contains the earlier, longer chapter drafts (not compiled; excluded
+from the pushed copy).

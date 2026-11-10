@@ -18,63 +18,64 @@ Each observation is represented as a triple $(v_i,c_j,y_{ij}\mid t_i)$, where
 $v_i$ is the voter profile, $c_j$ the target, $y_{ij}\in[0,100]$ the thermometer,
 and $t_i$ the year. Candidate identity is decoupled from attributes: each
 candidate is described by a metadata vector $\mathcal{M}[c]$ containing party,
-ideology, age, position, and incumbent status. Three features encode social
-cognition. Party match is $+1$ for a co-partisan, $-1$ for an independent, and
-$0$ otherwise. Ideological distance is the seven-point distance
-$\lvert\text{lcself}_v-\text{ideology}_c\rvert\in[0,6]$. A similarity index
-combines party, ideology, race, gender, and age with weights
-$0.25,0.25,0.20,0.15,0.15$. Cross-pressure indicators flag same-party but
-ideologically distant pairs (CP1), different-party but ideologically close pairs
-(CP2), and demographically similar but different-party pairs (CP3).
+ideology, age, position, and incumbent status. Features encode partisan, spatial,
+and conflict signals: party match ($+1$ co-partisan, $-1$ independent, $0$
+otherwise), seven-point ideological distance, a weighted similarity index (party
+$0.25$, ideology $0.25$, race $0.20$, gender $0.15$, age $0.15$), and three
+cross-pressure indicators (same-party but distant; different-party but close;
+similar but different-party).
 
 \section{Evaluation Protocols}
 
 ANES is a panel: 3,080 of 3,165 respondents appear in more than one wave, and
-every respondent observed in 2022 or 2024 also appears in 2016--2020. There are
-zero test-only respondents. A temporal split can therefore measure transfer to a
-later wave, but not generalization to unseen individuals. The temporal protocol
-(T) trains on 2016--2020 (6,516 rows), validates on 2022 (2,501), and tests on
-2024 (3,421). The respondent protocol (R) splits respondents 80/20 by a hash of
-the respondent identifier: 5,094 training rows and 6,014 test rows. A strict cell
-(T$\times$R) contains the 226 rows from 2024 whose respondents are held out. R is
-the main in-distribution test; T measures the temporal boundary.
+there are no test-only respondents in 2022/2024, so a temporal split measures
+transfer to a later wave, not generalization to unseen individuals. The temporal
+protocol (T) trains on 2016--2020 (6,516 rows), validates on 2022 (2,501), and
+tests on 2024 (3,421). The respondent protocol (R) splits respondents 80/20 by
+hash (5,094 train, 6,014 test rows); the strict T$\times$R cell contains 226
+rows. R is the main in-distribution test; T measures the temporal boundary.
 
 \section{Fine-Tuning and Readouts}
 
 The model is Qwen3-8B. LoRA is applied to all attention and MLP projections with
-rank $r=8$, scaling $\alpha=32$, and dropout $0.1$. Training uses three epochs, a
-learning rate of $10^{-4}$, an effective batch size of 16, and a maximum sequence
-length of 512. The loss is the causal language-modeling loss on the answer tokens
-only; prompt tokens are masked. This yields 21.8M trainable parameters (0.27\% of
-the model), and three seeds (42, 43, 44) are used.
+rank $r=8$, scaling $\alpha=32$, and dropout $0.1$. Training uses three epochs,
+learning rate $10^{-4}$, effective batch 16, and maximum length 512; the loss is
+on answer tokens only. This yields 21.8M trainable parameters (0.27\%), with
+three seeds (42--44).
 
-Two readouts are used. \emph{Generation} decodes greedily and parses the first
-integer in $[0,100]$; it preserves individual variation and is the primary readout
-for choice. \emph{Anchor likelihood} scores eleven anchors
-$a\in\{0,10,\dots,100\}$ by their sequence log-probability, normalizes with a
-softmax, and reports the expectation and the argmax. For choice, the candidate
-with the highest predicted score is selected within each respondent--year group;
-accuracy is reported against the rating-induced choice and against chance.
+\emph{Generation} decodes greedily and parses the first integer in $[0,100]$; it
+preserves individual variation and is the primary choice readout. \emph{Anchor
+likelihood} scores eleven anchors $a\in\{0,10,\dots,100\}$ by sequence
+log-probability, normalizes with a softmax, and reports expectation and argmax.
+Choice selects the highest-scoring candidate within each respondent--year group
+and is compared with the rating-induced choice and chance.
 
 \section{Population-Level Pipeline}
 
 For full attribute simulation (FAS), every univariate and pairwise cell is
-extrapolated with a four-model ensemble,
-\begin{equation}
-\hat p(t^*)=\frac{1.0\hat p_{\text{poly}}+1.0\hat p_{\text{loess}}
-+0.6\hat p_{\text{exp}}+0.8\hat p_{\text{lin}}}{3.4}.
-\end{equation}
-The predicted marginals and pairwise tables are combined with iterative
-proportional fitting: starting from the independence approximation,
+extrapolated with a four-model ensemble: quadratic regression, LOESS with a
+tri-cube kernel, an exponential trend, and linear regression, weighted by 1.0,
+1.0, 0.6, and 0.8 and normalized by 3.4. The predicted marginals and pairwise
+tables are combined with iterative proportional fitting: starting from the
+independence approximation,
 multiplicative updates match each pairwise table and marginal, run for 800
 iterations, and are normalized with Laplace smoothing. The resulting joint
 distribution is used to generate five task types: batch generation (50\%),
 prior-constrained sampling (25\%), scenario variation (15\%), subgroup analysis
 (7\%), and iterative correction (3\%).
 
+\paragraph{Generation setup.} All FAS samples were produced through a Dify
+application at a fixed endpoint, configured with an 8B Llama-family model (the
+project's GSS fine-tuned model for SFT, the base model otherwise); retrieval was
+toggled by switching application keys. Each run requested 20 rows per batch for
+20 batches (400 rows) in one conversation. Outputs were parsed as JSON arrays of
+three values in $\{1,2,3\}$; failed batches were skipped, explaining the 351--400
+row counts. Temperature is a fixed property of the Dify application. The quota
+condition used the same endpoint with 15 iterative correction rounds.
+
 \section{Metrics}
 
-For PAS, MAE, RMSE, Pearson correlation, a relaxed accuracy (same 20-point bin or
-absolute error $\le10$), rating-induced choice accuracy, and expected calibration
-error (ECE) are reported. For FAS, JS and symmetric KL divergence are computed on
-each marginal and each pairwise joint and averaged over attributes or pairs.
+PAS reports MAE, RMSE, Pearson correlation, relaxed accuracy (same 20-point bin or
+error $\le10$), rating-induced choice accuracy, and ECE. FAS reports JS and
+symmetric KL on each marginal and pairwise joint, averaged over attributes or
+pairs.
