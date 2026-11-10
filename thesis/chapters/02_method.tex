@@ -64,14 +64,15 @@ distribution is used to generate five task types: batch generation (50\%),
 prior-constrained sampling (25\%), scenario variation (15\%), subgroup analysis
 (7\%), and iterative correction (3\%).
 
-\paragraph{Generation setup.} All FAS samples were produced through a Dify
-application at a fixed endpoint, configured with an 8B Llama-family model (the
-project's GSS fine-tuned model for SFT, the base model otherwise); retrieval was
-toggled by switching application keys. Each run requested 20 rows per batch for
-20 batches (400 rows) in one conversation. Outputs were parsed as JSON arrays of
-three values in $\{1,2,3\}$; failed batches were skipped, explaining the 351--400
-row counts. Temperature is a fixed property of the Dify application. The quota
-condition used the same endpoint with 15 iterative correction rounds.
+\paragraph{Generation setup.} All FAS samples were generated with the project's
+8B Llama-family models, served locally through an orchestration layer that routed
+each condition to the corresponding Ollama model. The SFT conditions used the GSS
+fine-tuned model; the base conditions used the base model, and retrieval was
+toggled between runs. Each run requested 20 rows per batch for 20 batches (400
+rows) in one conversation. Outputs were parsed as JSON arrays of three values in
+$\{1,2,3\}$; failed batches were skipped, explaining the 351--400 row counts.
+Decoding temperature was fixed across conditions. The quota condition used the
+same setup with 15 iterative correction rounds.
 
 \section{Metrics}
 

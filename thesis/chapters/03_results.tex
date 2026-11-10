@@ -48,6 +48,11 @@ Direct SFT reduces these to 0.0048 and 0.0160 (91\% and 86\%), and the best run
 reaches 0.0077 and 0.0363 (76\% and 64\%). EDC therefore supports the claim that
 fine-tuning substantially improves population-level alignment, including pairwise
 structure. EHC is weaker, and the ``80\% reduction'' claim is scoped to EDC.
+Bootstrap 95\% CIs over the generated rows separate the base model from v3 on
+both configurations (EDC marginal 0.0552 [0.0476, 0.0644] vs 0.0040 [0.0022,
+0.0077]; EHC joint 0.1001 [0.0874, 0.1188] vs 0.0363 [0.0332, 0.0458]); the SFT
+and v3 intervals overlap, so the two SFT runs are not ranked. The full table is
+in Appendix~\ref{app:fas}.
 
 Component analysis shows that RAG alone is close to the base model (EDC 0.0473,
 EHC 0.0404) and that RAG plus SFT performs like direct SFT. The gain comes from

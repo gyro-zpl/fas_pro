@@ -14,11 +14,13 @@ Follows the UMAC FST master's thesis template:
 
 - A4 paper
 - Times New Roman 12pt body, 1.5 line spacing
-- Margins: left 1.5in, right 1in, top 1.5in, bottom 1in
+- Margins: left 1.5in (binding side), right 1in, top 1in, bottom 1in
 - Chapter headings 14pt, captions 10pt
 - Front matter: title page, abstract, TOC, list of figures, list of tables, list of abbreviations
+- Page numbers: preliminary pages bottom center (TOC first page unnumbered); text pages top center; first page of each chapter/bibliography/appendix counted but unnumbered
+- Table captions above tables; figure captions below figures
 - Main body: Chapters 1--5, **10 pages**
-- Back matter: bibliography, appendices A--C, vita
+- Back matter: bibliography, appendices A--C, vita (not listed in TOC)
 
 ## Build
 

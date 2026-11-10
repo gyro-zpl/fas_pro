@@ -12,6 +12,8 @@ traced back to the raw ANES table.
 \begin{table}[h]
 \centering
 \small
+\caption{Raw and cleaned row counts.}
+\label{tab:audit_full}
 \begin{tabular}{lr}
 \toprule
 Item & Count \\
@@ -24,8 +26,6 @@ Duplicate rows removed after normalization & 8,141 \\
 Clean rows & 98,159 \\
 \bottomrule
 \end{tabular}
-\caption{Raw and cleaned row counts.}
-\label{tab:audit_full}
 \end{table}
 
 \section{Splits}
@@ -33,6 +33,9 @@ Clean rows & 98,159 \\
 \begin{table}[h]
 \centering
 \small
+\caption{Candidate splits. The two protocols are alternative designs and overlap
+across each other; within each protocol the splits are disjoint.}
+\label{tab:splits}
 \begin{tabular}{llrr}
 \toprule
 Split & Years & Rows & Respondents \\
@@ -45,9 +48,6 @@ Split & Years & Rows & Respondents \\
 \texttt{test\_tr} & 2024 & 226 & 113 \\
 \bottomrule
 \end{tabular}
-\caption{Candidate splits. The two protocols are alternative designs and overlap
-across each other; within each protocol the splits are disjoint.}
-\label{tab:splits}
 \end{table}
 
 \section{Sampling Strategies}

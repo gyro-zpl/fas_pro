@@ -6,6 +6,9 @@
 \begin{table}[h]
 \centering
 \small
+\caption{PAS by survey year on the held-out respondents. The 2022 and 2024 waves
+have two candidates, so chance choice accuracy is 0.5.}
+\label{tab:year_full}
 \begin{tabular}{lccccccc}
 \toprule
 & & \multicolumn{3}{c}{Fine-tuned LLM} & \multicolumn{3}{c}{HistGB} \\
@@ -20,9 +23,6 @@ Year & $n$ & MAE & corr & choice & MAE & corr & choice \\
 2024 & 226 & 37.30 & $-0.056$ & 0.448 & 35.52 & $-0.008$ & 0.460 \\
 \bottomrule
 \end{tabular}
-\caption{PAS by survey year on the held-out respondents. The 2022 and 2024 waves
-have two candidates, so chance choice accuracy is 0.5.}
-\label{tab:year_full}
 \end{table}
 
 \section{Ablations}
@@ -30,6 +30,8 @@ have two candidates, so chance choice accuracy is 0.5.}
 \begin{table}[h]
 \centering
 \small
+\caption{Ablations on the 2016--2019 in-distribution rows.}
+\label{tab:ablation_full}
 \begin{tabular}{lccc}
 \toprule
 Configuration & MAE & Correlation & Choice \\
@@ -40,8 +42,6 @@ A2 minimal prompt & 21.13 & 0.670 & 0.567 \\
 A3 name-only prompt & 21.45 & 0.657 & 0.565 \\
 \bottomrule
 \end{tabular}
-\caption{Ablations on the 2016--2019 in-distribution rows.}
-\label{tab:ablation_full}
 \end{table}
 
 \section{Cross-Pressure Subgroups}
@@ -49,6 +49,8 @@ A3 name-only prompt & 21.45 & 0.657 & 0.565 \\
 \begin{table}[h]
 \centering
 \small
+\caption{Cross-pressure subgroups on the 2016--2019 rows.}
+\label{tab:cp_full}
 \begin{tabular}{lccc}
 \toprule
 Subgroup & LLM MAE (3 seeds) & HistGB MAE & $n$ \\
@@ -59,6 +61,4 @@ CP3 identity vs.\ party & 15.51--17.80 & 20.31 & 164 \\
 No conflict & 20.45--21.09 & 20.14 & 2,090 \\
 \bottomrule
 \end{tabular}
-\caption{Cross-pressure subgroups on the 2016--2019 rows.}
-\label{tab:cp_full}
 \end{table}

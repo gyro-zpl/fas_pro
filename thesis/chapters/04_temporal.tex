@@ -52,11 +52,11 @@ and age. All use seed 42 and the same in-distribution rows.
 The full model reaches an MAE of 20.84 $\pm$ 0.24, a correlation of 0.679
 $\pm$ 0.003, and a choice accuracy of 0.553 $\pm$ 0.011. A1 reaches 21.27, 0.658,
 and 0.543; A2 reaches 21.13, 0.670, and 0.567; A3 reaches 21.45, 0.657, and
-0.565. The direction is consistent but the effects are small: removing the
-distribution-aware sampling or the candidate metadata worsens MAE by roughly half
-a point and lowers correlation by about 0.02. The thesis does not claim that each
-component is individually necessary; the full table is in
-Appendix~\ref{app:results}.
+0.565. The direction is consistent but should be read as a small, descriptive
+trend: removing the distribution-aware sampling or the candidate metadata worsens
+MAE by roughly half a point and lowers correlation by about 0.02. Because each
+ablation uses one seed, the thesis does not claim that each component is
+individually necessary; the full table is in Appendix~\ref{app:results}.
 
 The cross-pressure analysis gives a finer-grained view. The fine-tuned LLM is
 substantially better than HistGB on CP3, the identity-versus-party conflict (MAE
