@@ -130,8 +130,8 @@ python -m experiments.eval.make_figures
 ### 英文毕业论文（UMAC 模板）
 
 - `thesis/main.tex`：UMAC FST 硕士论文模板（A4、12pt Times、1.5 倍行距）
-- `thesis/main.pdf`：已编译版本（**正文 10 页**，总 25 页）
-- `thesis/chapters/`：5 章正文；`thesis/appendix/`：3 个附录
+- `thesis/main.pdf`：已编译版本（**正文 10 页**，总 26 页）
+- `thesis/chapters/`：5 章正文；`thesis/appendix/`：4 个附录（含第二模型家族 DeepSeek-R1-Distill-Llama-8B）
 - 编译：`cd thesis && tectonic main.tex`
 - 作者：CHENYU YUAN；导师：PENGYANG WANG；日期：April 2027
 

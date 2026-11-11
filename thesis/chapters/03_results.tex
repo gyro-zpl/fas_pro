@@ -14,7 +14,9 @@ Table~\ref{tab:pas} reports the result. The fine-tuned LLM reaches an MAE of 20.
 [20.38, 21.30], a correlation of 0.679 [0.666, 0.692], and a choice accuracy of
 0.518 [0.481, 0.552] against chance 0.163. HistGB reaches 20.58 [20.01, 21.12],
 0.714 [0.696, 0.733], and 0.534 [0.498, 0.569]; Ridge is weaker at 22.47, 0.655,
-and 0.484.
+and 0.484. A second family, DeepSeek-R1-Distill-Llama-8B, trained under the
+same recipe reaches 22.66, 0.635, and 0.548 (Appendix~\ref{app:second}); the
+in-distribution signal is therefore not specific to Qwen3-8B.
 
 \input{tables/table2_pas}
 

@@ -53,6 +53,11 @@ MODELS = {
         "family": "llama",
         "enable_thinking": None,
     },
+    "deepseek-r1-distill-llama-8b": {
+        "path": "/home/jpzhao_team/models/deepseek-r1-distill-llama-8b",
+        "family": "deepseek",
+        "enable_thinking": None,
+    },
 }
 
 DEFAULT_MODEL = os.environ.get("FAS_MODEL", "qwen3-8b")

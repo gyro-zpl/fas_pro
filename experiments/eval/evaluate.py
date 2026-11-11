@@ -50,6 +50,7 @@ def main() -> None:
                         "generate = free generation + parse")
     p.add_argument("--limit", type=int, default=None)
     p.add_argument("--batch-size", type=int, default=8)
+    p.add_argument("--max-new-tokens", type=int, default=8)
     p.add_argument("--anchor-batch", type=int, default=3,
                    help="samples per forward in anchor readout")
     p.add_argument("--output", required=True)
@@ -75,6 +76,7 @@ def main() -> None:
             [s["instruction"] for s in samples],
             few_shot=(args.prompt_mode == "few"),
             task=args.task,
+            max_new_tokens=args.max_new_tokens,
         )
 
     rows = []

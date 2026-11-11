@@ -1,0 +1,36 @@
+\chapter{Second Model Family}
+\label{app:second}
+
+To test whether the results are specific to Qwen3-8B, a second family,
+DeepSeek-R1-Distill-Llama-8B (8B), was fine-tuned with the same data, LoRA
+configuration, and evaluation protocol (one seed). The model was trained to emit
+an empty thinking block followed by the score, because the base model otherwise
+produces long rationales and does not answer within a short generation budget.
+
+\begin{table}[h]
+\centering
+\small
+\caption{Second-family comparison. In-distribution rows are 2016--2019; 2024 is
+the temporal test. Choice chance is 0.163 in-distribution and 0.500 in 2024.}
+\label{tab:second}
+\begin{tabular}{lcccccc}
+\toprule
+& \multicolumn{3}{c}{2016--2019} & \multicolumn{3}{c}{2024} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}
+Model & MAE & corr & choice & MAE & corr & choice \\
+\midrule
+Qwen3-8B (3 seeds) & 20.84 & 0.679 & 0.518 & 36.47 & $-0.029$ & 0.527 \\
+DeepSeek-R1-Distill (1 seed) & 22.66 & 0.635 & 0.548 & 41.44 & $-0.017$ & 0.523 \\
+HistGB & 20.58 & 0.714 & 0.534 & 35.06 & $-0.030$ & 0.456 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The qualitative pattern is the same for both families: there is real
+in-distribution signal (correlation 0.635 for DeepSeek versus 0.679 for Qwen),
+and the 2024 correlation collapses to near zero ($-0.017$ versus $-0.029$). The
+Qwen model has a lower MAE and a higher correlation; the DeepSeek model has a
+slightly higher choice accuracy. With one seed for the second family, these
+differences should be read as descriptive. The result supports the claim that the
+in-distribution signal and the temporal failure are not specific to a single
+model family, while a broader multi-family study remains future work.

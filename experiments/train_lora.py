@@ -53,6 +53,10 @@ class RatingDataset(Dataset):
             kwargs["enable_thinking"] = False
         prompt = self.tokenizer.apply_chat_template(messages, **kwargs)
         answer = str(int(round(float(row["output"])))) + self.tokenizer.eos_token
+        if "deepseek" in self.tokenizer.name_or_path.lower():
+            # Learn an empty thinking block followed by the score; the prompt
+            # already ends with "<think>\n" from the chat template.
+            answer = "</think>\n" + answer
 
         prompt_ids = self.tokenizer(prompt, add_special_tokens=False).input_ids
         answer_ids = self.tokenizer(answer, add_special_tokens=False).input_ids

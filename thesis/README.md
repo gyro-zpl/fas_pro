@@ -38,7 +38,7 @@ pdflatex main
 pdflatex main
 ```
 
-The compiled PDF is `main.pdf` (25 pages total, 10-page main body).
+The compiled PDF is `main.pdf` (26 pages total, 10-page main body).
 
 ## Structure
 
@@ -54,7 +54,8 @@ thesis/
 ├── appendix/
 │   ├── A_data.tex        # data audit, splits, sampling, features
 │   ├── B_results.tex     # per-year table, ablations, cross-pressure
-│   └── C_fas.tex         # full FAS table, prompts, hyperparameters
+│   ├── C_fas.tex         # full FAS table, prompts, hyperparameters
+│   └── D_second_family.tex # DeepSeek-R1-Distill-Llama-8B robustness check
 ├── tables/
 │   ├── table2_pas.tex
 │   └── table3_fas.tex

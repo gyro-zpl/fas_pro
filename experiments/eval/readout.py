@@ -117,7 +117,11 @@ def apply_chat(tokenizer, messages: list[dict], family: str,
     kwargs = dict(tokenize=False, add_generation_prompt=True)
     if family == "qwen":
         kwargs["enable_thinking"] = bool(enable_thinking) if enable_thinking is not None else False
-    return tokenizer.apply_chat_template(messages, **kwargs)
+    prompt = tokenizer.apply_chat_template(messages, **kwargs)
+    # For DeepSeek-R1-Distill the template ends with "<think>\n"; the model is
+    # fine-tuned to emit "</think>\n<score>" immediately. Do not pre-close the
+    # block here: the base model ignores a pre-closed block and still reasons.
+    return prompt
 
 
 @dataclass

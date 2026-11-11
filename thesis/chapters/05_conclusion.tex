@@ -3,9 +3,10 @@
 
 \section{Limitations}
 
-\textbf{Model and survey coverage.} All fine-tuning uses Qwen3-8B; a second family
-was not evaluated because Llama-3.1-8B is gated. The pipeline is model-agnostic,
-but the claims are conditional on Qwen3-8B. Both ANES and GSS are U.S. surveys;
+\textbf{Model and survey coverage.} The main results use Qwen3-8B (three seeds);
+a second family, DeepSeek-R1-Distill-Llama-8B, was evaluated with one seed
+(Appendix~\ref{app:second}) and shows the same qualitative pattern. A broader
+multi-family study remains future work. Both ANES and GSS are U.S. surveys;
 cross-national, non-English, and non-political domains are not tested.
 
 \textbf{Group attitudes.} A nine-group corpus was constructed but not evaluated;
