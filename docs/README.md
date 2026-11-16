@@ -1,5 +1,7 @@
 # FAS_PRO 文档索引
 
+当前答辩修订入口：[答辩前论文问题优先级（P0 / P1 / P2）](02_计划与清单/答辩前论文问题优先级_2026-11-16.md)。
+
 > **毕设**：From Prompting to Social Cognition — PAS/FAS 框架的机制深化
 > **最后更新**：2026-11-05 17:35
 > **项目根目录**：`/home/jpzhao_team/cyyuan/FAS_PRO`
