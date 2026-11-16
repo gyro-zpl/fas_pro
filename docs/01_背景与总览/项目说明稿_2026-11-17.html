@@ -1,0 +1,1039 @@
+<title>LLM 调查模拟的边界</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  /* Design plan: cool "survey lab" paper; Source Serif 4 display + Inter body +
+     IBM Plex Mono data; deep teal accent, amber for caution, rose for limits.
+     Layout: a compact briefing masthead, then a numbered research-report spine. */
+  :root {
+    color-scheme: light;
+    --bg: #F6F8F5;
+    --surface: #FFFFFF;
+    --surface-2: #EDF2EE;
+    --ink: #14201C;
+    --ink-soft: #4E5D56;
+    --muted: #7C8B83;
+    --rule: #D7E1DA;
+    --rule-strong: #B9C8BF;
+    --accent: #0E6B5C;
+    --accent-soft: #D9ECE6;
+    --amber: #A9661F;
+    --amber-soft: #F4E5D4;
+    --rose: #944A5A;
+    --rose-soft: #F2E0E4;
+    --font-display: "Source Serif 4", Georgia, "Times New Roman", serif;
+    --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --max: 1120px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --bg: #0D1512;
+      --surface: #141E1A;
+      --surface-2: #1A2621;
+      --ink: #E8EFEA;
+      --ink-soft: #B3C2BA;
+      --muted: #8A9A92;
+      --rule: #2A3832;
+      --rule-strong: #3B4C45;
+      --accent: #63C7AD;
+      --accent-soft: #14332B;
+      --amber: #E0A15F;
+      --amber-soft: #332516;
+      --rose: #E08A9B;
+      --rose-soft: #331C22;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #0D1512;
+    --surface: #141E1A;
+    --surface-2: #1A2621;
+    --ink: #E8EFEA;
+    --ink-soft: #B3C2BA;
+    --muted: #8A9A92;
+    --rule: #2A3832;
+    --rule-strong: #3B4C45;
+    --accent: #63C7AD;
+    --accent-soft: #14332B;
+    --amber: #E0A15F;
+    --amber-soft: #332516;
+    --rose: #E08A9B;
+    --rose-soft: #331C22;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.65;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    -webkit-font-smoothing: antialiased;
+  }
+  main { max-width: var(--max); margin: 0 auto; padding-block: 44px 72px; }
+  a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  a:hover { text-decoration-thickness: 2px; }
+  a:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  p { margin: 0 0 1em; }
+  strong { font-weight: 600; }
+  .mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+  .muted { color: var(--muted); }
+  .small { font-size: 0.86rem; }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 14px;
+  }
+  .masthead {
+    border-bottom: 1px solid var(--rule-strong);
+    padding-bottom: 28px;
+    margin-bottom: 34px;
+  }
+  .masthead-top {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 10px 24px;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(240px, 0.65fr);
+    gap: 38px;
+    align-items: end;
+    margin-top: 18px;
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(2.35rem, 5.4vw, 4.1rem);
+    line-height: 1.04;
+    letter-spacing: -0.025em;
+    margin: 0 0 14px;
+    text-wrap: balance;
+  }
+  .dek {
+    font-size: clamp(1.02rem, 1.6vw, 1.18rem);
+    color: var(--ink-soft);
+    max-width: 44ch;
+    margin: 0;
+  }
+  .thesis-card {
+    background: var(--surface-2);
+    border-left: 3px solid var(--accent);
+    padding: 18px 20px 16px;
+    border-radius: 2px;
+  }
+  .thesis-card .label {
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 8px;
+  }
+  .thesis-card p {
+    font-family: var(--font-display);
+    font-size: 1.22rem;
+    line-height: 1.35;
+    margin: 0;
+    text-wrap: balance;
+  }
+  .byline {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 22px;
+    margin-top: 22px;
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    color: var(--muted);
+  }
+  .keyfacts {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0;
+    border-top: 1px solid var(--rule);
+    margin: 34px 0 0;
+  }
+  .keyfact {
+    padding: 13px 14px 0 0;
+    border-right: 1px solid var(--rule);
+  }
+  .keyfact:last-child { border-right: 0; }
+  .keyfact .v {
+    display: block;
+    font-family: var(--font-display);
+    font-size: clamp(1.35rem, 2.5vw, 1.8rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+  }
+  .keyfact .k {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 6px;
+  }
+  .toc {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+    margin: 34px 0 0;
+    padding: 14px 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+  }
+  .toc a { color: var(--ink-soft); text-decoration: none; }
+  .toc a:hover { color: var(--accent); text-decoration: underline; }
+  .section { margin-top: 70px; }
+  .section-head {
+    display: grid;
+    grid-template-columns: 52px minmax(0, 1fr);
+    gap: 14px;
+    align-items: baseline;
+    border-top: 1px solid var(--rule-strong);
+    padding-top: 15px;
+    margin-bottom: 24px;
+  }
+  .section-num {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--accent);
+    letter-spacing: 0.06em;
+  }
+  h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.55rem, 3vw, 2.15rem);
+    line-height: 1.14;
+    letter-spacing: -0.015em;
+    margin: 0;
+    text-wrap: balance;
+  }
+  h3 {
+    font-size: 1.02rem;
+    line-height: 1.4;
+    margin: 26px 0 8px;
+    font-weight: 600;
+  }
+  .prose { max-width: 72ch; }
+  .prose p { color: var(--ink-soft); }
+  .prose p strong { color: var(--ink); }
+  .level-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+    border-top: 2px solid var(--ink);
+    border-bottom: 1px solid var(--rule);
+  }
+  .level {
+    padding: 18px 20px 20px 0;
+    border-right: 1px solid var(--rule);
+  }
+  .level:last-child { border-right: 0; padding-right: 0; }
+  .level-tag {
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .level-num {
+    font-family: var(--font-display);
+    font-size: clamp(1.7rem, 3vw, 2.35rem);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    margin: 8px 0 6px;
+    font-variant-numeric: tabular-nums;
+  }
+  .level p { margin: 0; font-size: 0.9rem; color: var(--ink-soft); }
+  .rq-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+  }
+  .rq { border-top: 2px solid var(--accent); padding-top: 13px; }
+  .rq .tag {
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+  }
+  .rq h3 { margin-top: 7px; font-size: 1rem; }
+  .rq p { font-size: 0.9rem; color: var(--ink-soft); margin-bottom: 0; }
+  .table-wrap { overflow-x: auto; margin: 20px 0 10px; }
+  table.data {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 660px;
+    font-size: 0.9rem;
+  }
+  table.data th {
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: left;
+    font-weight: 500;
+    padding: 0 12px 8px 0;
+    border-bottom: 1px solid var(--ink);
+  }
+  table.data td {
+    padding: 9px 12px 9px 0;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+  }
+  table.data td.num, table.data th.num {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+    padding-right: 16px;
+  }
+  table.data th.num { text-align: right; }
+  table.data tr.highlight td { background: var(--surface-2); }
+  table.data tr.highlight td:first-child { box-shadow: inset 3px 0 0 var(--accent); }
+  .table-note {
+    font-size: 0.78rem;
+    color: var(--muted);
+    max-width: 70ch;
+    margin: 0 0 18px;
+  }
+  .callout {
+    background: var(--surface-2);
+    border-left: 3px solid var(--accent);
+    padding: 18px 22px;
+    border-radius: 2px;
+    margin: 24px 0;
+  }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout .label {
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 7px;
+  }
+  .two-col {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 34px;
+  }
+  .pipeline {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 30px;
+    margin-top: 10px;
+  }
+  .pipeline h3 { margin-top: 0; }
+  .flow { display: flex; flex-direction: column; align-items: stretch; gap: 0; }
+  .flow-step {
+    border: 1px solid var(--rule-strong);
+    background: var(--surface);
+    padding: 9px 12px;
+    font-size: 0.86rem;
+    line-height: 1.45;
+  }
+  .flow-step strong { display: block; font-size: 0.72rem; font-family: var(--font-mono); letter-spacing: 0.07em; text-transform: uppercase; color: var(--accent); margin-bottom: 2px; }
+  .flow-arrow {
+    text-align: center;
+    font-family: var(--font-mono);
+    color: var(--muted);
+    line-height: 1;
+    padding: 5px 0;
+    font-size: 0.8rem;
+  }
+  .metric-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 0;
+    margin: 8px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .metric-list li {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--ink-soft);
+    border: 1px solid var(--rule);
+    padding: 3px 7px;
+    margin-right: 6px;
+    border-radius: 2px;
+  }
+  .chart {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    padding: 18px 18px 12px;
+    margin: 22px 0;
+  }
+  .chart-head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 6px 18px;
+    margin-bottom: 6px;
+  }
+  .chart-title { font-size: 0.92rem; font-weight: 600; }
+  .chart-note { font-family: var(--font-mono); font-size: 0.68rem; color: var(--muted); }
+  .chart svg { width: 100%; height: auto; display: block; }
+  .grid-line { stroke: var(--rule); stroke-width: 1; }
+  .zero-line { stroke: var(--rule-strong); stroke-width: 1.2; stroke-dasharray: 3 4; }
+  .line-llm { stroke: var(--accent); stroke-width: 2.6; fill: none; }
+  .line-gbm { stroke: var(--amber); stroke-width: 2.2; fill: none; }
+  .pt-llm { fill: var(--accent); stroke: var(--surface); stroke-width: 1.5; }
+  .pt-gbm { fill: var(--amber); stroke: var(--surface); stroke-width: 1.5; }
+  .axis-label { fill: var(--muted); font-family: var(--font-mono); font-size: 11px; }
+  .axis-strong { fill: var(--ink-soft); font-family: var(--font-mono); font-size: 11px; }
+  .anno { fill: var(--ink-soft); font-family: var(--font-mono); font-size: 10.5px; }
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+    margin: 6px 0 0;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--ink-soft);
+  }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .swatch { width: 18px; height: 2px; display: inline-block; }
+  .swatch.llm { background: var(--accent); }
+  .swatch.gbm { background: var(--amber); }
+  .chart figcaption { font-size: 0.78rem; color: var(--muted); margin-top: 8px; }
+  .bars { display: flex; flex-direction: column; gap: 18px; margin: 18px 0 8px; }
+  .bar-group { display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 12px; align-items: start; }
+  .bar-group-label { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.08em; color: var(--muted); padding-top: 2px; }
+  .bar-rows { display: flex; flex-direction: column; gap: 7px; }
+  .bar-row { display: grid; grid-template-columns: 76px minmax(0, 1fr) 76px; gap: 8px; align-items: center; }
+  .bar-name { font-size: 0.76rem; color: var(--ink-soft); }
+  .bar-track { height: 13px; background: var(--surface-2); border: 1px solid var(--rule); }
+  .bar-fill { display: block; height: 100%; }
+  .bar-fill.prior { background: var(--accent); }
+  .bar-fill.llm { background: var(--amber); }
+  .bar-val { font-family: var(--font-mono); font-size: 0.72rem; text-align: right; font-variant-numeric: tabular-nums; }
+  .bar-note { font-size: 0.78rem; color: var(--muted); margin: 6px 0 16px; }
+  .limits {
+    background: var(--rose-soft);
+    border-left: 3px solid var(--rose);
+    padding: 18px 22px;
+    border-radius: 2px;
+  }
+  .limits h3 { margin-top: 0; color: var(--ink); }
+  .limits ul { margin: 0; padding-left: 1.1em; }
+  .limits li { margin-bottom: 6px; color: var(--ink-soft); font-size: 0.9rem; }
+  .contrib-list { margin: 0; padding: 0; list-style: none; counter-reset: contrib; }
+  .contrib-list li {
+    counter-increment: contrib;
+    padding: 11px 0 11px 38px;
+    border-bottom: 1px solid var(--rule);
+    position: relative;
+    font-size: 0.93rem;
+    color: var(--ink-soft);
+  }
+  .contrib-list li::before {
+    content: counter(contrib, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+    top: 12px;
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    color: var(--accent);
+  }
+  .contrib-list strong { color: var(--ink); }
+  .talk-list { margin: 0; padding: 0; list-style: none; counter-reset: talk; }
+  .talk-list li {
+    counter-increment: talk;
+    display: grid;
+    grid-template-columns: 38px 54px minmax(0, 1fr);
+    gap: 10px;
+    align-items: baseline;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--rule);
+    font-size: 0.92rem;
+  }
+  .talk-list li::before {
+    content: counter(talk, decimal-leading-zero);
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    color: var(--accent);
+  }
+  .talk-list .time {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--muted);
+  }
+  .glossary {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 28px;
+    margin: 0;
+  }
+  .glossary div {
+    border-bottom: 1px solid var(--rule);
+    padding: 9px 0;
+  }
+  .glossary dt {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .glossary dd {
+    margin: 2px 0 0;
+    font-size: 0.84rem;
+    color: var(--ink-soft);
+  }
+  .faq { margin: 0; }
+  .faq .qa {
+    border-bottom: 1px solid var(--rule);
+    padding: 13px 0;
+  }
+  .faq .q {
+    font-weight: 600;
+    font-size: 0.94rem;
+    margin: 0 0 3px;
+    color: var(--ink);
+  }
+  .faq .a {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+    max-width: 78ch;
+  }
+  .onepage {
+    background: var(--surface-2);
+    border: 1px solid var(--rule-strong);
+    border-top: 3px solid var(--ink);
+    padding: 24px 26px;
+    border-radius: 2px;
+  }
+  .onepage h2 { font-size: 1.45rem; }
+  .onepage ul { margin: 10px 0 0; padding-left: 1.15em; }
+  .onepage li { margin-bottom: 6px; font-size: 0.92rem; color: var(--ink-soft); }
+  .onepage li strong { color: var(--ink); }
+  footer {
+    border-top: 1px solid var(--rule-strong);
+    margin-top: 64px;
+    padding-top: 18px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px 24px;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--muted);
+  }
+  @media (max-width: 860px) {
+    .hero { grid-template-columns: 1fr; gap: 22px; }
+    .keyfacts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .keyfact { border-right: 0; border-bottom: 1px solid var(--rule); padding: 12px 0 10px; }
+    .keyfact:last-child { border-bottom: 0; }
+    .level-grid { grid-template-columns: 1fr; }
+    .level { border-right: 0; border-bottom: 1px solid var(--rule); padding: 16px 0; }
+    .level:last-child { border-bottom: 0; }
+    .rq-grid, .pipeline, .two-col { grid-template-columns: 1fr; }
+    .glossary { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 520px) {
+    main { padding-block: 28px 52px; }
+    .section { margin-top: 52px; }
+    .section-head { grid-template-columns: 34px minmax(0, 1fr); gap: 10px; }
+    .bar-group { grid-template-columns: 1fr; gap: 5px; }
+    .bar-row { grid-template-columns: 68px minmax(0, 1fr) 62px; }
+    .talk-list li { grid-template-columns: 28px 44px minmax(0, 1fr); }
+    .onepage { padding: 18px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition: none !important; }
+  }
+</style>
+
+<main>
+  <header class="masthead">
+    <div class="masthead-top">
+      <span>UMAC FST · Master's thesis project</span>
+      <span>Briefing · 2026-11-17</span>
+    </div>
+    <div class="hero">
+      <div>
+        <p class="eyebrow">LLM survey simulation · PAS / FAS / temporal</p>
+        <h1>LLM 调查模拟的边界</h1>
+        <p class="dek">一个 8B 模型能当虚拟受访者吗？我们在个体、群体、时间三个层面做了系统评测，并把“能”和“不能”都量化出来。</p>
+      </div>
+      <aside class="thesis-card">
+        <span class="label">一句话结论</span>
+        <p>结构化对齐是必要的，但不是充分的。</p>
+      </aside>
+    </div>
+    <div class="byline">
+      <span>CHENYU YUAN</span>
+      <span>导师：PENGYANG WANG</span>
+      <span>UMAC · 计算机科学硕士</span>
+      <span>代码：fas_pro_push / draft</span>
+    </div>
+  </header>
+
+  <section aria-label="关键数字">
+    <div class="keyfacts">
+      <div class="keyfact"><span class="v">98,159</span><span class="k">清洗后交互行 · ANES</span></div>
+      <div class="keyfact"><span class="v">3</span><span class="k">评测层面 · 个体 / 群体 / 时间</span></div>
+      <div class="keyfact"><span class="v">3</span><span class="k">Qwen3-8B seeds</span></div>
+      <div class="keyfact"><span class="v">2</span><span class="k">调查数据 · ANES + GSS</span></div>
+      <div class="keyfact"><span class="v">0.72 → 0</span><span class="k">2019 → 2024 个体相关性</span></div>
+    </div>
+  </section>
+
+  <nav class="toc" aria-label="目录">
+    <a href="#why">01 背景</a>
+    <a href="#questions">02 研究问题</a>
+    <a href="#data">03 数据</a>
+    <a href="#method">04 方法</a>
+    <a href="#individual">05 个体结果</a>
+    <a href="#population">06 群体结果</a>
+    <a href="#temporal">07 时间结果</a>
+    <a href="#contributions">08 贡献与局限</a>
+    <a href="#talk">09 十分钟汇报</a>
+    <a href="#glossary">10 术语与问答</a>
+  </nav>
+
+  <section class="section" id="why">
+    <div class="section-head"><span class="section-num">01</span><h2>为什么要做这个项目</h2></div>
+    <div class="prose">
+      <p>问卷调查研究是社会科学和公共政策的主要证据来源，但它很贵、很慢、很难大规模做。一个自然的想法是：<strong>用大语言模型当虚拟受访者</strong>。给它一个年龄、性别、教育、党派、意识形态的画像，再给它一个问题，让它直接给出回答。</p>
+      <p>这个想法已经有很多工作（Argyle et al., 2023; Dillion et al., 2023; Kim &amp; Lee, 2023）。但大多数评测是 <strong>one-shot prompting</strong>：把画像放进上下文，问一个问题，给回答打分。它测的是“模型能不能演一个受访者”，而不是模型有没有内化调查数据的结构、输出在群体层面是否连贯、行为能不能跨时间保持。</p>
+      <p>这个项目把调查模拟拆成三个层面：个体、群体、时间。每一层问一个研究问题，也各自给出一个边界。</p>
+    </div>
+
+    <div class="level-grid" aria-label="三个层面的答案">
+      <article class="level">
+        <span class="level-tag">个体 · PAS</span>
+        <div class="level-num">21.35</div>
+        <p>没见过的受访者上，微调 Qwen3-8B 的 MAE；强 GBM 是 20.73。LLM 与 GBM 持平，但略差。</p>
+      </article>
+      <article class="level">
+        <span class="level-tag">群体 · FAS</span>
+        <div class="level-num">0.0076</div>
+        <p>直接从重建先验采样得到的 EDC joint JS；最佳 LLM 是 0.0215。LLM 接近先验，但没有超过它。</p>
+      </article>
+      <article class="level">
+        <span class="level-tag">时间 · 2019 → 2024</span>
+        <div class="level-num">0.72 → −0.06</div>
+        <p>个体相关性塌缩；GBM 也从 0.75 掉到 −0.01。不是 LLM 特有，是分布偏移。</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" id="questions">
+    <div class="section-head"><span class="section-num">02</span><h2>三个研究问题</h2></div>
+    <div class="rq-grid">
+      <article class="rq">
+        <span class="tag">RQ1 · 个体</span>
+        <h3>结构化微调能不能让 8B 模型成为可信的个体级受访者？</h3>
+        <p>与强特征工程基线相比如何？答案：能与 GBM 持平，但不优于 GBM；微调显著优于 prompt-only。</p>
+      </article>
+      <article class="rq">
+        <span class="tag">RQ2 · 群体</span>
+        <h3>同一套 pipeline 能不能复现群体级调查分布？</h3>
+        <p>微调模型能不能超过重建的统计先验？答案：能接近先验，但不能超过直接采样先验。</p>
+      </article>
+      <article class="rq">
+        <span class="tag">RQ3 · 时间</span>
+        <h3>行为能不能跨调查波次迁移？</h3>
+        <p>四年后还能用吗？答案：2019 到 2024 个体信号塌缩；LLM 和 GBM 都一样。</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" id="data">
+    <div class="section-head"><span class="section-num">03</span><h2>数据：先把数据弄干净</h2></div>
+    <div class="prose">
+      <p>个体级数据来自 ANES pilot waves（2016、2018、2019、2020、2022、2024），原始表 132,948 行、3,165 名受访者、29 个候选人目标。原始表有三个问题：尾点重复名、社会群体温度计混进候选人列、缺失或越界评分。</p>
+    </div>
+
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr><th>数据审计</th><th class="num">行数</th><th>处理</th></tr></thead>
+        <tbody>
+          <tr><td>Raw ANES rows</td><td class="num">132,948</td><td>原始交互表</td></tr>
+          <tr><td>尾点命名（<span class="mono">obama.</span> / <span class="mono">hrc.</span>）</td><td class="num">8,165</td><td>归一化后 8,141 行是重复行，删除；24 行保留</td></tr>
+          <tr><td>群体目标混入候选人列</td><td class="num">23,060</td><td>分离到群体语料</td></tr>
+          <tr><td>缺失 / 越界评分</td><td class="num">3,588</td><td>先删群体目标后统计；68 行与群体目标重叠</td></tr>
+          <tr class="highlight"><td>Clean rows</td><td class="num">98,159</td><td>132,948 − 23,060 − 3,588 − 8,141</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="table-note">审计的关键不是“删了多少行”，而是把每一类污染单独量化，并保留原始行索引，保证每条清洗后的记录都能追溯。</p>
+
+    <h3>面板结构：为什么需要两套协议</h3>
+    <div class="prose">
+      <p>ANES 是<strong>面板数据</strong>：3,165 名受访者中 3,080 名出现在不止一个波次；2022/2024 没有“只在测试年份出现”的受访者。按年份切分（T 协议）测的是“迁移到后来的波次”，不是“泛化到新的人”；按受访者切分（R 协议）才能测“没见过的受访者”。</p>
+    </div>
+
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr><th>Split</th><th>Years</th><th class="num">Rows</th><th class="num">Respondents</th><th>用途</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">train_t</td><td>2016–2020</td><td class="num">6,516</td><td class="num">2,720</td><td>T 协议训练</td></tr>
+          <tr><td class="mono">val_t</td><td>2022</td><td class="num">2,501</td><td class="num">1,251</td><td>T 协议验证</td></tr>
+          <tr><td class="mono">test_t</td><td>2024</td><td class="num">3,421</td><td class="num">1,712</td><td>T 协议测试</td></tr>
+          <tr class="highlight"><td class="mono">train_r</td><td>2016–2020</td><td class="num">5,094</td><td class="num">2,131</td><td>R 协议训练；与 test_r 受访者不重叠</td></tr>
+          <tr class="highlight"><td class="mono">test_r</td><td>2016–2022</td><td class="num">6,014</td><td class="num">192</td><td>R 协议测试；主结果使用 2016–2019 的 2,726 行</td></tr>
+          <tr><td class="mono">test_tr</td><td>2024</td><td class="num">226</td><td class="num">113</td><td>严格 T×R 单元</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="table-note">R 协议按受访者 ID 的 hash 留出 20% 的人；训练池是已有采样池中不在这 20% 里的部分；测试集从这 20% 里按“整个人”抽到 6,000 行为止。R 模型只在 train_r 上训练，test_r 的人一个都没见过。</p>
+
+    <h3>特征与 GSS</h3>
+    <div class="prose">
+      <p>每个观察是一个三元组：选民画像、候选人、0–100 温度计评分，外加年份。候选人身份与候选人属性解耦；特征包括党派匹配、七点意识形态距离、加权人口相似度，以及三种交叉压力（同党但意识形态远、异党但意识形态近、身份相似但异党）。这些特征同时给 GBM / Ridge，保证 LLM 和表格模型看到同一套信号。</p>
+      <p>群体级数据来自 GSS 2004–2022 的八个历史波次，目标是 2024。两个三属性配置：<strong>EDC</strong>（教育、毒品、犯罪）和 <strong>EHC</strong>（环境、健康、城市）；每个属性三个等级。真实 2024 参照样本：EDC 1,601 人、EHC 1,552 人。</p>
+    </div>
+  </section>
+
+  <section class="section" id="method">
+    <div class="section-head"><span class="section-num">04</span><h2>方法：两条 pipeline</h2></div>
+    <div class="pipeline">
+      <div>
+        <h3>个体级 PAS</h3>
+        <div class="flow">
+          <div class="flow-step"><strong>输入</strong>选民画像 + 候选人属性 + 交互特征</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-step"><strong>Prompt</strong>自然语言任务描述，要求只输出 0–100</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-step"><strong>模型</strong>Qwen3-8B + LoRA；r=8, α=32, dropout=0.1；3 seeds</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-step"><strong>读出</strong>greedy generation（主 choice）；11-anchor likelihood（校准诊断）</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-step"><strong>输出</strong>0–100 评分 → 评分诱导的选择</div>
+        </div>
+      </div>
+      <div>
+        <h3>群体级 FAS</h3>
+        <div class="flow">
+          <div class="flow-step"><strong>历史</strong>GSS 2004–2022 八波；3 个属性 × 3 个等级</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-step"><strong>外推</strong>3 条边际 + B–C 表；二次 / LOESS / 指数 / 线性加权集成</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-step"><strong>联合重建</strong>IPF：边际 + B–C；300 次；Laplace α=1e-6 → Q*</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-step"><strong>合成 + 微调</strong>从 Q* 采样；五类任务；8B Llama-family SFT</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-step"><strong>评测</strong>400 行 vs 2024 真实分布；prior-only 是关键基线</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <span class="label">最关键的对照</span>
+      <p><strong>prior-only</strong>：直接从 Q* 采 400 行，不用 LLM。FAS 的问题不是“SFT 比 base 好多少”，而是“LLM 有没有超过统计先验”。答案是：没有。</p>
+    </div>
+
+    <h3>指标与统计</h3>
+    <ul class="metric-list">
+      <li>MAE ↓</li><li>Pearson corr ↑</li><li>choice（argmax）</li><li>tie-aware choice</li>
+      <li>JS / KL ↓</li><li>chance</li><li>bootstrap</li><li>paired bootstrap</li><li>cluster bootstrap</li>
+    </ul>
+    <div class="prose">
+      <p>choice 是 rating-induced：在每个 respondent–year 组里，把预测评分最高的候选人当作“选择”，和真值评分最高的候选人比；chance 是组内候选人数的倒数均值。模型输出整数，约 46% 的组有预测 argmax 并列，所以主表同时报 tie-aware choice。</p>
+    </div>
+  </section>
+
+  <section class="section" id="individual">
+    <div class="section-head"><span class="section-num">05</span><h2>结果一：个体级</h2></div>
+    <div class="prose">
+      <p>主结果使用 R 协议，2016/2018/2019 的 test_r：2,726 行、192 名没见过的受访者。chance choice = 0.163。</p>
+    </div>
+
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr><th>模型</th><th class="num">MAE ↓</th><th class="num">corr ↑</th><th class="num">choice</th><th class="num">tie-aware</th></tr></thead>
+        <tbody>
+          <tr class="highlight"><td>Qwen3-8B r（3 seeds）</td><td class="num">21.35 ± 0.19</td><td class="num">0.666 ± 0.003</td><td class="num">0.525 ± 0.033</td><td class="num">0.481</td></tr>
+          <tr><td>HistGB r</td><td class="num">20.73</td><td class="num"><strong>0.703</strong></td><td class="num"><strong>0.543</strong></td><td class="num"><strong>0.555</strong></td></tr>
+          <tr><td>Ridge r</td><td class="num">22.86</td><td class="num">0.639</td><td class="num">0.450</td><td class="num">0.474</td></tr>
+          <tr><td>Base Qwen</td><td class="num">24.15</td><td class="num">0.594</td><td class="num">0.478</td><td class="num">0.432</td></tr>
+          <tr><td>DeepSeek-R1-Distill r（1 seed）</td><td class="num">21.37</td><td class="num">0.665</td><td class="num">0.572</td><td class="num">0.526</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="table-note">choice 是逐 seed 的 argmax 均值；tie-aware 在最后一列。Qwen 的 choice 区间是 0.490–0.569，逐 seed 不稳定；tie-aware 下 GBM 的优势更清楚。</p>
+
+    <div class="two-col">
+      <div>
+        <h3>怎么读</h3>
+        <div class="prose">
+          <p>MAE 越低越好；LLM 比 GBM 高 0.62。corr 越高越好；GBM 高 0.037。choice 和 chance 0.163 比，模型确实学到了东西，但和 GBM 的 0.543 很接近。tie-aware 后 LLM 0.481、GBM 0.555。</p>
+          <p>配对 bootstrap：MAE 差 seed42 +0.59 [−0.17, +1.32]、seed43 +0.42 [−0.34, +1.19]、seed44 +0.89 [+0.10, +1.67]；差异很小，GBM 从不更差。corr 差三个 seed 都为负（−0.040 / −0.033 / −0.039）。</p>
+        </div>
+      </div>
+      <div>
+        <h3>微调有没有用</h3>
+        <div class="prose">
+          <p>有。相对 base Qwen，微调把 MAE 降低 2.5–3.0，corr 提高约 0.07，choice 提高 0.01–0.09（seed-dependent）。结构化对齐至少让模型从“不可用的 prompt-only”变成“可用的同分布预测器”。</p>
+          <p>第二个 checkpoint（DeepSeek-R1-Distill-Llama-8B，1 seed）达到 21.37 / 0.665 / 0.572，定性模式一致；它是 Llama-3.1 的蒸馏版，所以是 second checkpoint，不是独立家族。</p>
+        </div>
+      </div>
+    </div>
+
+    <h3>交叉压力子群</h3>
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr><th>子群</th><th class="num">LLM MAE（3 seeds）</th><th class="num">HistGB MAE</th><th class="num">n</th></tr></thead>
+        <tbody>
+          <tr><td>CP1 同党、意识形态远</td><td class="num">18.94–21.73</td><td class="num">21.16</td><td class="num">154</td></tr>
+          <tr><td>CP2 异党、意识形态近</td><td class="num">23.59–25.80</td><td class="num">23.06</td><td class="num">318</td></tr>
+          <tr><td>CP3 身份相似、异党</td><td class="num"><strong>15.06–17.69</strong></td><td class="num">20.67</td><td class="num">164</td></tr>
+          <tr><td>无冲突</td><td class="num">21.15–21.48</td><td class="num">20.35</td><td class="num">2,090</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="table-note">LLM 在 CP3（身份 vs 党派冲突）上明显更好，在 CP1 上大致相当，在 CP2 和非冲突行上略差。样本很小，是描述性结果。</p>
+  </section>
+
+  <section class="section" id="population">
+    <div class="section-head"><span class="section-num">06</span><h2>结果二：群体级</h2></div>
+    <div class="prose">
+      <p>FAS 的关键对照不是“base LLM vs SFT LLM”，而是 <strong>prior-only vs LLM</strong>。直接从 Q* 采 400 行，不用 LLM。</p>
+    </div>
+
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr><th>条件</th><th class="num">EDC marginal JS</th><th class="num">EDC joint JS</th><th class="num">EHC marginal JS</th><th class="num">EHC joint JS</th></tr></thead>
+        <tbody>
+          <tr class="highlight"><td>Prior-only（无 LLM）</td><td class="num"><strong>0.0004</strong></td><td class="num"><strong>0.0076</strong></td><td class="num"><strong>0.0011</strong></td><td class="num"><strong>0.0225</strong></td></tr>
+          <tr><td>LLM 最佳（v3）</td><td class="num">0.0040</td><td class="num">0.0215</td><td class="num">0.0077</td><td class="num">0.0363</td></tr>
+          <tr><td>LLM direct SFT</td><td class="num">0.0048</td><td class="num">0.0160</td><td class="num">0.0167</td><td class="num">0.0470</td></tr>
+          <tr><td>Base LLM</td><td class="num">0.0552</td><td class="num">0.1181</td><td class="num">0.0319</td><td class="num">0.1001</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="table-note">JS 越低越好。prior-only 在四个指标上都更低；joint 的 95% CI 与 v3 不重叠（EDC 0.0141 &lt; 0.0181；EHC 0.0308 &lt; 0.0332）。</p>
+
+    <h3>Joint JS：先验 vs 最佳 LLM</h3>
+    <div class="bars" role="img" aria-label="EDC 和 EHC 的 joint JS：prior-only 都低于最佳 LLM（v3）。">
+      <div class="bar-group">
+        <div class="bar-group-label">EDC</div>
+        <div class="bar-rows">
+          <div class="bar-row"><span class="bar-name">Prior</span><span class="bar-track"><span class="bar-fill prior" style="width:20.9%"></span></span><span class="bar-val">0.0076</span></div>
+          <div class="bar-row"><span class="bar-name">LLM v3</span><span class="bar-track"><span class="bar-fill llm" style="width:59.2%"></span></span><span class="bar-val">0.0215</span></div>
+        </div>
+      </div>
+      <div class="bar-group">
+        <div class="bar-group-label">EHC</div>
+        <div class="bar-rows">
+          <div class="bar-row"><span class="bar-name">Prior</span><span class="bar-track"><span class="bar-fill prior" style="width:62.0%"></span></span><span class="bar-val">0.0225</span></div>
+          <div class="bar-row"><span class="bar-name">LLM v3</span><span class="bar-track"><span class="bar-fill llm" style="width:100%"></span></span><span class="bar-val">0.0363</span></div>
+        </div>
+      </div>
+    </div>
+    <p class="bar-note">条长 ∝ joint JS；全图最大值为 EHC 的 LLM v3 0.0363。同一配置里，先验总是更短。</p>
+
+    <div class="two-col">
+      <div>
+        <h3>SFT 有没有把 LLM 拉向先验</h3>
+        <div class="prose">
+          <p>有。EDC marginal/joint 从 base 0.0552/0.1181 降到 direct SFT 0.0048/0.0160（91%/86%），v3 0.0040/0.0215（93%/82%）。EHC 从 0.0319/0.1001 降到 0.0167/0.0470（48%/53%），v3 0.0077/0.0363（76%/64%）。</p>
+          <p>但这些百分比是相对 base LLM，不是相对先验。先验本身仍然是更强的分布模型。</p>
+        </div>
+      </div>
+      <div>
+        <h3>其它发现</h3>
+        <div class="prose">
+          <p>RAG 单独接近 base（EDC 0.0473，EHC 0.0404），不是 driver；RAG + SFT 与 direct SFT 差不多；quota 不如 direct SFT，而且 15 轮内没有收敛。EHC 上 direct SFT 的 joint KL 反向（0.4289 → 0.5487），但 v3 两个指标都改善（0.0363 / 0.3064）。coverage-adjusted 后 direct SFT 的 EDC 优势明显缩小（0.0377/0.0489），v3 不受影响。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="temporal">
+    <div class="section-head"><span class="section-num">07</span><h2>结果三：时间级</h2></div>
+    <div class="prose">
+      <p>T 协议：2016–2020 训练，2024 测试。按年看，个体相关性从 2019 年的 0.72 掉到 2024 年的约 0。GBM 同样塌缩。</p>
+    </div>
+
+    <figure class="chart">
+      <div class="chart-head">
+        <span class="chart-title">个体级相关性，按调查年份</span>
+        <span class="chart-note">Pearson r · T 协议模型 · 20% held-out rows</span>
+      </div>
+      <svg viewBox="0 0 720 300" role="img" aria-label="2016 到 2024 年，微调 LLM 与 HistGB 的个体级相关性都从约 0.7 降到约 0；LLM 在 2019 为 0.72，2024 为 -0.06。">
+        <g>
+          <line class="grid-line" x1="70" y1="30" x2="690" y2="30"></line>
+          <line class="grid-line" x1="70" y1="76.7" x2="690" y2="76.7"></line>
+          <line class="grid-line" x1="70" y1="123.3" x2="690" y2="123.3"></line>
+          <line class="grid-line" x1="70" y1="170" x2="690" y2="170"></line>
+          <line class="zero-line" x1="70" y1="216.7" x2="690" y2="216.7"></line>
+        </g>
+        <g>
+          <text class="axis-label" x="62" y="34" text-anchor="end">0.8</text>
+          <text class="axis-label" x="62" y="80.7" text-anchor="end">0.6</text>
+          <text class="axis-label" x="62" y="127.3" text-anchor="end">0.4</text>
+          <text class="axis-label" x="62" y="174" text-anchor="end">0.2</text>
+          <text class="axis-label" x="62" y="220.7" text-anchor="end">0</text>
+          <text class="axis-label" x="62" y="244" text-anchor="end">−0.1</text>
+        </g>
+        <path class="line-gbm" d="M70,74.1 L225,46.6 L302.5,42.6 L380,86 L535,63.4 L690,218.5"></path>
+        <path class="line-llm" d="M70,79.5 L225,60.3 L302.5,48.2 L380,105.1 L535,121.5 L690,229.7"></path>
+        <g>
+          <circle class="pt-gbm" cx="70" cy="74.1" r="3.6"></circle>
+          <circle class="pt-gbm" cx="225" cy="46.6" r="3.6"></circle>
+          <circle class="pt-gbm" cx="302.5" cy="42.6" r="3.6"></circle>
+          <circle class="pt-gbm" cx="380" cy="86" r="3.6"></circle>
+          <circle class="pt-gbm" cx="535" cy="63.4" r="3.6"></circle>
+          <circle class="pt-gbm" cx="690" cy="218.5" r="3.6"></circle>
+        </g>
+        <g>
+          <circle class="pt-llm" cx="70" cy="79.5" r="4"></circle>
+          <circle class="pt-llm" cx="225" cy="60.3" r="4"></circle>
+          <circle class="pt-llm" cx="302.5" cy="48.2" r="4"></circle>
+          <circle class="pt-llm" cx="380" cy="105.1" r="4"></circle>
+          <circle class="pt-llm" cx="535" cy="121.5" r="4"></circle>
+          <circle class="pt-llm" cx="690" cy="229.7" r="4"></circle>
+        </g>
+        <g>
+          <text class="axis-strong" x="70" y="270" text-anchor="middle">2016</text>
+          <text class="axis-strong" x="225" y="270" text-anchor="middle">2018</text>
+          <text class="axis-strong" x="302.5" y="270" text-anchor="middle">2019</text>
+          <text class="axis-strong" x="380" y="270" text-anchor="middle">2020</text>
+          <text class="axis-strong" x="535" y="270" text-anchor="middle">2022</text>
+          <text class="axis-strong" x="690" y="270" text-anchor="middle">2024</text>
+        </g>
+        <g>
+          <text class="anno" x="310" y="40">2019 · 0.72</text>
+          <text class="anno" x="690" y="248" text-anchor="end">2024 · ≈0</text>
+        </g>
+      </svg>
+      <div class="legend">
+        <span><i class="swatch llm"></i>微调 LLM</span>
+        <span><i class="swatch gbm"></i>HistGB</span>
+      </div>
+      <figcaption>横轴按真实年份间距；纵轴 Pearson r。两条线在 2019 之后同时下行，2024 都接近 0。</figcaption>
+    </figure>
+
+    <div class="two-col">
+      <div>
+        <h3>2024 全量测试</h3>
+        <div class="prose">
+          <p>LLM MAE 36.47 ± 0.75、corr −0.029 ± 0.021；GBM 35.06、−0.030。3,173/3,421 条 LLM 预测正好是 50；Biden 行全部 50（std 0），Trump 行 std 17.4、corr −0.014。</p>
+          <p>常数 50 的 MAE 是 35.05，candidate-mean 是 34.84。LLM/GBM 的 MAE 已经在 no-signal baseline 或更差，所以 aggregate MAE 不能当作“还有信号”的证据。</p>
+        </div>
+      </div>
+      <div>
+        <h3>这不是“缺最近数据”</h3>
+        <div class="prose">
+          <p>把 2022 加进训练（9,017 行），2024 仍是 MAE 36.62、corr −0.030、choice 0.525。R 模型也塌缩：2024 test_t 上 Qwen r corr −0.055/−0.033/−0.024，DeepSeek r −0.040；严格 226 行 T×R 单元上 Qwen r corr −0.151/−0.111/−0.091，DeepSeek −0.121。</p>
+          <p>2020 是训练年份，2019→2020 的下降是 in-domain wave difficulty，不是时间外推；真正的时间边界在 2022/2024。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="contributions">
+    <div class="section-head"><span class="section-num">08</span><h2>贡献与局限</h2></div>
+    <div class="two-col">
+      <div>
+        <h3>四个贡献</h3>
+        <ol class="contrib-list">
+          <li><strong>可复现的数据审计。</strong>把尾点重复名、群体目标混入、坏评分量化并清洗；给出 T / R 两套协议，明确面板数据的限制。</li>
+          <li><strong>个体级的诚实边界。</strong>在真正没见过的受访者上，8B 模型与强 GBM 持平但略差；微调显著优于 prompt-only；LLM 的价值是统一接口和评分分布。</li>
+          <li><strong>群体级的边界。</strong>prior-only 比所有 LLM 条件都准；LLM 接近先验但不超越；群体级贡献必须从“无条件分布匹配”转向“条件生成 / 自然语言控制”。</li>
+          <li><strong>时间级的负面结果。</strong>四年后 LLM 和 GBM 都失去个体信号；recency 不缓解；strict T×R 也复现。时间偏移应成为一等评测轴。</li>
+        </ol>
+      </div>
+      <div class="limits">
+        <h3>不声称的事</h3>
+        <ul>
+          <li>不声称 LLM 在个体级优于 GBM；数据不支持。</li>
+          <li>不声称 LLM 在群体级优于经典先验；prior 更准。</li>
+          <li>不声称 2024 的 aggregate MAE 是“提升”；corr ≈ 0，预测塌缩。</li>
+          <li>不声称跨国家、非英语、非政治领域适用；只做了 ANES + GSS。</li>
+          <li>不声称多家族稳健；主 PAS 是 Qwen3-8B，第二个 checkpoint 只有 1 seed。</li>
+          <li>不声称消融的每个组件必要；1 seed，效应小，是描述性趋势。</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="talk">
+    <div class="section-head"><span class="section-num">09</span><h2>十分钟汇报大纲</h2></div>
+    <ol class="talk-list">
+      <li><span class="time">1 min</span><span><strong>开场</strong>：调查很贵；LLM 虚拟受访者的承诺；one-shot prompting 只测“演得像不像”。</span></li>
+      <li><span class="time">1 min</span><span><strong>问题</strong>：三个层面（个体、群体、时间），三个 RQ。</span></li>
+      <li><span class="time">1.5 min</span><span><strong>数据</strong>：ANES 审计 132,948 → 98,159；面板结构；T/R 两套协议。</span></li>
+      <li><span class="time">1.5 min</span><span><strong>方法</strong>：PAS = prompt + LoRA + 读出；FAS = 外推 + IPF + 合成 + SFT；prior-only 基线。</span></li>
+      <li><span class="time">1.5 min</span><span><strong>个体结果</strong>：21.35 vs 20.73；corr 0.666 vs 0.703；tie-aware choice 0.481 vs 0.555；competitive, not superior。</span></li>
+      <li><span class="time">1.5 min</span><span><strong>群体结果</strong>：prior 0.0076 vs LLM 0.0215（EDC joint）；LLM 接近但不超越；EHC KL。</span></li>
+      <li><span class="time">1.5 min</span><span><strong>时间结果</strong>：0.722 → −0.056；GBM 也塌；常数基线 35.05；recency 不缓解。</span></li>
+      <li><span class="time">0.5 min</span><span><strong>结论 / 局限 / 下一步</strong>：结构化对齐必要不充分；条件生成、更多模型家族、时间自适应、真实投票验证。</span></li>
+    </ol>
+  </section>
+
+  <section class="section" id="glossary">
+    <div class="section-head"><span class="section-num">10</span><h2>术语表与常见问题</h2></div>
+    <dl class="glossary">
+      <div><dt>ANES / GSS</dt><dd>美国选举研究调查 / 美国综合社会调查。</dd></div>
+      <div><dt>PAS / FAS</dt><dd>个体级“选民–候选人”评分预测 / 群体级联合分布生成。</dd></div>
+      <div><dt>T 协议 / R 协议</dt><dd>按年份切分 / 按受访者切分；R 协议测没见过的受访者。</dd></div>
+      <div><dt>LoRA</dt><dd>轻量微调，只训练小的低秩适配器；不重训整个 8B 模型。</dd></div>
+      <div><dt>IPF</dt><dd>迭代比例拟合：调整列联表，使边际和联合约束匹配。</dd></div>
+      <div><dt>Q*</dt><dd>从历史 GSS 外推 + IPF 重建出的 2024 联合分布。</dd></div>
+      <div><dt>JS / KL</dt><dd>两个分布的距离；JS 对称有界，KL 非对称、对近零格子敏感。</dd></div>
+      <div><dt>MAE / corr</dt><dd>平均绝对误差 / Pearson 相关；前者越低越好，后者越高越好。</dd></div>
+      <div><dt>Choice / chance</dt><dd>评分诱导的选择准确率 / 随机选择的准确率。</dd></div>
+      <div><dt>Tie-aware</dt><dd>预测并列时按比例给分，避免任意排序偏置。</dd></div>
+      <div><dt>Bootstrap</dt><dd>有放回重采样估计置信区间；paired 比较同一批样本，cluster 按受访者重采样。</dd></div>
+      <div><dt>Prior-only</dt><dd>直接从 Q* 采样，不用 LLM；FAS 的关键基线。</dd></div>
+    </dl>
+
+    <h3>第一次听汇报最可能问的</h3>
+    <div class="faq">
+      <div class="qa"><p class="q">为什么不用 GPT-4？</p><p class="a">用开源 8B 模型是为了可复现、可本地训练、成本可控；GPT-4 不能本地微调，API 也会变。更大的模型和更多家族是 future work。</p></div>
+      <div class="qa"><p class="q">为什么 GBM 这么强？</p><p class="a">因为特征工程把党派、意识形态、候选人属性、交互都显式编码了；GBM 在小数据上非常强。LLM 的价值不是“点预测更强”，而是统一接口、评分分布、可扩展到群体生成。</p></div>
+      <div class="qa"><p class="q">为什么 prior 比 LLM 还准？</p><p class="a">因为 prior 就是用历史 GSS 外推 + IPF 重建出来的；LLM 是在学习这个 prior 的采样。直接采样 prior 当然更准。LLM 的潜在价值在条件生成 / 自然语言控制，不是无条件分布匹配。</p></div>
+      <div class="qa"><p class="q">2024 塌缩是不是因为模型没看过 2024？</p><p class="a">不是。加入 2022 年数据不缓解；GBM 也塌缩；R 模型也塌缩。这是分布偏移，不是“缺最近数据”。</p></div>
+      <div class="qa"><p class="q">“LLM 与 GBM 持平”是不是说明 LLM 没用？</p><p class="a">不是。它说明在这个任务、这个数据、这个 8B 模型上，LLM 没有超过强特征工程；但 LLM 提供了统一接口和分布输出，且能扩展到群体生成。论文的价值是把边界说清楚，而不是夸大。</p></div>
+      <div class="qa"><p class="q">这篇论文最大的贡献是什么？</p><p class="a">三件事：可复现的数据审计与 T/R 协议；个体、群体、时间三个层面的边界量化；诚实的负面结果（GBM 更强、prior 更强、四年后塌缩）。</p></div>
+    </div>
+  </section>
+
+  <section class="section" id="onepage">
+    <div class="onepage">
+      <h2>一页纸总结</h2>
+      <ul>
+        <li><strong>问题</strong>：LLM 能不能当虚拟受访者？不是“演得像不像”，而是个体、群体、时间三个层面。</li>
+        <li><strong>数据</strong>：ANES 2016–2024（132,948 → 98,159 行）；GSS 2004–2022 → 2024。</li>
+        <li><strong>方法</strong>：Qwen3-8B + LoRA；R 协议主结果；T 协议时间；FAS 外推 + IPF + SFT；prior-only 基线。</li>
+        <li><strong>结果</strong>：个体 21.35/0.666/0.525 vs GBM 20.73/0.703/0.543；群体 prior 0.0076/0.0225 vs LLM 0.0215/0.0363；时间 0.722 → −0.056。</li>
+        <li><strong>结论</strong>：结构化对齐必要但不充分；时间偏移是一等评测轴。</li>
+        <li><strong>态度</strong>：不夸大、不隐藏负面结果；把边界量化，让后续工作更容易校准。</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    <span>From Prompting to Structured Alignment · CHENYU YUAN · UMAC FST</span>
+    <span>数字以 thesis/main.pdf 与 r_protocol.md 为准 · 2026-11-17</span>
+  </footer>
+</main>
