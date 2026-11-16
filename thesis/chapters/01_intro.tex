@@ -5,7 +5,7 @@ Questionnaire surveys are a primary source of evidence in the social sciences an
 in public policy, but they are expensive, slow, and difficult to field at scale.
 Large language models (LLMs) have been proposed as virtual survey respondents:
 given a demographic profile and a question, a model can produce an answer without
-recruiting a participant \citep{argyle2022,dillion2023,kim2023}. Most existing
+recruiting a participant \citep{argyle2023,aher2023multiple,dillion2023,kim2023,tourangeau2000survey}. Most existing
 work evaluates the model as a one-shot prompt. A profile is placed in the context
 window, a question is asked, and the answer is scored. This measures how well a
 model can role-play a respondent in a single turn. It does not test whether the
@@ -52,7 +52,7 @@ in the same way; adding the 2022 wave does not help.
 
 Work on LLMs as virtual respondents conditions models on demographic backstories
 and compares the resulting ``silicon samples'' with survey margins
-\citep{argyle2022,santurkar2023,dillion2023,kim2023}; later work extends the
+\citep{argyle2023,aher2023multiple,santurkar2023,dillion2023,kim2023}; later work extends the
 paradigm to random silicon sampling, cross-survey probing, multi-domain
 benchmarks, and specialization to survey distributions
 \citep{sun2024,zhou2024,zhao2025,cao2025}. Most of this work evaluates a one-shot
@@ -61,10 +61,10 @@ alignment. A parallel literature documents the limits: models exhibit human-like
 response biases but also systematic deviations \citep{tjuatja2023}, synthetic
 replacements can distort marginal and joint distributions \citep{bisbee2024},
 and the role of generative AI in social science remains contested
-\citep{grossmann2023,bail2024,ziems2024,ma2024}.
+\citep{grossmann2023,bail2024,ziems2024,ma2024,mou2024,anthis2025}.
 
 Persona fidelity and personalization have been studied extensively
-\citep{park2024,wang2024,xu2024,salemi2024,ng2024}; that work concerns
+\citep{park2023generative,park2024,wang2024,xu2024,salemi2024,ng2024}; that work concerns
 behavioural consistency within a conversation, whereas this thesis asks for
 statistical structure across a population. Fine-tuning has been used for
 preference alignment \citep{chu2023,zhao2023}; here the goal is competence

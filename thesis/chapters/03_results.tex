@@ -5,8 +5,10 @@
 
 The main in-distribution evaluation uses the respondent protocol restricted to
 the 2016, 2018, and 2019 waves: 2,726 rows from respondents never seen during
-training. Baselines are HistGB and Ridge on the same features, plus the base model
-with the same prompts but no fine-tuning. Confidence intervals are bootstrap 95\%
+training. Baselines are HistGB, a gradient-boosting model \citep{friedman2001gbm},
+and Ridge on the same features, plus the base model with the same prompts but no
+fine-tuning. Confidence intervals are bootstrap 95\% intervals based on the
+nonparametric bootstrap \citep{efron1993bootstrap}
 intervals over rows for MAE and correlation, and over respondent--year groups for
 choice.
 

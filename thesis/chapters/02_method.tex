@@ -4,9 +4,9 @@
 \section{Data Construction}
 
 The individual-level corpus is built from the ANES pilot waves of 2016, 2018,
-2019, 2020, 2022, and 2024 (132,948 rows, 3,165 respondents, 29 candidates). The
+2019, 2020, 2022, and 2024 (132,948 rows, 3,165 respondents, 29 candidates) \citep{anesdata}. The
 population-level component uses the GSS waves of 2004--2022, with 2024 as the
-target year. The raw ANES table contains two defects. Trailing-period duplicates
+target year \citep{gssdata}. The raw ANES table contains two defects. Trailing-period duplicates
 (\texttt{obama.} and \texttt{obama}, \texttt{hrc.} and \texttt{hrc}) produce
 8,165 rows; social-group thermometers (\texttt{black}, \texttt{white},
 \texttt{dem}, \texttt{rep}) stored in the candidate column produce 23,060 rows.
@@ -37,7 +37,7 @@ rows. R is the main in-distribution test; T measures the temporal boundary.
 
 \section{Fine-Tuning and Readouts}
 
-The model is Qwen3-8B. LoRA is applied to all attention and MLP projections with
+The model is Qwen3-8B \citep{yang2025qwen3}. LoRA \citep{hu2022lora} is applied to all attention and MLP projections with
 rank $r=8$, scaling $\alpha=32$, and dropout $0.1$. Training uses three epochs,
 learning rate $10^{-4}$, effective batch 16, and maximum length 512; the loss is
 on answer tokens only. This yields 21.8M trainable parameters (0.27\%), with
@@ -77,6 +77,6 @@ same setup with 15 iterative correction rounds.
 \section{Metrics}
 
 PAS reports MAE, RMSE, Pearson correlation, relaxed accuracy (same 20-point bin or
-error $\le10$), rating-induced choice accuracy, and ECE. FAS reports JS and
-symmetric KL on each marginal and pairwise joint, averaged over attributes or
-pairs.
+error $\le10$), rating-induced choice accuracy, and ECE. FAS reports
+Jensen--Shannon divergence \citep{lin1991js} and symmetric KL on each marginal
+and pairwise joint, averaged over attributes or pairs.

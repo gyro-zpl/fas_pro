@@ -24,7 +24,7 @@ mitigation is tested.
 
 \textbf{Pretraining contamination.} Qwen3-8B and the Llama-family models used for
 FAS may have seen ANES/GSS data, election coverage, or published poll results
-during pretraining. The in-distribution signal may therefore reflect memorization
+during pretraining \citep{bender2021stochastic}. The in-distribution signal may therefore reflect memorization
 as well as learned structure, and the 2024 collapse may be shaped by knowledge
 cutoff or contamination. The experiments cannot rule this out; the claims should
 be read as the behaviour of these models, not as learning from scratch.
