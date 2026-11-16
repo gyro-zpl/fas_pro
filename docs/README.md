@@ -3,7 +3,7 @@
 当前答辩修订入口：[答辩前论文问题优先级（P0 / P1 / P2）](02_计划与清单/答辩前论文问题优先级_2026-11-16.md)。
 
 > **毕设**：From Prompting to Social Cognition — PAS/FAS 框架的机制深化
-> **最后更新**：2026-11-05 17:35
+> **最后更新**：2026-11-12 22:30
 > **项目根目录**：`/home/jpzhao_team/cyyuan/FAS_PRO`
 
 ---
@@ -33,7 +33,8 @@
 - **已完成**：原始数据审计与清洗（132,948 → 98,159 行）；4 套候选人切分 + 2 套群体切分；HistGB / Ridge 表格基线；Qwen3-8B base 的 `test_t` zero-shot 评测。
 - **已完成**：补充实验（r026–r030）。recency + 2022 未缓解 2024 塌缩；A1/A2/A3 消融完成；base `test_r` 对照完成。
 - **进行中**：论文写作。已生成 `experiments/results/paper_tables/` 下 5 张表与 `docs/04_论文稿件/初稿提纲_2026-11-08.md`。
-- **主结果已出**：分布内 2016–2019 LLM MAE 20.85、corr 0.674、choice 0.542；GBM 20.58/0.707/0.516；2024 两者都塌缩（corr≈0）。详见 [论文可用结果](03_进度与执行/论文可用结果_2026-11-07.md)。
+- **主结果已出**：分布内 2016–2019（R 协议，unseen respondents）LLM MAE 21.35、corr 0.666、choice 0.525（tie-aware 0.481）；GBM 20.73/0.703/0.543；2024 两者都塌缩（corr≈0）。R 协议结果见 `experiments/results/paper_tables/r_protocol.md`；旧 t 协议见 [论文可用结果](03_进度与执行/论文可用结果_2026-11-07.md)。
+- **第二轮 review 已完成**：`03_进度与执行/论文评审_第二轮_2026-11-12.md`；已按其中 P0 修改正文（choice 口径、FAS prior-only 基线、数据审计表、方法描述、split 说明）。
 - **已完成**：`train_t` × 3 seeds（seed42/43/44）全部训练完成，最终 adapter 齐全。
 - **已停止**：base 模型 8 组评测（r003–r009）因 Qwen3-8B 关闭 thinking 时严重偏高分而中止；已有结果在 `experiments/runs.csv` 标记为 `done_legacy`，仅作参考。
 - **关键数字**：
@@ -42,8 +43,8 @@
   - Qwen3-8B base `test_t` zero-shot：MAE 46.20，choice 52.3%
   - **seed42 微调（100 条快速检查）**：`generate` MAE 34.56 / choice 0.64；`anchor` MAE 32.60 / choice 0.54；base 为 MAE 43.52、pred mean 86.7
 - **LaTeX 版本**：`doc_latex/main.pdf`（15 页，ACL 模板；源码 `doc_latex/main.tex`，已推送 GitHub）。
-- **英文毕业论文（UMAC 模板）**：`thesis/main.pdf`（**正文 10 页**，总 26 页；5 章 + 4 附录）。P0/P1 修改已完成，第二模型家族 DeepSeek-R1-Distill-Llama-8B 已补入 Appendix D。
-- **关键判断（11-07 更新）**：微调在 `test_r` 上与 HistGB 持平（23.81 vs 22.73），未显著超过；2024 完全塌缩（corr≈0，pred std 2–12）。论文主张定为：C1 在同分布年份（2016–2019）成立；C2 FAS 分布对齐；C3 时间边界（2020→2024 单调衰减）。
+- **英文毕业论文（UMAC 模板）**：`thesis/main.pdf`（**正文 13 页**，总 31 页；5 章 + 4 附录）。P0/P1 修改已完成，第二模型 checkpoint DeepSeek-R1-Distill-Llama-8B 已补入 Appendix D；FAS 已补 prior-only 基线（prior 优于 LLM）。
+- **关键判断（11-12 更新）**：微调在 `test_r` 上与 HistGB 持平，未显著超过；2024 完全塌缩（corr≈0，pred std 2–12）。论文主张定为：C1 在同分布年份（2016–2019）成立（row-level）；C2 FAS 中 LLM 接近但不超过重建 prior；C3 时间边界（2020→2024 单调衰减）。第二轮 review 见 `03_进度与执行/论文评审_第二轮_2026-11-12.md`。
 - **阻塞 / 已定决策**：Llama-3.1-8B 权重缺失，默认底座改为 Qwen3-8B；群体任务降为附录；配额退火不进正文。
 
 **Gate 状态**

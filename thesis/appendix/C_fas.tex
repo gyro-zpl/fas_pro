@@ -13,16 +13,18 @@ Coverage is the fraction of the 400 requested rows returned.}
 \toprule
 Config & Run & $n$ & Coverage & Marginal JS & Joint JS \\
 \midrule
-\multirow{6}{*}{EDC} & Base & 400 & 1.000 & 0.0552 & 0.1181 \\
+\multirow{7}{*}{EDC} & Prior (no LLM) & 400 & 1.000 & \textbf{0.0004} & \textbf{0.0076} \\
+ & Base & 400 & 1.000 & 0.0552 & 0.1181 \\
  & SFT & 381 & 0.953 & 0.0048 & 0.0160 \\
- & SFT (v3) & 400 & 1.000 & \textbf{0.0040} & 0.0215 \\
+ & SFT (v3) & 400 & 1.000 & 0.0040 & 0.0215 \\
  & RAG & 376 & 0.940 & 0.0473 & 0.1096 \\
  & RAG + SFT & 381 & 0.953 & 0.0054 & 0.0176 \\
  & Quota & 395 & 0.988 & 0.0091 & 0.0216 \\
 \midrule
-\multirow{6}{*}{EHC} & Base & 351 & 0.877 & 0.0319 & 0.1001 \\
+\multirow{7}{*}{EHC} & Prior (no LLM) & 400 & 1.000 & \textbf{0.0011} & \textbf{0.0225} \\
+ & Base & 351 & 0.877 & 0.0319 & 0.1001 \\
  & SFT & 400 & 1.000 & 0.0167 & 0.0470 \\
- & SFT (v3) & 400 & 1.000 & \textbf{0.0077} & \textbf{0.0363} \\
+ & SFT (v3) & 400 & 1.000 & 0.0077 & 0.0363 \\
  & RAG & 379 & 0.948 & 0.0404 & 0.1095 \\
  & RAG + SFT & 380 & 0.950 & 0.0152 & 0.0427 \\
  & Quota & 400 & 1.000 & 0.0175 & 0.0522 \\
@@ -40,15 +42,18 @@ Config & Run & $n$ & Coverage & Marginal JS & Joint JS \\
 \toprule
 Config & Run & Marginal JS [95\% CI] & Joint JS [95\% CI] \\
 \midrule
-EDC & Base & 0.0552 [0.0476, 0.0644] & 0.1181 [0.1035, 0.1371] \\
+EDC & Prior (no LLM) & 0.0004 [0.0002, 0.0023] & 0.0076 [0.0070, 0.0141] \\
+ & Base & 0.0552 [0.0476, 0.0644] & 0.1181 [0.1035, 0.1371] \\
  & SFT & 0.0048 [0.0029, 0.0089] & 0.0160 [0.0139, 0.0247] \\
  & SFT-v3 & 0.0040 [0.0022, 0.0077] & 0.0215 [0.0181, 0.0305] \\
-EHC & Base & 0.0319 [0.0260, 0.0400] & 0.1001 [0.0874, 0.1188] \\
+EHC & Prior (no LLM) & 0.0011 [0.0006, 0.0036] & 0.0225 [0.0192, 0.0308] \\
+ & Base & 0.0319 [0.0260, 0.0400] & 0.1001 [0.0874, 0.1188] \\
  & SFT & 0.0167 [0.0130, 0.0229] & 0.0470 [0.0413, 0.0587] \\
  & SFT-v3 & 0.0077 [0.0052, 0.0123] & 0.0363 [0.0332, 0.0458] \\
 \bottomrule
 \end{tabular}}
-\caption{Bootstrap 95\% CIs from 1,000 resamples of the generated rows.}
+\caption{Bootstrap 95\% CIs from 1,000 resamples of the generated or
+prior-sampled rows. The empirical 2024 sample is treated as fixed.}
 \label{tab:fas_ci}
 \end{table}
 
@@ -88,14 +93,18 @@ rows, one per synthetic respondent.
 \toprule
 Parameter & Value \\
 \midrule
-Base model & Qwen3-8B \\
+PAS base model & Qwen3-8B (thinking disabled) \\
+FAS base model & Llama-family 8B (\texttt{llama3:8b}) \\
+FAS SFT model & GSS fine-tuned Llama-family 8B (\texttt{llama-gss-v3:8B}) \\
 LoRA rank / alpha / dropout & 8 / 32 / 0.1 \\
 Epochs & 3 \\
 Learning rate & $10^{-4}$ \\
 Effective batch size & 16 \\
 Maximum sequence length & 512 \\
 Seeds & 42, 43, 44 \\
-IPF iterations & 800 \\
+IPF iterations (SFT data) & 300 (marginals + B--C table) \\
+IPF iterations (quota) & 800 (all pairwise tables) \\
+Laplace smoothing & $\alpha=10^{-6}$ \\
 FAS target samples & 400 \\
 \bottomrule
 \end{tabular}

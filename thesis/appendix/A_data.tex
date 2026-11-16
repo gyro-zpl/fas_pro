@@ -19,13 +19,19 @@ traced back to the raw ANES table.
 Item & Count \\
 \midrule
 Raw rows & 132,948 \\
-Trailing-period duplicate rows & 8,165 \\
 Group targets mixed into candidates & 23,060 \\
 Missing or out-of-range scores & 3,588 \\
 Duplicate rows removed after normalization & 8,141 \\
 Clean rows & 98,159 \\
 \bottomrule
 \end{tabular}
+\par\smallskip\footnotesize
+Rows with trailing-dot candidate names: 8,165; 8,141 of them become duplicates
+after normalization and are removed, leaving 24 unique rows. The raw audit flags
+1,550 missing and 2,106 out-of-range scores; 68 of these overlap with
+group-target rows, so the post-filter bad-score count is 3,588. The removals are
+sequential in the order group targets, bad scores, duplicates:
+$132{,}948 - 23{,}060 - 3{,}588 - 8{,}141 = 98{,}159$.
 \end{table}
 
 \section{Splits}
@@ -40,14 +46,20 @@ across each other; within each protocol the splits are disjoint.}
 \toprule
 Split & Years & Rows & Respondents \\
 \midrule
-\texttt{train\_t} & 2016--2020 & 6,516 & all \\
-\texttt{val\_t} & 2022 & 2,501 & sampled \\
+\texttt{train\_t} & 2016--2020 & 6,516 & 2,720 \\
+\texttt{val\_t} & 2022 & 2,501 & 1,251 \\
 \texttt{test\_t} & 2024 & 3,421 & 1,712 \\
-\texttt{train\_r} & 2016--2020 & 5,094 & 80\% \\
+\texttt{train\_r} & 2016--2020 & 5,094 & 2,131 \\
 \texttt{test\_r} & 2016--2022 & 6,014 & 192 \\
 \texttt{test\_tr} & 2024 & 226 & 113 \\
 \bottomrule
 \end{tabular}
+\par\smallskip\footnotesize
+\texttt{train\_r} is the sampled pool restricted to the 80\% non-test respondents
+(2,131 of 3,165 respondents, 67\%); \texttt{test\_r} samples whole respondents
+from the 20\% hash holdout up to 6,000 rows, yielding 192 respondents. The main
+model is trained on \texttt{train\_t}, so the \texttt{test\_r} evaluation is
+row-level rather than respondent-disjoint (Section~\ref{ch:conclusion}).
 \end{table}
 
 \section{Sampling Strategies}

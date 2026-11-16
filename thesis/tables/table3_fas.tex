@@ -7,13 +7,18 @@
 \toprule
 Config & Run & $n$ & Marginal JS & Joint JS \\
 \midrule
-\multirow{3}{*}{EDC} & Base & 400 & 0.0552 & 0.1181 \\
+\multirow{4}{*}{EDC} & Prior (no LLM) & 400 & \textbf{0.0004} & \textbf{0.0076} \\
+ & Base & 400 & 0.0552 & 0.1181 \\
  & SFT & 381 & 0.0048 & 0.0160 \\
- & SFT (v3) & 400 & \textbf{0.0040} & 0.0215 \\
+ & SFT (v3) & 400 & 0.0040 & 0.0215 \\
 \midrule
-\multirow{3}{*}{EHC} & Base & 351 & 0.0319 & 0.1001 \\
+\multirow{4}{*}{EHC} & Prior (no LLM) & 400 & \textbf{0.0011} & \textbf{0.0225} \\
+ & Base & 351 & 0.0319 & 0.1001 \\
  & SFT & 400 & 0.0167 & 0.0470 \\
- & SFT (v3) & 400 & \textbf{0.0077} & \textbf{0.0363} \\
+ & SFT (v3) & 400 & 0.0077 & 0.0363 \\
 \bottomrule
 \end{tabular}
+\par\smallskip\footnotesize
+Prior samples 400 rows directly from the reconstructed joint $Q^{\ast}$ without a
+language model.
 \end{table}

@@ -29,12 +29,15 @@ most evaluations treat surveys as one-shot prompting tasks. We present a
 data-centric pipeline that reconstructs voter--candidate interactions from
 ANES, aligns a compact 8B model with survey distributions via LoRA, and
 evaluates both individual-level prediction and population-level simulation. On
-unseen respondents in the same era, the fine-tuned model reaches an MAE of
-20.84, a correlation of 0.679, and a choice accuracy of 0.518 against a chance
-level of 0.163; a gradient-boosted baseline on the same features reaches 20.58,
-0.714, and 0.534, and paired bootstrap shows no significant MAE or choice
-difference. On GSS policy attitudes, fine-tuning reduces marginal and joint
-Jensen--Shannon divergence by 91\% and 86\% on the EDC configuration. We then
+unseen respondents in the 2016--2019 waves, the fine-tuned model reaches an MAE
+of 21.35, a correlation of 0.666, and a choice accuracy of 0.525 against a
+chance level of 0.163; a gradient-boosted baseline on the same features reaches
+20.73, 0.703, and 0.543. The MAE difference is small and seed-dependent, the
+baseline has a higher correlation, and tie-aware choice favors the baseline. On
+GSS policy attitudes, fine-tuning moves the model toward a reconstructed joint
+distribution, but direct sampling from that prior is more accurate: the prior
+reaches marginal and joint Jensen--Shannon divergences of 0.0004 and 0.0076 on
+EDC, versus 0.0040 and 0.0215 for the best fine-tuned run. We then
 show a sharp temporal boundary: across the 2019--2024 waves, individual-level
 correlation decays from 0.722 to near zero, and both the LLM and the tabular
 baseline collapse in 2024. Structured alignment is necessary but not sufficient
@@ -44,7 +47,6 @@ first-class evaluation axis.
 
 \input{body_final}
 
-\bibliographystyle{acl_natbib}
 \bibliography{references}
 
 \end{document}

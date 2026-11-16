@@ -14,13 +14,13 @@
 
 | 层面 | 结果 |
 |---|---|
-| PAS 分布内（2016–2019，陌生人） | 微调 Qwen3-8B：MAE **20.84**、corr **0.679**、choice **0.518**（chance 0.163）；HistGB：20.58 / 0.714 / 0.534；配对 bootstrap 显示 MAE/choice 差异不显著，GBM corr 更高 |
-| PAS 微调必要性 | base Qwen：MAE 24.16、corr 0.593；微调相对 base 的 ΔMAE **−2.98**、Δcorr **+0.082**、Δchoice **+0.081** |
-| FAS（GSS） | EDC 边际/联合 JS 降低 **91% / 86%**（全覆盖 v3：93% / 82%）；EHC：76% / 64% |
+| PAS 分布内（2016–2019，unseen respondents） | 微调 Qwen3-8B：MAE **21.35**、corr **0.666**、choice **0.525**（tie-aware 0.481；chance 0.163）；HistGB：20.73 / 0.703 / 0.543；MAE 差异小且 seed-dependent，GBM corr 更高、tie-aware choice 更优 |
+| PAS 微调必要性 | base Qwen：MAE 24.15、corr 0.594；微调相对 base 的 ΔMAE **−2.5～−3.0**、Δcorr **+0.07**、Δchoice **+0.01～+0.09**（seed-dependent） |
+| FAS（GSS） | **Prior-only 优于 LLM**：EDC 边际/联合 JS **0.0004 / 0.0076**，EHC **0.0011 / 0.0225**；LLM v3 为 EDC 0.0040 / 0.0215、EHC 0.0077 / 0.0363。SFT 让 LLM 接近 prior，但没有超过它 |
 | 时间边界 | LLM corr：2019 **0.722** → 2020 0.478 → 2022 0.408 → 2024 **−0.056**；GBM 同样塌缩（−0.008）；recency + 2022 不缓解 |
-| 数据审计 | 132,948 → **98,159** 行；尾点重复名 8,165、群体混入 23,060、异常评分 3,588 |
+| 数据审计 | 132,948 → **98,159** 行；尾点命名 8,165（其中 8,141 行为重复行）、群体混入 23,060、异常评分 3,588 |
 
-**一句话**：结构化对齐是必要的，但不是充分的——它能让 8B 模型在同分布陌生人上与强 GBM 持平，并在 EDC 上把分布差异降低约 90%，但无法阻止四年后的时间塌缩。
+**一句话**：结构化对齐是必要的，但不是充分的——它能让 8B 模型在同分布 unseen respondents 上与强 GBM 基本持平（略差），并让 LLM 接近重建的 prior，但 prior 本身更好；四年后两者仍然塌缩。
 
 ---
 
@@ -47,7 +47,7 @@
 │   ├── 03_进度与执行/     # 时间线、执行记录、运行快照、最终总结
 │   └── 04_论文稿件/       # 完整初稿、分章 md、图
 ├── doc_latex/             # ACL LaTeX 版本（main.tex / main.pdf / references.bib）
-├── thesis/                # UMAC 英文毕业论文（main.tex / main.pdf，正文 10 页）
+├── thesis/                # UMAC 英文毕业论文（main.tex / main.pdf，正文 13 页）
 └── environment.yml
 ```
 
@@ -122,6 +122,7 @@ python -m experiments.eval.make_figures
 
 - `doc_latex/main.tex`：ACL 模板（`[review]` 模式）
 - `doc_latex/main.pdf`：已编译版本（15 页）
+- **注意**：`doc_latex/` 已按 R 协议 + FAS prior 基线同步（`body_final.tex` 与 `tables/` 直接修改），并重新生成 `fas_pro_overleaf_acl.zip`；但 `docs/04_论文稿件/chapters/` 仍是 2026-11-09 快照，重跑 `build_md.py` 会覆盖 `body_final.tex`，需先同步 chapters。
 - `doc_latex/references.bib`：参考文献
 - `doc_latex/tables/`、`doc_latex/figures/`：表格与图
 - 编译：`cd doc_latex && tectonic main.tex`（或 `pdflatex` + `bibtex`）
@@ -130,8 +131,8 @@ python -m experiments.eval.make_figures
 ### 英文毕业论文（UMAC 模板）
 
 - `thesis/main.tex`：UMAC FST 硕士论文模板（A4、12pt Times、1.5 倍行距）
-- `thesis/main.pdf`：已编译版本（**正文 10 页**，总 26 页）
-- `thesis/chapters/`：5 章正文；`thesis/appendix/`：4 个附录（含第二模型家族 DeepSeek-R1-Distill-Llama-8B）
+- `thesis/main.pdf`：已编译版本（**正文 13 页**，总 31 页）
+- `thesis/chapters/`：5 章正文；`thesis/appendix/`：4 个附录（含第二模型 checkpoint DeepSeek-R1-Distill-Llama-8B）
 - 编译：`cd thesis && tectonic main.tex`
 - 作者：CHENYU YUAN；导师：PENGYANG WANG；日期：April 2027
 

@@ -3,19 +3,28 @@
 
 \section{Limitations}
 
-\textbf{Model and survey coverage.} The main results use Qwen3-8B (three seeds);
-a second family, DeepSeek-R1-Distill-Llama-8B, was evaluated with one seed
-(Appendix~\ref{app:second}) and shows the same qualitative pattern. A broader
-multi-family study remains future work. Both ANES and GSS are U.S. surveys;
-cross-national, non-English, and non-political domains are not tested.
+\textbf{Model and survey coverage.} The main PAS results use Qwen3-8B (three
+seeds); the population-level FAS experiments use an 8B Llama-family model
+(Section~\ref{ch:method}). A second PAS checkpoint,
+DeepSeek-R1-Distill-Llama-8B, was evaluated with one seed
+(Appendix~\ref{app:second}) and shows the same qualitative pattern; it shares the
+Llama-3.1 architecture, so it is a second checkpoint rather than an independent
+family. A broader multi-family study remains future work. Both ANES and GSS are
+U.S. surveys; cross-national, non-English, and non-political domains are not
+tested.
 
 \textbf{Group attitudes.} A nine-group corpus was constructed but not evaluated;
 coverage is uneven across waves (three groups in 2016, nine in 2020, two in 2022),
 so the claims are restricted to candidate PAS and GSS FAS.
 
 \textbf{Panel and choice.} ANES is a panel with no test-only respondents in
-2022/2024, and the T$\times$R cell is 226 rows. Choice is rating-induced, not
-observed vote.
+2022/2024, and the T$\times$R cell is 226 rows. The main in-distribution
+evaluation uses the respondent-disjoint protocol: the models are trained on
+\texttt{train\_r} and evaluated on \texttt{test\_r}, whose respondent sets do not
+overlap. The temporal analysis uses the separate T protocol, where the split is
+by year rather than by respondent. Choice is rating-induced, not observed vote;
+the fine-tuned models emit integer ratings with many ties, so tie-aware scoring
+is reported alongside the standard argmax accuracy.
 
 \textbf{Ablations and FAS.} Ablations use one seed; effects are small. FAS covers
 two configurations; EHC is weaker and its joint symmetric KL moves opposite for
@@ -30,9 +39,13 @@ cutoff or contamination. The experiments cannot rule this out; the claims should
 be read as the behaviour of these models, not as learning from scratch.
 
 \textbf{FAS uncertainty.} FAS metrics are computed on a single 400-row generation
-per condition; no confidence intervals or repeated generations are reported.
-Differences between adjacent conditions (e.g., 91\% vs 93\%) should therefore be
-read as descriptive.
+per condition. The reported 95\% CIs resample these generated rows; they quantify
+row-sampling variability but not generation-to-generation variability, because
+each condition was generated once. They also treat the empirical 2024 sample as
+fixed and therefore do not include target-sampling uncertainty. Differences
+between adjacent LLM conditions (e.g., 91\% vs 93\%) should be read as
+descriptive, and the prior-only baseline is more accurate than every LLM
+condition.
 
 \textbf{Ethics.} Synthetic respondents are not a substitute for real participants.
 A model trained on historical data can reproduce and amplify its biases, and the
@@ -47,25 +60,34 @@ This thesis presented a data-centric pipeline for LLM survey simulation and
 evaluated it at the individual, population, and temporal levels. The pipeline
 reconstructs interaction-level ANES data, decouples candidate identity from
 attributes, encodes partisan and ideological structure as explicit features,
-samples the training pool to cover tails and conflict cases, and fine-tunes a
-compact 8B model with LoRA; the same pipeline reconstructs a GSS joint
+samples the training pool to cover tails and conflict cases, and fine-tunes
+compact 8B models with LoRA; the same pipeline reconstructs a GSS joint
 distribution and fine-tunes a model to generate a synthetic population.
 
-The individual-level result is deliberately modest. On unseen respondents in the
-same era, the fine-tuned model reaches an MAE of 20.84, a correlation of 0.679,
-and a choice accuracy of 0.518 against chance 0.163. A gradient-boosted baseline
-reaches 20.58, 0.714, and 0.534, and paired bootstrap shows no significant MAE or
-choice difference. The value of the language model is not superior point
-prediction; it is a unified interface that produces a rating distribution and
-extends to population-level generation. The population-level result is stronger
-for EDC: fine-tuning reduces marginal and joint JS divergence by 91\% and 86\%
-(93\% and 82\% for the fully covered run).
+The individual-level result is deliberately modest. On unseen respondents in
+the same era, the fine-tuned model reaches an MAE of 21.35, a correlation of
+0.666, and a choice accuracy of 0.525 across seeds against chance 0.163. A
+gradient-boosted baseline reaches 20.73, 0.703, and 0.543; the MAE difference is
+small and seed-dependent, and the baseline has a higher correlation and a
+tie-aware choice advantage. The value of the language model is not superior
+point prediction; it is a unified interface that produces a rating distribution
+and extends to population-level generation. The population-level
+result is a boundary rather than a win. Fine-tuning moves the LLM toward the
+reconstructed joint distribution (EDC marginal/joint JS 0.0048/0.0160 for direct
+SFT; 0.0040/0.0215 for v3), but direct sampling from that prior is more accurate
+(0.0004/0.0076). The LLM approaches the prior without surpassing it; its value
+must lie in conditional generation or natural-language control, which the current
+evaluation does not isolate.
 
 The temporal result is the most important negative finding. Individual-level
 correlation falls from 0.722 in 2019 to $-0.056$ in 2024, and the tabular baseline
-collapses in the same way. Adding the most recent wave does not help. Structured
-alignment is necessary but not sufficient for temporal generalization, and
-temporal shift should be treated as a first-class evaluation axis. Future work
-should replicate the pipeline on a second model family, extend it to
-cross-national and group-attitude data, develop temporal adaptation methods, and
-validate rating-induced choice against observed vote choice.
+collapses in the same way. Adding the most recent wave does not help. Across the
+three levels, structured alignment makes the LLM competitive, but it does not
+make it the best tool: a tabular baseline matches it at the individual level, a
+classical prior beats it at the population level, and both the LLM and the
+baseline fail four years later. Structured alignment is necessary but not
+sufficient for temporal generalization, and temporal shift should be treated as
+a first-class evaluation axis. Future work should replicate the pipeline on a
+broader set of model families, extend it to cross-national and group-attitude
+data, develop temporal adaptation methods, and validate rating-induced choice
+against observed vote choice.

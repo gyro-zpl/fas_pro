@@ -1,8 +1,9 @@
-\chapter{Second Model Family}
+\chapter{Second Model Checkpoint}
 \label{app:second}
 
-To test whether the results are specific to Qwen3-8B, a second family,
-DeepSeek-R1-Distill-Llama-8B (8B) \citep{deepseek2025r1}, was fine-tuned with the same data, LoRA
+To test whether the results are specific to Qwen3-8B, a second checkpoint,
+DeepSeek-R1-Distill-Llama-8B (8B) \citep{deepseek2025r1}, was fine-tuned with the
+same data, LoRA
 configuration, and evaluation protocol (one seed). The model was trained to emit
 an empty thinking block followed by the score, because the base model otherwise
 produces long rationales and does not answer within a short generation budget.
@@ -19,18 +20,21 @@ the temporal test. Choice chance is 0.163 in-distribution and 0.500 in 2024.}
 \cmidrule(lr){2-4}\cmidrule(lr){5-7}
 Model & MAE & corr & choice & MAE & corr & choice \\
 \midrule
-Qwen3-8B (3 seeds) & 20.84 & 0.679 & 0.518 & 36.47 & $-0.029$ & 0.527 \\
-DeepSeek-R1-Distill (1 seed) & 22.66 & 0.635 & 0.548 & 41.44 & $-0.017$ & 0.523 \\
-HistGB & 20.58 & 0.714 & 0.534 & 35.06 & $-0.030$ & 0.456 \\
+Qwen3-8B (3 seeds) & 21.35 & 0.666 & 0.525 & 36.90 & $-0.037$ & 0.524 \\
+DeepSeek-R1-Distill (1 seed) & 21.37 & 0.665 & 0.572 & 38.95 & $-0.040$ & 0.523 \\
+HistGB & 20.73 & 0.703 & 0.543 & 35.11 & $+0.015$ & 0.485 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-The qualitative pattern is the same for both families: there is real
-in-distribution signal (correlation 0.635 for DeepSeek versus 0.679 for Qwen),
-and the 2024 correlation collapses to near zero ($-0.017$ versus $-0.029$). The
-Qwen model has a lower MAE and a higher correlation; the DeepSeek model has a
-slightly higher choice accuracy. With one seed for the second family, these
-differences should be read as descriptive. The result supports the claim that the
-in-distribution signal and the temporal failure are not specific to a single
-model family, while a broader multi-family study remains future work.
+The qualitative pattern is the same for both checkpoints: there is real
+in-distribution signal (correlation 0.665 for DeepSeek versus 0.666 for Qwen),
+and the 2024 correlation collapses to near zero ($-0.040$ versus $-0.037$).
+Qwen has a slightly lower MAE and a slightly higher correlation; DeepSeek has a
+higher choice accuracy (0.572 versus 0.525). With one seed for the second
+checkpoint, these differences should be read as descriptive. On the strict
+T$\times$R cell (226 rows, 113 respondents), the Qwen correlations are $-0.151$,
+$-0.111$, and $-0.091$ and DeepSeek is $-0.121$, while HistGB is $+0.104$; the
+cell is small, so we do not rank the models there. The result supports the claim
+that the in-distribution signal and the temporal failure are not specific to
+Qwen3-8B, while a broader multi-family study remains future work.

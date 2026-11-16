@@ -4,71 +4,100 @@
 \section{Individual-Level Results}
 
 The main in-distribution evaluation uses the respondent protocol restricted to
-the 2016, 2018, and 2019 waves: 2,726 rows from respondents never seen during
-training. Baselines are HistGB, a gradient-boosting model \citep{friedman2001gbm},
-and Ridge on the same features, plus the base model with the same prompts but no
-fine-tuning. Confidence intervals are bootstrap 95\% intervals based on the
-nonparametric bootstrap \citep{efron1993bootstrap}
-intervals over rows for MAE and correlation, and over respondent--year groups for
-choice.
+the 2016, 2018, and 2019 waves: 2,726 rating rows from the 20\% hash holdout,
+whose respondents do not appear in \texttt{train\_r}. Baselines are HistGB, a
+gradient-boosting model \citep{friedman2001gbm}, and Ridge trained on
+\texttt{train\_r} with the same features, plus the base model with the same
+prompts but no fine-tuning. Confidence intervals are bootstrap 95\% intervals
+based on the nonparametric bootstrap \citep{efron1993bootstrap}, over rows for
+MAE and correlation and over respondent--year groups for choice.
 
-Table~\ref{tab:pas} reports the result. The fine-tuned LLM reaches an MAE of 20.84
-[20.38, 21.30], a correlation of 0.679 [0.666, 0.692], and a choice accuracy of
-0.518 [0.481, 0.552] against chance 0.163. HistGB reaches 20.58 [20.01, 21.12],
-0.714 [0.696, 0.733], and 0.534 [0.498, 0.569]; Ridge is weaker at 22.47, 0.655,
-and 0.484. A second family, DeepSeek-R1-Distill-Llama-8B, trained under the
-same recipe reaches 22.66, 0.635, and 0.548 (Appendix~\ref{app:second}); the
-in-distribution signal is therefore not specific to Qwen3-8B.
+Table~\ref{tab:pas} reports the result. The fine-tuned LLM reaches an MAE of 21.35
+[20.87, 21.83], a correlation of 0.666 [0.652, 0.680], and a choice accuracy of
+0.525 $\pm$ 0.033 across seeds (range 0.490--0.569; tie-aware scoring gives
+0.481) against chance 0.163. HistGB reaches 20.73 [20.16, 21.26], 0.703 [0.684,
+0.724], and 0.543; Ridge is weaker at 22.86, 0.639, and 0.450. A
+second checkpoint, DeepSeek-R1-Distill-Llama-8B, trained under the same recipe
+reaches 21.37, 0.665, and 0.572 (Appendix~\ref{app:second}); the in-distribution
+signal is therefore not specific to Qwen3-8B.
 
 \input{tables/table2_pas}
 
 The honest reading is that the LLM is competitive with, but not superior to, a
 strong tabular baseline. A paired bootstrap over the same rows gives an
-LLM--GBM MAE difference of $+0.60$ $[-0.19,+1.42]$ for seed 42 (seeds 43 and 44:
-$+0.02$ and $+0.19$), and a choice difference of $+0.026$ $[-0.007,+0.062]$; both
-intervals include zero. The correlation difference is $-0.039$ $[-0.056,-0.021]$,
-consistently negative across seeds. Fine-tuning, by contrast, improves MAE by
-2.98 $[2.10,3.82]$ relative to the base model, with a correlation gain of $+0.082$
-and a choice gain of $+0.081$. The language model therefore adds a unified
-interface and a rating distribution, not superior point prediction.
+LLM--GBM MAE difference of $+0.59$ $[-0.17,+1.32]$ for seed 42, $+0.42$
+$[-0.34,+1.19]$ for seed 43, and $+0.89$ $[+0.10,+1.67]$ for seed 44; the
+difference is small and only the seed-44 interval excludes zero, with the
+baseline never worse. The argmax choice difference is mixed ($+0.026$
+$[-0.005,+0.057]$, $-0.028$ $[-0.067,+0.010]$, and $-0.052$
+$[-0.103,-0.002]$), while tie-aware choice consistently favors the baseline
+($-0.057$ $[-0.092,-0.023]$, $-0.082$ $[-0.122,-0.040]$, and $-0.083$
+$[-0.134,-0.036]$). The correlation difference is consistently negative
+($-0.040$, $-0.033$, and $-0.039$). A respondent-level cluster bootstrap on
+seed 42 widens the MAE interval from $[-0.17,+1.32]$ to $[-0.40,+1.61]$ and
+keeps the correlation interval negative ($[-0.062,-0.019]$); the conclusions are
+unchanged. Fine-tuning, by contrast, improves MAE by 2.5--3.0 relative to the
+base model (seed 42: $-2.85$ $[-3.74,-2.03]$; seed 43: $-3.01$
+$[-3.95,-2.08]$; seed 44: $-2.54$ $[-3.50,-1.64]$), with a correlation gain of
+about $+0.07$ and a choice gain of $+0.01$ to $+0.09$ depending on seed. The
+language model therefore adds a unified interface and a rating distribution, not
+superior point prediction.
 
 Predictions are correlated with the truth but compressed toward the middle of the
-scale, which motivates reporting prediction spread alongside calibration. The
-per-year breakdown is reported in Chapter~\ref{ch:temporal}.
+scale: on the in-distribution rows the LLM's prediction standard deviation is
+about 40, versus 24 for HistGB. The per-year breakdown and the 2024 collapse are
+reported in Chapter~\ref{ch:temporal}.
 
 \section{Population-Level Results}
 
 For each GSS configuration (EDC and EHC), the 2024 joint distribution is
-reconstructed from eight historical waves, 400 synthetic respondents are sampled,
-and the sample is compared with the empirical 2024 distribution. JS divergence is
-reported on the three marginals and the three pairwise joints; lower is better.
+reconstructed from eight historical waves, and 400 synthetic respondents are
+sampled and compared with the empirical 2024 sample (1,601 for EDC, 1,552 for
+EHC). JS divergence is reported on the three marginals and the three pairwise
+joints; lower is better. As a reference, we also draw 400 rows directly from the
+reconstructed joint $Q^{\ast}$ without a language model.
 
 \input{tables/table3_fas}
 
-On EDC, the base model produces a marginal JS of 0.0552 and a joint JS of 0.1181.
-Direct SFT reduces these to 0.0048 and 0.0160 (91\% and 86\%), and the best run
-(v3) reaches 0.0040 and 0.0215 (93\% and 82\%). On EHC, the base model starts at
-0.0319 and 0.1001; direct SFT reaches 0.0167 and 0.0470 (48\% and 53\%), and v3
-reaches 0.0077 and 0.0363 (76\% and 64\%). EDC therefore supports the claim that
-fine-tuning substantially improves population-level alignment, including pairwise
-structure. EHC is weaker, and the ``80\% reduction'' claim is scoped to EDC.
-Bootstrap 95\% CIs over the generated rows separate the base model from v3 on
-both configurations (EDC marginal 0.0552 [0.0476, 0.0644] vs 0.0040 [0.0022,
-0.0077]; EHC joint 0.1001 [0.0874, 0.1188] vs 0.0363 [0.0332, 0.0458]); the SFT
-and v3 intervals overlap, so the two SFT runs are not ranked. The full table is
-in Appendix~\ref{app:fas}.
+Direct sampling from $Q^{\ast}$ reaches a marginal JS of 0.0004 [0.0002, 0.0023] and
+a joint JS of 0.0076 [0.0070, 0.0141] on EDC; on EHC it reaches 0.0011 [0.0006,
+0.0036] and 0.0225 [0.0192, 0.0308]. These are lower than every LLM condition on
+both metrics. The prior is therefore the strongest distributional baseline in
+this task. The result is stable across sampling seeds: over repeated 400-row
+draws, EDC marginal/joint JS ranges 0.0004--0.0012 / 0.0064--0.0076 and EHC
+0.0011--0.0028 / 0.0190--0.0225.
+
+The LLM results should be read against that baseline. On EDC, the base model
+produces 0.0552/0.1181; direct SFT reduces these to 0.0048/0.0160 (91\%/86\%), and
+v3 reaches 0.0040/0.0215 (93\%/82\%). On EHC, the base model starts at
+0.0319/0.1001; direct SFT reaches 0.0167/0.0470 (48\%/53\%), and v3 reaches
+0.0077/0.0363 (76\%/64\%). Fine-tuning therefore moves the LLM substantially
+toward $Q^{\ast}$, but it does not surpass $Q^{\ast}$: the prior remains better on both
+marginal and joint JS in both configurations. EDC is the stronger configuration
+for the LLM; EHC is weaker, and the large-reduction claim is scoped to the
+LLM-versus-base comparison.
+
+Bootstrap 95\% CIs over the generated or prior-sampled rows separate the base
+model from v3 on both configurations (EDC marginal 0.0552 [0.0476, 0.0644] vs 0.0040 [0.0022,
+0.0077]; EHC joint 0.1001 [0.0874, 0.1188] vs 0.0363 [0.0332, 0.0458]) and
+separate the prior from v3 on the joint metric (EDC 0.0076 [0.0070, 0.0141] vs
+0.0215 [0.0181, 0.0305]; EHC 0.0225 [0.0192, 0.0308] vs 0.0363 [0.0332,
+0.0458]). The SFT and v3 intervals overlap, so the two SFT runs are not ranked.
+The full table is in Appendix~\ref{app:fas}.
 
 Component analysis shows that RAG alone is close to the base model (EDC 0.0473,
-EHC 0.0404) and that RAG plus SFT performs like direct SFT. The gain comes from
-supervised exposure to the reconstructed distribution and the five task types,
-not from retrieval. Quota annealing (EDC 0.0091, EHC 0.0175) is worse than direct
-SFT and is not used.
+EHC 0.0404) and that RAG plus SFT performs like direct SFT. The movement
+toward $Q^{\ast}$ comes from supervised exposure to the reconstructed distribution
+and the five task types, not from retrieval. Quota annealing (EDC 0.0091, EHC
+0.0175) is worse than direct SFT; the quota run did not converge within 15
+rounds, so the comparison is descriptive.
 
 The base model returns 351 of 400 rows on EHC (coverage 0.877), while the SFT runs
 return 399--400. Charging every missing row as maximally wrong raises the base
 model's EHC marginal/joint JS from 0.0319/0.1001 to 0.1168/0.1850, while the
 fully covered v3 run stays at 0.0077/0.0363; on EDC, direct SFT's 0.0048/0.0160
 becomes 0.0377/0.0489, whereas v3 is unaffected at 0.0040/0.0215. The v3 run is
-therefore the cleanest headline result. On EHC the joint symmetric KL increases
-from 0.4289 to 0.5487 for direct SFT even though JS falls, so JS is the primary
-metric.
+therefore the cleanest LLM result. On EHC, direct SFT's joint symmetric KL
+increases from 0.4289 to 0.5487 even though JS falls, so we do not use it as the
+EHC headline; v3 improves both JS and KL (0.0363 and 0.3064 vs 0.1001 and
+0.4289), which is why v3 is the EHC reference run.

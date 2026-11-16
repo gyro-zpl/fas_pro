@@ -6,13 +6,17 @@
 The individual-level corpus is built from the ANES pilot waves of 2016, 2018,
 2019, 2020, 2022, and 2024 (132,948 rows, 3,165 respondents, 29 candidates) \citep{anesdata}. The
 population-level component uses the GSS waves of 2004--2022, with 2024 as the
-target year \citep{gssdata}. The raw ANES table contains two defects. Trailing-period duplicates
-(\texttt{obama.} and \texttt{obama}, \texttt{hrc.} and \texttt{hrc}) produce
-8,165 rows; social-group thermometers (\texttt{black}, \texttt{white},
-\texttt{dem}, \texttt{rep}) stored in the candidate column produce 23,060 rows.
-Names are normalized, candidate and group targets are separated, missing or
-out-of-range scores are removed (3,588), and duplicates are dropped (8,141). The
-clean candidate table contains 98,159 rows.
+target year \citep{gssdata}. The raw ANES table contains three data issues.
+First, 8,165 rows carry candidate names with a trailing period (\texttt{obama.}
+and \texttt{obama}, \texttt{hrc.} and \texttt{hrc}); after normalization, 8,141
+of them duplicate an existing row and are dropped, leaving 24 unique rows.
+Second, social-group thermometers (\texttt{black}, \texttt{white}, \texttt{dem},
+\texttt{rep}) stored in the candidate column produce 23,060 rows; these are
+separated into a group corpus. Third, missing or out-of-range scores are removed:
+the raw audit flags 1,550 missing and 2,106 out-of-range values, and 68 of these
+overlap with group-target rows, so 3,588 rows are removed after the group filter.
+The clean candidate table contains 98,159 rows (132,948 raw rows minus 23,060
+group targets, 3,588 bad scores, and 8,141 duplicates).
 
 Each observation is represented as a triple $(v_i,c_j,y_{ij}\mid t_i)$, where
 $v_i$ is the voter profile, $c_j$ the target, $y_{ij}\in[0,100]$ the thermometer,
@@ -31,14 +35,21 @@ ANES is a panel: 3,080 of 3,165 respondents appear in more than one wave, and
 there are no test-only respondents in 2022/2024, so a temporal split measures
 transfer to a later wave, not generalization to unseen individuals. The temporal
 protocol (T) trains on 2016--2020 (6,516 rows), validates on 2022 (2,501), and
-tests on 2024 (3,421). The respondent protocol (R) splits respondents 80/20 by
-hash (5,094 train, 6,014 test rows); the strict T$\times$R cell contains 226
-rows. R is the main in-distribution test; T measures the temporal boundary.
+tests on 2024 (3,421). The respondent protocol (R) holds out 20\% of respondents
+by a hash of their identifier and builds the training pool from the existing
+sampled pool restricted to the other 80\% (5,094 rows from 2,131 respondents);
+the test set samples whole respondents from the 20\% holdout up to 6,000 rows
+(6,014 rows from 192 respondents). The strict T$\times$R cell contains 226 rows.
+R is the main in-distribution test; the R models are trained on
+\texttt{train\_r} with three seeds and evaluated on \texttt{test\_r}, so the
+respondent sets are disjoint. T measures the temporal boundary with models
+trained on the full temporal pool.
 
 \section{Fine-Tuning and Readouts}
 
-The model is Qwen3-8B \citep{yang2025qwen3}. LoRA \citep{hu2022lora} is applied to all attention and MLP projections with
-rank $r=8$, scaling $\alpha=32$, and dropout $0.1$. Training uses three epochs,
+The model is Qwen3-8B \citep{yang2025qwen3} with thinking disabled. LoRA
+\citep{hu2022lora} is applied to all attention and MLP projections with rank
+$r=8$, scaling $\alpha=32$, and dropout $0.1$. Training uses three epochs,
 learning rate $10^{-4}$, effective batch 16, and maximum length 512; the loss is
 on answer tokens only. This yields 21.8M trainable parameters (0.27\%), with
 three seeds (42--44).
@@ -48,35 +59,44 @@ preserves individual variation and is the primary choice readout. \emph{Anchor
 likelihood} scores eleven anchors $a\in\{0,10,\dots,100\}$ by sequence
 log-probability, normalizes with a softmax, and reports expectation and argmax.
 Choice selects the highest-scoring candidate within each respondent--year group
-and is compared with the rating-induced choice and chance.
+and compares it with the ground-truth rating-induced choice and with chance.
 
 \section{Population-Level Pipeline}
 
-For full attribute simulation (FAS), every univariate and pairwise cell is
-extrapolated with a four-model ensemble: quadratic regression, LOESS with a
-tri-cube kernel, an exponential trend, and linear regression, weighted by 1.0,
-1.0, 0.6, and 0.8 and normalized by 3.4. The predicted marginals and pairwise
-tables are combined with iterative proportional fitting: starting from the
-independence approximation,
-multiplicative updates match each pairwise table and marginal, run for 800
-iterations, and are normalized with Laplace smoothing. The resulting joint
-distribution is used to generate five task types: batch generation (50\%),
-prior-constrained sampling (25\%), scenario variation (15\%), subgroup analysis
-(7\%), and iterative correction (3\%).
+For full attribute simulation (FAS), the three marginals and one pairwise table
+(B--C) are extrapolated with a four-model ensemble: quadratic regression, LOESS
+with a tri-cube kernel, an exponential trend, and linear regression, weighted by
+1.0, 1.0, 0.6, and 0.8 and normalized by 3.4. The predicted marginals and the
+B--C table are combined with iterative proportional fitting: starting from the
+independence approximation, multiplicative updates match the marginals and the
+B--C table, run for 300 iterations, and are normalized with Laplace smoothing
+($\alpha=10^{-6}$). The other two pairwise joints (A--B, A--C) are read out from
+the resulting joint. The quota condition uses a variant that matches all three
+pairwise tables for 800 iterations; it is not used for the SFT data. The
+resulting joint distribution is used to generate five task types: batch
+generation (50\%), prior-constrained sampling (25\%), scenario variation (15\%),
+subgroup analysis (7\%), and iterative correction (3\%).
 
 \paragraph{Generation setup.} All FAS samples were generated with the project's
 8B Llama-family models, served locally through an orchestration layer that routed
-each condition to the corresponding Ollama model. The SFT conditions used the GSS
-fine-tuned model; the base conditions used the base model, and retrieval was
-toggled between runs. Each run requested 20 rows per batch for 20 batches (400
-rows) in one conversation. Outputs were parsed as JSON arrays of three values in
-$\{1,2,3\}$; failed batches were skipped, explaining the 351--400 row counts.
-Decoding temperature was fixed across conditions. The quota condition used the
-same setup with 15 iterative correction rounds.
+each condition to the corresponding Ollama model. The local scripts use the
+Ollama tags \texttt{llama3:8b} for the base model and
+\texttt{llama-gss-v3:8B} for the GSS fine-tuned model; the orchestration app
+configuration fixes the decoding temperature, and the client does not override
+it. The SFT conditions used the GSS fine-tuned model; the base conditions used
+the base model, and retrieval was toggled between runs. Each run requested 20
+rows per batch for 20 batches (400 rows) in one conversation. Outputs were
+parsed as JSON arrays of three values in $\{1,2,3\}$; failed batches were
+skipped, explaining the 351--400 row counts. The quota condition used the same
+setup with 15 iterative correction rounds.
 
 \section{Metrics}
 
-PAS reports MAE, RMSE, Pearson correlation, relaxed accuracy (same 20-point bin or
-error $\le10$), rating-induced choice accuracy, and ECE. FAS reports
+PAS reports MAE, RMSE, Pearson correlation, relaxed accuracy (same 20-point bin
+or error $\le10$), rating-induced choice accuracy, and ECE; the main tables focus
+on MAE, correlation, and choice, and Appendix~\ref{app:results} reports the
+per-year breakdown and prediction spread. Choice is computed per seed and then
+averaged; because the model emits integer ratings, ties are common, and a
+tie-aware variant is reported in Section~\ref{ch:results}. FAS reports
 Jensen--Shannon divergence \citep{lin1991js} and symmetric KL on each marginal
 and pairwise joint, averaged over attributes or pairs.

@@ -7,11 +7,15 @@
 \toprule
 Model & MAE & Correlation & Choice \\
 \midrule
-Fine-tuned LLM (3 seeds) & 20.84 & 0.679 & 0.518 \\
-HistGB & 20.58 & \textbf{0.714} & 0.534 \\
-Ridge & 22.47 & 0.655 & 0.484 \\
-Base LLM & 24.16 & 0.593 & 0.479 \\
-DeepSeek-R1-Distill (1 seed) & 22.66 & 0.635 & 0.548 \\
+Fine-tuned LLM (3 seeds) & 21.35 & 0.666 & 0.525 \\
+HistGB & 20.73 & \textbf{0.703} & 0.543 \\
+Ridge & 22.86 & 0.639 & 0.450 \\
+Base LLM & 24.15 & 0.594 & 0.478 \\
+DeepSeek-R1-Distill (1 seed) & 21.37 & 0.665 & 0.572 \\
 \bottomrule
 \end{tabular}
+\par\smallskip\footnotesize
+Choice is the mean of three per-seed rating-induced accuracies (standard
+deviation 0.033; range 0.490--0.569); tie-aware scoring gives 0.481 for the LLM
+and 0.555 for HistGB. See Section~\ref{ch:results}.
 \end{table}
