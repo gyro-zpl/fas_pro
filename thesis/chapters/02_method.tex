@@ -88,7 +88,22 @@ the base model, and retrieval was toggled between runs. Each run requested 20
 rows per batch for 20 batches (400 rows) in one conversation. Outputs were
 parsed as JSON arrays of three values in $\{1,2,3\}$; failed batches were
 skipped, explaining the 351--400 row counts. The quota condition used the same
-setup with 15 iterative correction rounds.
+setup with 15 iterative correction rounds. Figure~\ref{fig:pipeline} summarizes
+the two pipelines and the three evaluation levels.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figures/fig1_pipeline.pdf}
+\caption{Overview of the two pipelines and the three evaluation levels. The
+left panel shows PAS: voter and candidate attributes are rendered as a prompt, a
+LoRA-adapted Qwen3-8B predicts a 0--100 rating, and the R protocol holds out
+respondents by hash. The right panel shows FAS: historical GSS waves are
+extrapolated and combined by IPF into a teacher distribution $Q^{\ast}$; a
+Llama-family 8B model is fine-tuned on synthetic samples, and its samples are
+compared with prior-only samples against the real 2024 GSS. The bottom row shows
+the individual, population, and temporal evaluation levels.}
+\label{fig:pipeline}
+\end{figure}
 
 \section{Metrics}
 

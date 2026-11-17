@@ -121,7 +121,7 @@ python -m experiments.eval.make_figures
 ### LaTeX 版本
 
 - `doc_latex/main.tex`：ACL 模板（`[review]` 模式）
-- `doc_latex/main.pdf`：已编译版本（15 页）
+- `doc_latex/main.pdf`：已编译版本（17 页）
 - **注意**：`doc_latex/` 已按 R 协议 + FAS prior 基线同步（`body_final.tex` 与 `tables/` 直接修改），并重新生成 `fas_pro_overleaf_acl.zip`；但 `docs/04_论文稿件/chapters/` 仍是 2026-11-09 快照，重跑 `build_md.py` 会覆盖 `body_final.tex`，需先同步 chapters。
 - `doc_latex/references.bib`：参考文献
 - `doc_latex/tables/`、`doc_latex/figures/`：表格与图

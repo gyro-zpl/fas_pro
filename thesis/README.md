@@ -60,7 +60,9 @@ thesis/
 │   ├── table2_pas.tex
 │   └── table3_fas.tex
 ├── figures/
-│   └── fig2_temporal_decay.pdf
+│   ├── fig1_pipeline.pdf      # architecture of the PAS and FAS pipelines
+│   ├── fig2_temporal_decay.pdf
+│   └── figure1.svg            # editable source of fig1_pipeline.pdf
 ├── references.bib
 └── main.pdf
 ```

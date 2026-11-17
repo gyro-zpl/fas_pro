@@ -141,6 +141,22 @@ For the population-level task we reconstruct the joint distribution of three pol
 
 \section{Method}\label{method}
 
+Figure~\ref{fig:pipeline} gives an overview of the two pipelines and the three evaluation levels.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\linewidth]{figures/figure1_acl.pdf}
+\caption{Overview of the two pipelines and the three evaluation levels. The
+left panel shows PAS: voter and candidate attributes are rendered as a prompt, a
+LoRA-adapted Qwen3-8B predicts a 0--100 rating, and the R protocol holds out
+respondents by hash. The right panel shows FAS: historical GSS waves are
+extrapolated and combined by IPF into a teacher distribution \(Q^*\); a
+Llama-family 8B model is fine-tuned on synthetic samples, and its samples are
+compared with prior-only samples against the real 2024 GSS. The bottom row shows
+the individual, population, and temporal evaluation levels.}
+\label{fig:pipeline}
+\end{figure*}
+
 \subsection{Task definitions}\label{task-definitions}
 
 We study two levels of survey simulation.
