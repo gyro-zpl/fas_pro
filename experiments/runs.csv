@@ -28,3 +28,17 @@ r026,train_eval,qwen3-8b,,train_t+2022,,,done,2026-11-07 23:20,experiments/resul
 r027,train_eval,qwen3-8b,,a1_random,,,done,2026-11-07 23:21,experiments/results/logs/ablations.log,sft/sft_models/qwen3_8b_a1_random
 r028,train_eval,qwen3-8b,,a2_minimal,,,done,,experiments/results/logs/ablations.log,sft/sft_models/qwen3_8b_a2_minimal
 r029,train_eval,qwen3-8b,,a3_name_only,,,done,,experiments/results/logs/ablations.log,sft/sft_models/qwen3_8b_a3_name_only
+r030,tabular,histgb+ridge,,train_r,,,done,2026-11-13 00:39,experiments/results/01_tabular_r.md,experiments/results/01_tabular_r
+r031,train_r,qwen3-8b,seed42,train_r,,,done,2026-11-13 00:39,experiments/results/logs/train_r_seed42.log,sft/sft_models/qwen3_8b_r_seed42
+r032,train_r,qwen3-8b,seed43,train_r,,,done,2026-11-13 00:39,experiments/results/logs/train_r_seed43.log,sft/sft_models/qwen3_8b_r_seed43
+r033,train_r,qwen3-8b,seed44,train_r,,,done,2026-11-15 23:14,experiments/results/logs/train_r_seed44_retry.log,sft/sft_models/qwen3_8b_r_seed44
+r034,eval,qwen3-8b,seed42,test_r,zero,generate,done,2026-11-13 01:10,experiments/results/logs/eval_r_seed42_test_r_generate.log,experiments/results/preds/qwen3_r_seed42_test_r_generate
+r035,eval,qwen3-8b,seed42,test_t,zero,generate,done,2026-11-13 01:10,experiments/results/logs/eval_r_seed42_test_t_generate.log,experiments/results/preds/qwen3_r_seed42_test_t_generate
+r036,eval,qwen3-8b,seed43,test_r,zero,generate,done,2026-11-13 01:10,experiments/results/logs/eval_r_seed43_test_r_generate.log,experiments/results/preds/qwen3_r_seed43_test_r_generate
+r037,eval,qwen3-8b,seed43,test_t,zero,generate,done,2026-11-13 01:10,experiments/results/logs/eval_r_seed43_test_t_generate.log,experiments/results/preds/qwen3_r_seed43_test_t_generate
+r038,eval,qwen3-8b,seed44,test_r,zero,generate,done,2026-11-16 00:00,experiments/results/logs/eval_r_seed44_test_r_generate.log,experiments/results/preds/qwen3_r_seed44_test_r_generate
+r039,eval,qwen3-8b,seed44,test_t,zero,generate,done,2026-11-16 00:00,experiments/results/logs/eval_r_seed44_test_t_generate.log,experiments/results/preds/qwen3_r_seed44_test_t_generate
+r040,train_r,deepseek-r1-distill-llama-8b,seed42,train_r,,,done,2026-11-13 00:39,experiments/results/logs/train_deepseek_r.log,sft/sft_models/deepseek_r1_distill_8b_r_seed42
+r041,eval,deepseek-r1-distill-llama-8b,seed42,test_r,zero,generate,done,2026-11-13 01:17,experiments/results/logs/eval_deepseek_r_test_r.log,experiments/results/preds/deepseek_r_seed42_test_r_generate
+r042,eval,deepseek-r1-distill-llama-8b,seed42,test_t,zero,generate,done,2026-11-13 01:17,experiments/results/logs/eval_deepseek_r_test_t.log,experiments/results/preds/deepseek_r_seed42_test_t_generate
+r043,tables,r_protocol_tables.py,,test_r,,,done,2026-11-16 00:16,experiments/results/paper_tables/r_protocol.md,experiments/results/paper_tables/r_protocol
