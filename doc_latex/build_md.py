@@ -15,7 +15,20 @@ CH = BASE / "docs" / "04_论文稿件" / "chapters"
 OUT = Path(__file__).resolve().parent / "body.md"
 
 CITES = {
-    "Argyle et al., 2022": "argyle2022",
+    "Argyle et al., 2023": "argyle2023",
+    "Aher et al., 2023": "aher2023multiple",
+    "Tourangeau et al., 2000": "tourangeau2000survey",
+    "Park et al., 2023": "park2023generative",
+    "Quinonero-Candela et al., 2009": "quinonero2009dataset",
+    "Ovadia et al., 2019": "ovadia2019shift",
+    "Bender et al., 2021": "bender2021stochastic",
+    "Yang et al., 2025": "yang2025qwen3",
+    "Hu et al., 2022": "hu2022lora",
+    "ANES, 2026": "anesdata",
+    "GSS, 2026": "gssdata",
+    "Friedman, 2001": "friedman2001gbm",
+    "Efron and Tibshirani, 1993": "efron1993bootstrap",
+    "Lin, 1991": "lin1991js",
     "Dillion et al., 2023": "dillion2023",
     "Kim and Lee, 2023": "kim2023",
     "Santurkar et al., 2023": "santurkar2023",
@@ -61,17 +74,21 @@ CAPTIONS = {
         ": FAS distributional alignment on GSS.\\label{tab:fas}",
     ],
     "08_ablation.md": [
-        ": Ablations and cross-pressure subgroups (2016--2019).\\label{tab:ablation}",
+        ": Ablations (temporal pool) and cross-pressure subgroups (respondent-disjoint models), 2016--2019.\\label{tab:ablation}",
     ],
 }
 
 FIGURES = {
+    "04_method.md": (
+        "We study two levels of survey simulation. Figure 1 gives an overview of the two pipelines and the three evaluation levels.",
+        "\n![Overview of the two pipelines and the three evaluation levels.](figures/figure1_acl.pdf){width=\\linewidth}\n: Overview of the two pipelines and the three evaluation levels.\\label{fig:pipeline}\n",
+    ),
     "05_pas.md": (
         "motivates the anchor readout discussed next.",
         "\n![Predicted score versus ground-truth thermometer score on the in-distribution rows (seed 42). The dashed line is $y=x$; the density is compressed toward 50.](figures/fig4_pas_scatter.pdf){width=0.55\\linewidth}\n: In-distribution prediction density.\\label{fig:scatter}\n",
     ),
     "06_fas.md": (
-        "we scope the \"80% reduction\" claim to EDC.",
+        "The large-reduction claim is scoped to the LLM-versus-base comparison.",
         "\n![Marginal and joint JS divergence for EDC and EHC. Lower is better.](figures/fig3_fas_js.pdf){width=\\linewidth}\n: FAS distributional alignment.\\label{fig:fas}\n",
     ),
     "07_temporal.md": (

@@ -3,8 +3,8 @@
 # Usage: bash experiments/run_train_r_seeds.sh
 set -euo pipefail
 
-ROOT=/home/jpzhao_team/cyyuan/FAS_PRO
-PY=/home/jpzhao_team/cyyuan/miniconda3/envs/llama_factory/bin/python
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+PY="${PY:-/home/jpzhao_team/cyyuan/miniconda3/envs/llama_factory/bin/python}"
 export CUDA_VISIBLE_DEVICES=3
 cd "$ROOT"
 

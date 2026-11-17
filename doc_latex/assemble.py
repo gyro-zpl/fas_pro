@@ -2,23 +2,28 @@
 from __future__ import annotations
 
 import re
+import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 BODY = HERE / "body.tex"
-OUT = HERE / "body_final.tex"
+# Safe default: do not overwrite the hand-synced ACL source. Pass --force
+# only after comparing body_from_md.tex with body_final.tex.
+OUT = HERE / ("body_final.tex" if "--force" in sys.argv else "body_from_md.tex")
 
 WIDTHS = {
     "fig4_pas_scatter.pdf": "0.9\\columnwidth",
     "fig3_fas_js.pdf": "\\linewidth",
     "fig2_temporal_decay.pdf": "\\linewidth",
+    "figure1_acl.pdf": "\\linewidth",
 }
-WIDE_FIGS = {"fig3_fas_js.pdf", "fig2_temporal_decay.pdf"}
+WIDE_FIGS = {"fig3_fas_js.pdf", "fig2_temporal_decay.pdf", "figure1_acl.pdf"}
 
 
 def replace_figures(text: str) -> str:
     pattern = re.compile(
-        r"\\includegraphics\{figures/([^}]+)\}\n: ([^\n]+?)\.\\label\{([^}]+)\}"
+        r"\\includegraphics\{figures/([^}]+)\}\n: (.*?)\.\\label\{([^}]+)\}",
+        re.S,
     )
 
     def repl(m: re.Match) -> str:
@@ -44,6 +49,7 @@ def replace_refs(text: str) -> str:
         ("Table 3", "Table~\\ref{tab:year}"),
         ("Table 4", "Table~\\ref{tab:fas}"),
         ("Table 5", "Table~\\ref{tab:ablation}"),
+        ("Figure 1", "Figure~\\ref{fig:pipeline}"),
         ("Figure 2", "Figure~\\ref{fig:temporal}"),
         ("Figure 3", "Figure~\\ref{fig:fas}"),
         ("Figure 4", "Figure~\\ref{fig:scatter}"),
@@ -55,11 +61,10 @@ def replace_refs(text: str) -> str:
 
 def insert_tables(text: str) -> str:
     anchors = [
-        ("Ridge is weaker at 22.47, 0.655, and 0.484.",
-         "tables/table2_pas"),
-        ("The LLM narrows the gap in 2019 but does not overtake the baseline.",
+        ("and 0.450.", "tables/table2_pas"),
+        ("does not overtake the baseline.",
          "tables/table3_year"),
-        ("claim to EDC.", "tables/table4_fas"),
+        ("the LLM-versus-base comparison.", "tables/table4_fas"),
         ("A3 reaches 21.45, 0.657, and 0.565.", "tables/table5_ablation"),
     ]
     for anchor, table in anchors:
@@ -122,12 +127,23 @@ def main() -> None:
         text,
         flags=re.S,
     )
+    # pandoc 3.5 wraps images in \pandocbounded{...}; unwrap them so that
+    # replace_figures can build proper figure environments.
+    text = re.sub(
+        r"\\pandocbounded\{\\includegraphics(?:\[[^\]]*\])?\{([^}]+)\}\}",
+        r"\\includegraphics{\1}",
+        text,
+    )
+    text = re.sub(r"\\includegraphics\[[^\]]*\]\{", r"\\includegraphics{", text)
     text = replace_figures(text)
     text = replace_refs(text)
     text = insert_tables(text)
     text = fix_equations(text)
     OUT.write_text(text, encoding="utf-8")
     print(f"wrote {OUT}")
+    if OUT.name != "body_final.tex":
+        print("body_final.tex was not overwritten; compare body_from_md.tex "
+              "and copy manually (or run with --force).")
 
 
 if __name__ == "__main__":

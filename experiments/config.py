@@ -7,7 +7,7 @@ from __future__ import annotations
 import os
 from pathlib import Path
 
-ROOT = Path(os.environ.get("FAS_ROOT", "/home/jpzhao_team/cyyuan/FAS_PRO"))
+ROOT = Path(os.environ.get("FAS_ROOT", str(Path(__file__).resolve().parents[1])))
 
 # ---------------------------------------------------------------------------
 # Data

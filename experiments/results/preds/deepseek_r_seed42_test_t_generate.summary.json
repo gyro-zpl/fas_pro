@@ -1,0 +1,69 @@
+{
+  "config": {
+    "split": "data/anes/v3/splits/test_t.jsonl",
+    "model": "deepseek-r1-distill-llama-8b",
+    "lora": "sft/sft_models/deepseek_r1_distill_8b_r_seed42",
+    "task": "candidate",
+    "prompt_mode": "zero",
+    "n_requested": 3421,
+    "n_parsed": 3421,
+    "parse_rate": 1.0
+  },
+  "overall": {
+    "n": 3421,
+    "mae": 38.945337620578776,
+    "rmse": 49.699294534519105,
+    "pearson": -0.03952950609548657,
+    "spearman": -0.030630032776385752,
+    "relaxed_acc": 0.28792750657702426,
+    "ece": 26.50862320958784,
+    "choice": {
+      "accuracy": 0.5231129315389117,
+      "n_groups": 1709,
+      "n_candidates_mean": 2.0,
+      "chance": 0.5,
+      "by_year": {
+        "2024": {
+          "accuracy": 0.5231129315389117,
+          "n_groups": 1709,
+          "chance": 0.5
+        }
+      }
+    },
+    "pairwise": {
+      "accuracy": 0.5051608986035215,
+      "n_pairs": 1647
+    }
+  },
+  "by_candidate": {
+    "biden": {
+      "n": 1710,
+      "mae": 33.40701754385965,
+      "rmse": 37.310393954982885,
+      "relaxed_acc": 0.15321637426900586
+    },
+    "trump": {
+      "n": 1711,
+      "mae": 44.48042080654588,
+      "rmse": 59.55958565279539,
+      "relaxed_acc": 0.42255990648743424
+    }
+  },
+  "by_year": {
+    "2024": {
+      "n": 3421,
+      "mae": 38.945337620578776,
+      "rmse": 49.699294534519105,
+      "relaxed_acc": 0.28792750657702426
+    }
+  },
+  "by_strategy": {
+    "clean": {
+      "n": 3421,
+      "mae": 38.945337620578776,
+      "rmse": 49.699294534519105,
+      "relaxed_acc": 0.28792750657702426
+    }
+  },
+  "by_group": {}
+}

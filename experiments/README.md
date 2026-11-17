@@ -70,6 +70,54 @@ setsid nohup bash experiments/run_baselines.sh \
   > experiments/results/logs/run_baselines.out 2>&1 < /dev/null &
 ```
 
+## R protocol (main PAS table)
+
+The thesis main table uses the respondent-disjoint R protocol, not the
+temporal-protocol T models. The R artifacts are committed for reproduction:
+
+```bash
+cd /path/to/fas_pro_push   # repository root; config.ROOT defaults here
+
+# tabular baselines trained on train_r
+$PY -m experiments.baselines.tabular --train-split train_r --suffix _r
+
+# Qwen3-8B, 3 seeds, parallel on GPUs 0/1/3
+bash experiments/run_train_r_parallel.sh
+
+# 2024 test_t / strict T x R (seed44 was interrupted and retrained)
+bash experiments/run_seed44_r.sh 1
+
+# DeepSeek-R1-Distill-Llama-8B, one seed
+bash experiments/run_deepseek_r.sh 2
+
+# evaluate: seed42/test_r/test_t, then seed43, seed44
+bash experiments/run_eval_r_suite.sh 0 42:test_r:generate 42:test_t:generate
+bash experiments/run_eval_r_suite.sh 1 43:test_r:generate 43:test_t:generate
+bash experiments/run_eval_r_suite.sh 3 44:test_r:generate 44:test_t:generate
+
+# tables + paired/cluster bootstrap + cross-pressure
+$PY -m experiments.eval.r_protocol_tables --seeds 42,43,44
+```
+
+Artifacts:
+
+| File | Content |
+|---|---|
+| `results/paper_tables/r_protocol.md` / `.json` | main R table, CIs, paired bootstrap |
+| `results/paper_tables/r_pas_by_year.md` | R protocol per-year |
+| `results/paper_tables/r_cross_pressure.md` | R cross-pressure subgroups |
+| `results/paper_tables/r_test_t.md` | 2024 full test set |
+| `results/paper_tables/r_test_tr.md` | strict 226-row T×R cell |
+| `results/01_tabular_r.md` / `.json` | HistGB/Ridge R baselines |
+| `results/preds/qwen3_r_*` / `deepseek_r_*` | committed predictions and summaries |
+| `results/logs/train_r_*` / `eval_r_*` | committed R training/eval logs |
+| `experiments/runs.csv` r030–r043 | run registry |
+
+The 87 MB LoRA adapters themselves are excluded by `.gitignore`; their configs
+and SHA256 checksums are in `sft/sft_models/README.md`. The committed
+predictions are sufficient to regenerate every R table without loading the
+weights.
+
 ## Model registry
 
 `config.MODELS` currently contains:

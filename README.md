@@ -95,6 +95,32 @@ bash experiments/run_eval_suite.sh 3 42:test_t:generate 43:test_t:generate 44:te
 bash experiments/run_ablations_suite.sh 1
 ```
 
+### R 协议主表（论文最终使用）
+
+论文主表是 respondent-disjoint R 协议，不是上面的 T 协议。完整命令：
+
+```bash
+PY=/home/jpzhao_team/cyyuan/miniconda3/envs/llama_factory/bin/python
+
+# tabular 基线（train_r）
+$PY -m experiments.baselines.tabular --train-split train_r --suffix _r
+
+# Qwen3-8B ×3 seeds（GPU 0/1/3 并行）
+bash experiments/run_train_r_parallel.sh
+bash experiments/run_seed44_r.sh 1          # seed44 重训 + 评测
+bash experiments/run_deepseek_r.sh 2         # 第二 checkpoint
+
+# 评测
+bash experiments/run_eval_r_suite.sh 0 42:test_r:generate 42:test_t:generate
+bash experiments/run_eval_r_suite.sh 1 43:test_r:generate 43:test_t:generate
+bash experiments/run_eval_r_suite.sh 3 44:test_r:generate 44:test_t:generate
+
+# 主表 + paired/cluster bootstrap + cross-pressure
+$PY -m experiments.eval.r_protocol_tables --seeds 42,43,44
+```
+
+结果：`experiments/results/paper_tables/r_protocol.md`（主表 21.35/0.666/0.525；HistGB 20.73/0.703/0.543）、`r_pas_by_year.md`、`r_cross_pressure.md`、`r_test_t.md`、`r_test_tr.md`。runs 登记见 `experiments/runs.csv` r030–r043。R 协议的预测与日志已提交；87MB 的 LoRA adapter 因体积未提交，配置和 SHA256 见 `sft/sft_models/README.md`。
+
 论文表与图：
 
 ```bash
@@ -106,6 +132,7 @@ python -m experiments.eval.gss_tables
 python -m experiments.eval.fas_coverage
 python -m experiments.eval.cross_pressure
 python -m experiments.eval.make_figures
+python -m experiments.eval.r_protocol_tables --seeds 42,43,44
 ```
 
 ---
@@ -122,11 +149,17 @@ python -m experiments.eval.make_figures
 
 - `doc_latex/main.tex`：ACL 模板（`[review]` 模式）
 - `doc_latex/main.pdf`：已编译版本（17 页）
-- **注意**：`doc_latex/` 已按 R 协议 + FAS prior 基线同步（`body_final.tex` 与 `tables/` 直接修改），并重新生成 `fas_pro_overleaf_acl.zip`；但 `docs/04_论文稿件/chapters/` 仍是 2026-11-09 快照，重跑 `build_md.py` 会覆盖 `body_final.tex`，需先同步 chapters。
+- **注意**：`doc_latex/` 与 `docs/04_论文稿件/chapters/` 已同步到 R 协议 + FAS prior 基线；`body_final.tex` 是当前 ACL 编译源。`build_md.py` + pandoc + `assemble.py` 默认写 `body_from_md.tex`，不会覆盖 `body_final.tex`；确认两者一致后才用 `--force`。
 - `doc_latex/references.bib`：参考文献
 - `doc_latex/tables/`、`doc_latex/figures/`：表格与图
 - 编译：`cd doc_latex && tectonic main.tex`（或 `pdflatex` + `bibtex`）
-- 说明：`body_final.tex` 由 `build_md.py` + `assemble.py` 从 `docs/04_论文稿件/chapters/` 生成；改正文请改 chapters 后重跑脚本。
+- 重新生成正文：
+  ```bash
+  python doc_latex/build_md.py
+  pandoc doc_latex/body.md -o doc_latex/body.tex --natbib --shift-heading-level-by=-1
+  python doc_latex/assemble.py   # 写 body_from_md.tex，不覆盖 body_final.tex
+  ```
+  `assemble.py --force` 才会覆盖 `body_final.tex`；pandoc 3.5 的 `\pandocbounded` 已在 assemble 中剥离。
 
 ### 英文毕业论文（UMAC 模板）
 

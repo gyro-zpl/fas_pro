@@ -17,6 +17,7 @@ os.environ.setdefault("OMP_NUM_THREADS", "8")
 os.environ.setdefault("MKL_NUM_THREADS", "8")
 os.environ.setdefault("OPENBLAS_NUM_THREADS", "8")
 
+import argparse
 import json
 from pathlib import Path
 
@@ -65,11 +66,18 @@ def _design(df: pd.DataFrame, cat_cols: list[str]) -> pd.DataFrame:
 
 
 def main() -> None:
+    p = argparse.ArgumentParser()
+    p.add_argument("--train-split", default="train_t",
+                   help="split used to fit the tabular baselines")
+    p.add_argument("--suffix", default="",
+                   help="suffix for output files, e.g. _r for the R protocol")
+    args = p.parse_args()
+
     clean = pd.read_csv(config.V3 / "anes_candidates_clean.csv", low_memory=False)
     clean = clean.set_index("orig_row_id", drop=False)
 
-    # Fit once on train_t, then predict every split.
-    train = _load_split(config.V3_SPLITS / "train_t.jsonl")
+    # Fit once on the chosen training split, then predict every split.
+    train = _load_split(config.V3_SPLITS / f"{args.train_split}.jsonl")
     train_rows = clean.loc[train["orig_row_id"]].reset_index(drop=True)
     X_train = _design(train_rows, CAT_COLS)
     y_train = train["true_score"].values
@@ -116,11 +124,11 @@ def main() -> None:
                 "n": int(len(frame)),
             }
             frame.to_json(
-                config.PREDS / f"tabular_{name}_{split_name}.predictions.jsonl",
+                config.PREDS / f"tabular_{name}_{split_name}{args.suffix}.predictions.jsonl",
                 orient="records", lines=True,
             )
 
-    out = config.RESULTS / "01_tabular.json"
+    out = config.RESULTS / f"01_tabular{args.suffix}.json"
     with open(out, "w") as f:
         json.dump(results, f, indent=2, ensure_ascii=False)
 
@@ -134,7 +142,7 @@ def main() -> None:
             f"{o['relaxed_acc']:.4f} | {o['choice']['accuracy']:.4f} | "
             f"{o['choice']['chance']:.4f} |"
         )
-    (config.RESULTS / "01_tabular.md").write_text("\n".join(lines), encoding="utf-8")
+    (config.RESULTS / f"01_tabular{args.suffix}.md").write_text("\n".join(lines), encoding="utf-8")
     print("\n".join(lines))
     print(f"\nSaved {out}")
 

@@ -2,7 +2,7 @@
 
 ### 8.1 Setup
 
-We isolate three design choices with matched training runs. **A1 (random sampling)** replaces the nine-strategy pool with a uniform random sample of the same size (6,516 rows) from all cleaned 2016--2020 rows. **A2 (minimal prompt)** keeps the same rows but removes the interaction block from the prompt (party alignment, ideological distance, age difference). **A3 (name-only prompt)** additionally removes the candidate's party, position, and age, leaving only the candidate name. All three use the same LoRA configuration, three epochs, and seed 42; they are evaluated on the same in-distribution rows (2016--2019) as the main model. The full model is reported as the mean of seeds 42--44.
+We isolate three design choices with matched training runs on the temporal training pool. **A1 (random sampling)** replaces the nine-strategy pool with a uniform random sample of the same size (6,516 rows) from all cleaned 2016--2020 rows. **A2 (minimal prompt)** keeps the same rows but removes the interaction block from the prompt (party alignment, ideological distance, age difference). **A3 (name-only prompt)** additionally removes the candidate's party, position, and age, leaving only the candidate name. All three use the same LoRA configuration, three epochs, and seed 42; they are evaluated on the same in-distribution rows (2016--2019). Because they use the temporal pool, they are a separate descriptive analysis and are not directly comparable to the respondent-disjoint main table. The full model is reported as the mean of seeds 42--44.
 
 ### 8.2 Results
 
@@ -18,10 +18,10 @@ The small average effect does not mean the design is irrelevant. The sampling st
 
 ### 8.4 Cross-pressure subgroups
 
-We classify each voter--candidate pair into three conflict types from Section 3.4 and compute MAE and correlation within each type on the 2016--2019 rows (Table 5, lower block). The fine-tuned LLM is substantially better than HistGB on CP3, the identity-versus-party conflict (MAE 15.51--17.80 across seeds versus 20.31 for HistGB), and comparable on CP1, the party-versus-ideology conflict (18.77--21.55 versus 21.55). It is slightly worse on CP2, the ideology-versus-party conflict (23.21--24.13 versus 23.18), and on the non-conflict rows (20.45--21.09 versus 20.14).
+We classify each voter--candidate pair into three conflict types from Section 3.4 and compute MAE and correlation within each type on the 2016--2019 rows for the respondent-disjoint models (Table 5, lower block). The fine-tuned LLM is substantially better than HistGB on CP3, the identity-versus-party conflict (MAE 15.06--17.69 across seeds versus 20.67 for HistGB), and comparable on CP1, the party-versus-ideology conflict (18.94--21.73 versus 21.16). It is slightly worse on CP2, the ideology-versus-party conflict (23.59--25.80 versus 23.06), and on the non-conflict rows (21.15--21.48 versus 20.35).
 
 This is a finer-grained version of the main result: the LLM does not win on average, but it handles one theoretically important conflict type better than the feature-engineered baseline. The pattern is consistent across the three seeds, although each cell is small (154--318 rows), so we report it as a descriptive subgroup result rather than a confirmed advantage.
 
 ### 8.5 Limitations
 
-The ablations use one seed each, and the effects are small; a two- or three-seed replication would be needed to establish that the A1/A3 gaps are larger than run-to-run variation. The choice metric is noisier than MAE and should not be used to rank the ablations. Finally, the cross-pressure cells are small and the CP3 advantage should be treated as a hypothesis for future work rather than a settled finding.
+The ablations use one seed each, and the effects are small; a two- or three-seed replication would be needed to establish that the A1/A3 gaps are larger than run-to-run variation. The choice metric is noisier than MAE and should not be used to rank the ablations; tie-aware choice should be reported alongside argmax accuracy. Finally, the cross-pressure cells are small and the CP3 advantage should be treated as a hypothesis for future work rather than a settled finding.
