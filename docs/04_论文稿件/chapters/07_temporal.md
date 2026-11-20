@@ -2,7 +2,7 @@
 
 ### 7.1 Setup
 
-The temporal protocol (T) trains on 2016--2020 and tests on 2024. We also report a per-year view of the temporal-protocol model on the respondent-protocol rows: for each wave from 2016 to 2024, we evaluate the model on the rows contributed by the 20% hash-selected respondents. The temporal model is trained on 2016--2020 for all respondents, so this view is not respondent-held-out; it isolates the year while holding the respondent pool fixed. The 2024 wave is additionally evaluated on the full 3,421-row test set (all respondents), and we compare with HistGB trained on the same features. The respondent-held-out models are evaluated separately on 2024 (Section 7.3).
+The temporal protocol (T) trains on 2016--2020 and tests on 2024. We also report a per-year view of the temporal-protocol model on the respondent-protocol rows: for each wave from 2016 to 2024, we evaluate the model on the rows contributed by the 20% hash-selected respondent numbers. The temporal model is trained on 2016--2020 for all respondents, so this view does not hold out respondent numbers; it isolates the year while holding the respondent pool fixed. The 2024 wave is additionally evaluated on the full 3,421-row test set (all respondents), and we compare with HistGB trained on the same features. The R models are evaluated separately on 2024 (Section 7.3).
 
 ### 7.2 The decay is monotonic and steep
 
@@ -14,7 +14,7 @@ Two features of this pattern matter. First, the decay is not a sudden break at 2
 
 On the full 2024 test set the collapse is complete. The fine-tuned LLM reaches an MAE of 36.47 $\pm$ 0.75 but a correlation of $-$0.029 $\pm$ 0.021; HistGB reaches 35.06 and $-$0.030. A constant prediction of 50 reaches an MAE of 35.05 on the same rows, and a candidate-mean baseline reaches 34.84; the LLM's and HistGB's aggregate MAEs are therefore at or above the no-signal baseline. The MAE should not be read as evidence of individual-level signal. The predictions concentrate on the middle of the scale: 3,173 of 3,421 LLM predictions are exactly 50, and every Biden row is predicted as 50 (standard deviation 0.0), while Trump rows have a standard deviation of 17.4 and a correlation of $-$0.014. The anchor readout does not rescue the signal: on the same rows it produces a correlation of 0.003 with a prediction standard deviation of 2.1. The low ECE of the anchor readout (2.90) is therefore an artifact of near-constant predictions, not evidence of calibration.
 
-This is not an LLM-specific failure. HistGB, which has no language-model component, also loses the individual signal in 2024. The respondent-held-out models show the same collapse: on the full 2024 test set their correlation is $-$0.02 to $-$0.06, and on the strict 226-row T×R cell it is $-$0.09 to $-$0.15. The common factor is distribution shift; possible contributors include the changed candidate set and the shifted distribution, which our design does not separate.
+This is not an LLM-specific failure. HistGB, which has no language-model component, also loses the individual signal in 2024. The R models show the same collapse: on the full 2024 test set their correlation is $-$0.02 to $-$0.06, and on the strict 226-row T×R cell it is $-$0.09 to $-$0.15. The common factor is distribution shift; possible contributors include the changed candidate set and the shifted distribution, which our design does not separate.
 
 ### 7.4 Adding the most recent wave does not help
 

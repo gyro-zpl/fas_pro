@@ -1830,7 +1830,7 @@
         <i data-lucide="fingerprint" class="lucide"></i>
         <span class="nb-corner">01</span>
         <h3 class="ttl">数据</h3>
-        <p class="desc">六波同一批受访者；表内编号是逐年序号。</p>
+        <p class="desc">六波是面板设计；表内编号是逐年序号，发布文件没有跨年 key。</p>
       </article>
       <article class="sub-card">
         <i data-lucide="user" class="lucide"></i>
@@ -1870,9 +1870,9 @@
   <div class="canvas-card">
     <header class="chrome-min" data-anim="line">
       <div class="l">04 / 12 · 切分</div>
-      <div class="r">T 往后看 · R 把人切开</div>
+      <div class="r">T 往后看 · R 按编号留出</div>
     </header>
-    <h2 class="h-xl-zh">同一批人，编号重排</h2>
+    <h2 class="h-xl-zh">面板设计，编号重排</h2>
     <div class="timeline-v compact">
       <div class="tl-node">
         <span class="dot"></span>
@@ -1890,7 +1890,7 @@
         <span class="dot"></span>
         <span class="yr">2024</span>
         <span class="multi">3,421</span>
-        <p class="desc">同一批人的后续波次。这不是另一群新人。</p>
+        <p class="desc">面板设计的后续波次；发布文件缺跨年 key，不能按编号追人。</p>
       </div>
       <div class="tl-node">
         <span class="dot"></span>
@@ -2086,7 +2086,7 @@
       </div>
       <div class="ledger-row">
         <span class="ledger-num">−0.056</span>
-        <span class="ledger-label">2024 · 同一批留出受访者。各年条数不同，不是等长轨迹。</span>
+        <span class="ledger-label">2024 · 同一组留出编号。各年条数不同，不是等长轨迹。</span>
         <i data-lucide="arrow-down-right" class="ledger-icon lucide"></i>
       </div>
       <div class="ledger-row">
@@ -2121,8 +2121,8 @@
     <div data-anim="up" style="display:grid;grid-template-columns:repeat(4,1fr);gap:1vw;flex:1;margin-top:4vh">
       <article style="background:var(--grey-1);padding:2.4vh 1.1vw;display:flex;flex-direction:column;gap:1.4vh">
         <span class="t-meta">01</span>
-        <h3 class="t-h-prod">已确认</h3>
-        <p class="t-body-sm">论文改用同一批受访者。不再写身份待核验。</p>
+        <h3 class="t-h-prod">口径已统一</h3>
+        <p class="t-body-sm">论文改用 held-out 编号；身份待核验写在 Limitations。</p>
       </article>
       <article style="background:var(--accent);color:var(--accent-on);padding:2.4vh 1.1vw;display:flex;flex-direction:column;gap:1.4vh">
         <span class="t-meta" style="color:rgba(var(--accent-on-rgb),.75)">02</span>
@@ -2204,7 +2204,7 @@
 const SPEAKER_NOTES = [
   {id:'cover', title:'对齐之后，边界还在', section:'开场', minutes:0.5,
    purpose:'用三句话定调，不在封面展开实验。',
-   talk:['今天不是来证明大模型超过传统方法。','三条边界：个体、群体、时间。','身份已经可以按同一批受访者来讲。'],
+   talk:['今天不是来证明大模型超过传统方法。','三条边界：个体、群体、时间。','身份核验受发布文件限制；主表按 held-out 编号讲。'],
    transition:'先说明这篇论文相对基座 benchmark 多做了什么。',
    pronunciation:['ANES 读成 A-NESS','GSS 按字母读','LoRA 读成 LOW-ruh']},
   {id:'base-vs-thesis', title:'基座给框架，本论文做训练', section:'出发点', minutes:1.0,
@@ -2213,12 +2213,12 @@ const SPEAKER_NOTES = [
    transition:'贡献边界说清后，再看已经做完的六块。'},
   {id:'work-map', title:'六块工作', section:'范围', minutes:0.8,
    purpose:'先给工作量，再进主结果。',
-   talk:['蓝色这格是已经确认的：六波是同一批受访者；表里编号逐年重排，不能按编号跨年追人。','PAS 和 FAS 的结论方向相反：一个接近表格，一个超不过抽样。','消融很多是单种子，论文口径还没冻住。'],
-   transition:'既然身份确认了，下一页就把 T 和 R 分开。'},
-  {id:'same-people', title:'同一批人，编号重排', section:'切分', minutes:1.2,
-   purpose:'避免把后续波次和留出的另一批人说成同一件事。',
-   talk:['T 的 2024 是这批人的后续波次。','R 主表是编号没有交集的另一批人，年份停在 2016 到 2019。','各波次人数不同，不是每人每年都有记录。'],
-   transition:'人说清了，再看一条样本是怎么来的。'},
+   talk:['蓝色这格是数据边界：ANES 是面板设计，但发布文件只有波内编号；表里编号逐年重排，不能按编号跨年追人。','PAS 和 FAS 的结论方向相反：一个接近表格，一个超不过抽样。','消融很多是单种子，论文口径还没冻住。'],
+   transition:'既然数据边界说清了，下一页就把 T 和 R 分开。'},
+  {id:'same-people', title:'面板设计，编号重排', section:'切分', minutes:1.2,
+   purpose:'避免把面板设计的后续波次和留出的另一批编号说成同一件事。',
+   talk:['T 的 2024 是面板设计的后续波次。','R 主表是编号没有交集的另一批编号，年份停在 2016 到 2019。','各波次人数不同，不是每人每年都有记录。'],
+   transition:'边界说清了，再看一条样本是怎么来的。'},
   {id:'pas-task', title:'问卷拆成评分样本', section:'PAS', minutes:0.9,
    purpose:'说明模型学的是选民和候选人的关系。',
    talk:['标签是训练用的 0 到 100，不是模型已经预测出来的分数。','8,165 是尾点命名的条数，真正删掉的重复是 8,141。','候选人姓名还在，不能说已经排除身份记忆。'],
@@ -2238,14 +2238,14 @@ const SPEAKER_NOTES = [
   {id:'fas-js', title:'微调更近，抽样更准', section:'FAS', minutes:1.2,
    purpose:'把 FAS 定位成已经做完、但没有超过先验的尝试。',
    talk:['蓝色短柱是不用语言模型、直接从 Q 星抽样。','直接 SFT 的 EDC 有效行是 381，v3 是 400。','还没有充分测自然语言控制，不能说学到了通用能力。'],
-   transition:'群体边界定了，回到同一批人的 2024。'},
+   transition:'群体边界定了，回到 2024 的留出编号。'},
   {id:'year-2024', title:'2024，高低分不开了', section:'时间', minutes:1.2,
    purpose:'确认现象，拒绝因果解释。',
    talk:['这是相关性，不是准确率。','T 和 R 的 2024 数字分开报。','加入 2022 的一次补充训练没有把相关拉回来。','不能直接说成政治环境变化造成的。字段和缺失还要核对。'],
    transition:'现象够用了。剩下的是还要做什么。'},
   {id:'next-steps', title:'先收口，再决定补什么', section:'计划', minutes:0.8,
    purpose:'把必须做的和可选的分开。',
-   talk:['身份不用再当作开放风险。','蓝色这格是下一件必须做的：特征和缺失。','新闻增强和新条件任务不要同时开。'],
+   talk:['身份核验仍受发布文件限制，按 Limitations 讲。','蓝色这格是下一件必须做的：特征和缺失。','新闻增强和新条件任务不要同时开。'],
    transition:'最后把需要老师拍板的三件事留下。'},
   {id:'closing', title:'请老师定边界', section:'讨论', minutes:0.8,
    purpose:'把讨论收成三个决定。',

@@ -12,7 +12,7 @@ A related literature studies how well models maintain a persona. Park et al. (20
 
 ### 2.3 Fine-tuning for social simulation
 
-Fine-tuning has been used to align models with political or social preferences (Chu et al., 2023; Zhao et al., 2023), often with the goal of mimicking a group's voice. Our goal is not preference alignment but competence alignment: we want the model to learn the rules that map a voter profile and a candidate to a rating, not to adopt a particular ideology. This distinction matters for evaluation. A model that has learned the rules should generalize to held-out respondents and candidates; a model that has learned a group's voice may reproduce the margin without the mechanism. The respondent-held-out protocol in Section 3.6 is designed to test the former.
+Fine-tuning has been used to align models with political or social preferences (Chu et al., 2023; Zhao et al., 2023), often with the goal of mimicking a group's voice. Our goal is not preference alignment but competence alignment: we want the model to learn the rules that map a voter profile and a candidate to a rating, not to adopt a particular ideology. This distinction matters for evaluation. A model that has learned the rules should generalize to held-out respondent numbers and candidates; a model that has learned a group's voice may reproduce the margin without the mechanism. The respondent-held-out-number protocol in Section 3.6 is designed to test the former.
 
 ### 2.4 Population-level distribution alignment
 

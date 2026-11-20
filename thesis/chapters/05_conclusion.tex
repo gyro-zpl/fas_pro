@@ -17,16 +17,17 @@ tested.
 coverage is uneven across waves (three groups in 2016, nine in 2020, two in 2022),
 so the claims are restricted to candidate PAS and GSS FAS.
 
-\textbf{Panel and choice.} The 2016--2024 ANES waves re-interview the same
-panel, and no respondent appears only in 2022 or 2024; the T$\times$R cell is
-226 rows. The analysis table carries only a within-wave respondent number, so
-the respondent protocol holds out numbers within a wave rather than a linked
-person across waves; person-level isolation would need the original case
-identifiers. An audit of the released raw files shows that the available
-\texttt{caseid} is also within-wave (cross-wave birth-year agreement is about
-2\%), and the 2020 file carries only a random \texttt{ResponseId}, so the
-original panel identifiers are not present and person-level isolation is not
-verified. The temporal analysis uses the separate T protocol, where the split
+\textbf{Panel and choice.} The 2016--2024 ANES waves are designed as a panel,
+but the released files do not carry a cross-wave person key; the T$\times$R cell
+is only 226 rows. The analysis table carries only a within-wave respondent
+number, so the respondent protocol holds out numbers within a wave rather than a
+linked person across waves. An audit of the released raw files shows that the
+available \texttt{caseid} is also within-wave (cross-wave birth-year agreement is
+1.2--2.6\%), and the 2020 file carries only a random \texttt{ResponseId}
+(Appendix~\ref{app:data}, Tables~\ref{tab:person_linkage}
+and~\ref{tab:number_overlap}). The original panel identifiers are therefore not
+present, and person-level isolation is not verified. The temporal analysis uses
+the separate T protocol, where the split
 is by year rather than by respondent. Choice is rating-induced, not observed vote;
 the fine-tuned models emit integer ratings with many ties, so tie-aware scoring
 is reported alongside the standard argmax accuracy.
@@ -69,8 +70,8 @@ samples the training pool to cover tails and conflict cases, and fine-tunes
 compact 8B models with LoRA; the same pipeline reconstructs a GSS joint
 distribution and fine-tunes a model to generate a synthetic population.
 
-The individual-level result is deliberately modest. On held-out respondents in
-the same era, the fine-tuned model reaches an MAE of 21.35, a correlation of
+The individual-level result is deliberately modest. On held-out respondent
+numbers in the same era, the fine-tuned model reaches an MAE of 21.35, a correlation of
 0.666, and a choice accuracy of 0.525 across seeds against chance 0.163. A
 gradient-boosted baseline reaches 20.73, 0.703, and 0.543; the MAE difference is
 small and seed-dependent, and the baseline has a higher correlation and a

@@ -171,9 +171,12 @@ Group splits:
 
 1. **Candidate table pollution**: 8,165 trailing-dot names (`obama.`, `hrc.`) and
    23,060 social-group rows (`black/white/dem/rep`) were removed.
-2. **Panel structure**: 3,080 / 3,165 respondents appear in multiple years; there
-   are **zero** test-only respondents. Temporal splits therefore reuse respondents.
-   This is why we also report respondent-disjoint splits.
+2. **Panel structure (number-level, not person-level)**: the released files do not
+   carry a cross-wave person key; `respondent_id` is a within-wave number. Counts
+   such as 3,080 / 3,165 and "zero test-only respondents" are number overlaps, not
+   panel evidence. Temporal splits therefore reuse respondents; the R protocol
+   holds out respondent numbers within a wave, not linked persons. See the
+   person-linkage audit above.
 3. **2020 group rows lost `respondent_id`**: block-level pseudo IDs are assigned by
    detecting repeated group names. 2020 is excluded from respondent-level group
    splits but included in the 2020 block split.

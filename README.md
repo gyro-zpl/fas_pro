@@ -14,13 +14,13 @@
 
 | 层面 | 结果 |
 |---|---|
-| PAS 分布内（2016–2019，unseen respondents） | 微调 Qwen3-8B：MAE **21.35**、corr **0.666**、choice **0.525**（tie-aware 0.481；chance 0.163）；HistGB：20.73 / 0.703 / 0.543；MAE 差异小且 seed-dependent，GBM corr 更高、tie-aware choice 更优 |
+| PAS 分布内（2016–2019，held-out respondent numbers） | 微调 Qwen3-8B：MAE **21.35**、corr **0.666**、choice **0.525**（tie-aware 0.481；chance 0.163）；HistGB：20.73 / 0.703 / 0.543；MAE 差异小且 seed-dependent，GBM corr 更高、tie-aware choice 更优 |
 | PAS 微调必要性 | base Qwen：MAE 24.15、corr 0.594；微调相对 base 的 ΔMAE **−2.5～−3.0**、Δcorr **+0.07**、Δchoice **+0.01～+0.09**（seed-dependent） |
 | FAS（GSS） | **Prior-only 优于 LLM**：EDC 边际/联合 JS **0.0004 / 0.0076**，EHC **0.0011 / 0.0225**；LLM v3 为 EDC 0.0040 / 0.0215、EHC 0.0077 / 0.0363。SFT 让 LLM 接近 prior，但没有超过它 |
 | 时间边界 | LLM corr：2019 **0.722** → 2020 0.478 → 2022 0.408 → 2024 **−0.056**；GBM 同样塌缩（−0.008）；recency + 2022 不缓解 |
 | 数据审计 | 132,948 → **98,159** 行；尾点命名 8,165（其中 8,141 行为重复行）、群体混入 23,060、异常评分 3,588 |
 
-**一句话**：结构化对齐是必要的，但不是充分的——它能让 8B 模型在同分布 unseen respondents 上与强 GBM 基本持平（略差），并让 LLM 接近重建的 prior，但 prior 本身更好；四年后两者仍然塌缩。
+**一句话**：结构化对齐是必要的，但不是充分的——它能让 8B 模型在同分布 held-out 编号上与强 GBM 基本持平（略差），并让 LLM 接近重建的 prior，但 prior 本身更好；四年后两者仍然塌缩。这里的 held-out 是**波内编号**，不是人物级隔离（发布文件无跨年 person key）。
 
 ---
 
@@ -97,7 +97,7 @@ bash experiments/run_ablations_suite.sh 1
 
 ### R 协议主表（论文最终使用）
 
-论文主表是 respondent-disjoint R 协议，不是上面的 T 协议。完整命令：
+论文主表是 held-out-number R 协议（同波内编号不重叠，非人物级），不是上面的 T 协议。完整命令：
 
 ```bash
 PY=/home/jpzhao_team/cyyuan/miniconda3/envs/llama_factory/bin/python
@@ -164,7 +164,7 @@ python -m experiments.eval.r_protocol_tables --seeds 42,43,44
 ### 英文毕业论文（UMAC 模板）
 
 - `thesis/main.tex`：UMAC FST 硕士论文模板（A4、12pt Times、1.5 倍行距）
-- `thesis/main.pdf`：已编译版本（**正文 13 页**，总 31 页）
+- `thesis/main.pdf`：已编译版本（**正文 13 页**，总 32 页）
 - `thesis/chapters/`：5 章正文；`thesis/appendix/`：4 个附录（含第二模型 checkpoint DeepSeek-R1-Distill-Llama-8B）
 - 编译：`cd thesis && tectonic main.tex`
 - 作者：CHENYU YUAN；导师：PENGYANG WANG；日期：April 2027
