@@ -9,8 +9,8 @@ and the full table in Appendix~\ref{app:results} report a per-year view of the
 temporal-protocol model on the respondent-protocol rows: for each wave from 2016
 to 2024, the model is evaluated on the rows contributed by the 20\% hash-selected
 respondents. The temporal model is trained on 2016--2020 for all respondents, so
-this view is not respondent-disjoint; it isolates the year while holding the
-respondent pool fixed. The respondent-disjoint models show the same 2024
+this view is not respondent-held-out; it isolates the year while holding the
+respondent pool fixed. The held-out-number models show the same 2024
 collapse on the full 2024 test set (correlation $-0.02$ to $-0.06$); on the
 strict 226-row T$\times$R cell the LLM correlations are $-0.09$ to $-0.15$
 (Appendix~\ref{app:second}).
@@ -74,7 +74,7 @@ MAE by roughly half a point and lowers correlation by about 0.02. Because each
 ablation uses one seed, the thesis does not claim that each component is
 individually necessary; the full table is in Appendix~\ref{app:results}.
 
-The cross-pressure analysis on the respondent-disjoint models gives a
+The cross-pressure analysis on the respondent-held-out models gives a
 finer-grained view. The fine-tuned LLM is substantially better than HistGB on
 CP3, the identity-versus-party conflict (MAE 15.06--17.69 versus 20.67), and
 comparable on CP1 (18.94--21.73 versus 21.16). It is slightly worse on CP2

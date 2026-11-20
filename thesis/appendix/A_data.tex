@@ -44,7 +44,7 @@ across each other; within each protocol the splits are disjoint.}
 \label{tab:splits}
 \begin{tabular}{llrr}
 \toprule
-Split & Years & Rows & Respondents \\
+Split & Years & Rows & Numbers \\
 \midrule
 \texttt{train\_t} & 2016--2020 & 6,516 & 2,720 \\
 \texttt{val\_t} & 2022 & 2,501 & 1,251 \\
@@ -55,11 +55,12 @@ Split & Years & Rows & Respondents \\
 \bottomrule
 \end{tabular}
 \par\smallskip\footnotesize
-\texttt{train\_r} is the sampled pool restricted to the 80\% non-test respondents
-(2,131 of 3,165 respondents, 67\%); \texttt{test\_r} samples whole respondents
-from the 20\% hash holdout up to 6,000 rows, yielding 192 respondents. The main
-model is trained on \texttt{train\_t}, so the \texttt{test\_r} evaluation is
-row-level rather than respondent-disjoint (Section~\ref{ch:conclusion}).
+\texttt{train\_r} is the sampled pool restricted to the 80\% non-test numbers
+(2,131 of 3,165 numbers, 67\%); \texttt{test\_r} samples whole numbers from the
+20\% hash holdout up to 6,000 rows, yielding 192 numbers. The R models are trained
+on \texttt{train\_r}, so the held-out numbers do not overlap the training numbers
+within a wave; because numbers are re-issued each wave, person-level isolation
+would require the original case identifiers (Section~\ref{ch:conclusion}).
 \end{table}
 
 \section{Sampling Strategies}

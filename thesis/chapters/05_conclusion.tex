@@ -17,12 +17,13 @@ tested.
 coverage is uneven across waves (three groups in 2016, nine in 2020, two in 2022),
 so the claims are restricted to candidate PAS and GSS FAS.
 
-\textbf{Panel and choice.} ANES is a panel with no test-only respondents in
-2022/2024, and the T$\times$R cell is 226 rows. The main in-distribution
-evaluation uses the respondent-disjoint protocol: the models are trained on
-\texttt{train\_r} and evaluated on \texttt{test\_r}, whose respondent sets do not
-overlap. The temporal analysis uses the separate T protocol, where the split is
-by year rather than by respondent. Choice is rating-induced, not observed vote;
+\textbf{Panel and choice.} The 2016--2024 ANES waves re-interview the same
+panel, and no respondent appears only in 2022 or 2024; the T$\times$R cell is
+226 rows. The analysis table carries only a within-wave respondent number, so
+the respondent protocol holds out numbers within a wave rather than a linked
+person across waves; person-level isolation would need the original case
+identifiers. The temporal analysis uses the separate T protocol, where the split
+is by year rather than by respondent. Choice is rating-induced, not observed vote;
 the fine-tuned models emit integer ratings with many ties, so tie-aware scoring
 is reported alongside the standard argmax accuracy.
 
@@ -64,7 +65,7 @@ samples the training pool to cover tails and conflict cases, and fine-tunes
 compact 8B models with LoRA; the same pipeline reconstructs a GSS joint
 distribution and fine-tunes a model to generate a synthetic population.
 
-The individual-level result is deliberately modest. On unseen respondents in
+The individual-level result is deliberately modest. On held-out respondents in
 the same era, the fine-tuned model reaches an MAE of 21.35, a correlation of
 0.666, and a choice accuracy of 0.525 across seeds against chance 0.163. A
 gradient-boosted baseline reaches 20.73, 0.703, and 0.543; the MAE difference is

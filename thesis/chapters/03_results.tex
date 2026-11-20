@@ -5,7 +5,7 @@
 
 The main in-distribution evaluation uses the respondent protocol restricted to
 the 2016, 2018, and 2019 waves: 2,726 rating rows from the 20\% hash holdout,
-whose respondents do not appear in \texttt{train\_r}. Baselines are HistGB, a
+whose respondent numbers do not appear in \texttt{train\_r}. Baselines are HistGB, a
 gradient-boosting model \citep{friedman2001gbm}, and Ridge trained on
 \texttt{train\_r} with the same features, plus the base model with the same
 prompts but no fine-tuning. Confidence intervals are bootstrap 95\% intervals

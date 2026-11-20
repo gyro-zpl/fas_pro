@@ -31,19 +31,24 @@ similar but different-party).
 
 \section{Evaluation Protocols}
 
-ANES is a panel: 3,080 of 3,165 respondents appear in more than one wave, and
-there are no test-only respondents in 2022/2024, so a temporal split measures
-transfer to a later wave, not generalization to unseen individuals. The temporal
-protocol (T) trains on 2016--2020 (6,516 rows), validates on 2022 (2,501), and
-tests on 2024 (3,421). The respondent protocol (R) holds out 20\% of respondents
-by a hash of their identifier and builds the training pool from the existing
-sampled pool restricted to the other 80\% (5,094 rows from 2,131 respondents);
-the test set samples whole respondents from the 20\% holdout up to 6,000 rows
-(6,014 rows from 192 respondents). The strict T$\times$R cell contains 226 rows.
-R is the main in-distribution test; the R models are trained on
-\texttt{train\_r} with three seeds and evaluated on \texttt{test\_r}, so the
-respondent sets are disjoint. T measures the temporal boundary with models
-trained on the full temporal pool.
+The 2016--2024 ANES waves re-interview the same respondents, and no respondent
+appears only in 2022 or 2024, so a temporal split measures transfer to a later
+wave rather than generalization to new people. The analysis table, however,
+records only a within-wave respondent number: the same number in a different
+wave is a different person, and person-level linkage comes from the original
+case identifiers, which the table does not carry. The temporal protocol (T)
+trains on 2016--2020 (6,516 rows), validates on 2022 (2,501), and tests on 2024
+(3,421). The respondent protocol (R) holds out 20\% of respondent numbers by a
+hash and builds the training pool from the existing sampled pool restricted to
+the other 80\% (5,094 rows from 2,131 numbers); the test set samples whole
+numbers from the 20\% holdout up to 6,000 rows (6,014 rows from 192 numbers).
+The strict T$\times$R cell contains 226 rows. R is the main in-distribution
+test; the R models are trained on \texttt{train\_r} with three seeds and
+evaluated on \texttt{test\_r}, so the held-out numbers do not overlap the
+training numbers within a wave. Because numbers are re-issued each wave, this
+does not guarantee that a given individual is absent from training under
+another wave's number. T measures the temporal boundary with models trained on
+the full temporal pool.
 
 \section{Fine-Tuning and Readouts}
 
