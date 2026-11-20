@@ -22,7 +22,11 @@ panel, and no respondent appears only in 2022 or 2024; the T$\times$R cell is
 226 rows. The analysis table carries only a within-wave respondent number, so
 the respondent protocol holds out numbers within a wave rather than a linked
 person across waves; person-level isolation would need the original case
-identifiers. The temporal analysis uses the separate T protocol, where the split
+identifiers. An audit of the released raw files shows that the available
+\texttt{caseid} is also within-wave (cross-wave birth-year agreement is about
+2\%), and the 2020 file carries only a random \texttt{ResponseId}, so the
+original panel identifiers are not present and person-level isolation is not
+verified. The temporal analysis uses the separate T protocol, where the split
 is by year rather than by respondent. Choice is rating-induced, not observed vote;
 the fine-tuned models emit integer ratings with many ties, so tie-aware scoring
 is reported alongside the standard argmax accuracy.

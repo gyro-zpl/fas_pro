@@ -72,7 +72,7 @@ setsid nohup bash experiments/run_baselines.sh \
 
 ## R protocol (main PAS table)
 
-The thesis main table uses the respondent-disjoint R protocol, not the
+The thesis main table uses the respondent-held-out-number R protocol, not the
 temporal-protocol T models. The R artifacts are committed for reproduction:
 
 ```bash
@@ -117,6 +117,24 @@ The 87 MB LoRA adapters themselves are excluded by `.gitignore`; their configs
 and SHA256 checksums are in `sft/sft_models/README.md`. The committed
 predictions are sufficient to regenerate every R table without loading the
 weights.
+
+## Person-linkage audit
+
+The v4 person-level rerun plan requires a cross-wave person identifier. The
+released ANES CSVs do not carry one: `caseid` is a within-wave 1..N number
+(cross-wave birth-year agreement about 2%), the 2020 file only has a random
+`ResponseId`, and the clean table's `respondent_id` is 0..N-1. The R protocol
+is therefore a held-out-number protocol, not a person-level split. The audit
+is reproducible with:
+
+```bash
+python -m experiments.data.audit_person_linkage \
+  --raw-dir /path/to/FAS_PRO/data/anes/raw_data \
+  --anes-root /path/to/FAS_PRO/data/anes/v3
+```
+
+Output: `results/00_person_linkage_audit.md` / `.json`. See
+`docs/03_进度与执行/人物级链接审计_2026-11-20.md` for the interpretation.
 
 ## Model registry
 

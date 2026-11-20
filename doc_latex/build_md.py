@@ -67,14 +67,14 @@ TABLE1 = """
 
 CAPTIONS = {
     "05_pas.md": [
-        ": PAS in-distribution results on unseen respondents (2016--2019).\\label{tab:pas}",
+        ": PAS in-distribution results on held-out respondents (2016--2019).\\label{tab:pas}",
         ": PAS by survey year (fine-tuned LLM vs. HistGB).\\label{tab:year}",
     ],
     "06_fas.md": [
         ": FAS distributional alignment on GSS.\\label{tab:fas}",
     ],
     "08_ablation.md": [
-        ": Ablations (temporal pool) and cross-pressure subgroups (respondent-disjoint models), 2016--2019.\\label{tab:ablation}",
+        ": Ablations (temporal pool) and cross-pressure subgroups (respondent-held-out models), 2016--2019.\\label{tab:ablation}",
     ],
 }
 

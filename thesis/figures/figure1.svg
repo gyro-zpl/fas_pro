@@ -70,7 +70,7 @@
 <line x1="300" y1="361" x2="326" y2="361" stroke="#8A939C" stroke-width="2.0" stroke-linecap="round" marker-end="url(#m8A939C)"/>
 <line x1="580" y1="361" x2="606" y2="361" stroke="#8A939C" stroke-width="2.0" stroke-linecap="round" marker-end="url(#m8A939C)"/>
 <rect x="12" y="456" width="820" height="154" rx="12" fill="#FFFFFF" stroke="#DCE0E4" stroke-width="1.2"/>
-<text x="32" y="490" font-size="24" fill="#1F2933" font-weight="700" font-family="'Source Sans 3', 'DejaVu Sans', sans-serif">Respondent-disjoint split</text>
+<text x="32" y="490" font-size="24" fill="#1F2933" font-weight="700" font-family="'Source Sans 3', 'DejaVu Sans', sans-serif">Respondent-held-out split</text>
 <text x="360" y="490" font-size="19" fill="#8A939C" font-weight="400" font-family="'Source Sans 3', 'DejaVu Sans', sans-serif">the hash holdout never appears in training</text>
 <text x="32" y="528" font-size="20" fill="#1F2933" font-weight="600" font-family="'Source Sans 3', 'DejaVu Sans', sans-serif">Train  ·  80% of respondents</text>
 <rect x="32" y="542" width="148" height="58" rx="10" fill="#F5F3EF"/>
@@ -80,8 +80,8 @@
 <g transform="translate(397,553)"><path d="M -11.52 16.20 L -9.54 5.94 C -5.40 2.16 5.40 2.16 9.54 5.94 L 11.52 16.20 Z" fill="#B9BEC4"/><circle cx="-9.00" cy="0.90" r="1.53" fill="#EFC49B"/><circle cx="9.00" cy="0.90" r="1.53" fill="#EFC49B"/><circle cx="0" cy="0" r="9.00" fill="#EFC49B"/><path d="M -9.36 -1.44 C -9.36 -10.26 9.36 -10.26 9.36 -1.44 L 8.46 -3.06 C 4.86 -7.20 -4.86 -7.20 -8.46 -3.06 Z" fill="#4A3A33"/><ellipse cx="-3.06" cy="0.00" rx="0.77" ry="1.04" fill="#2B333B"/><ellipse cx="3.06" cy="0.00" rx="0.77" ry="1.04" fill="#2B333B"/><path d="M -2.70 3.24 Q 0 5.40 2.70 3.24" fill="none" stroke="#2B333B" stroke-width="0.77" stroke-linecap="round"/></g>
 <g transform="translate(423,553)"><path d="M -11.52 16.20 L -9.54 5.94 C -5.40 2.16 5.40 2.16 9.54 5.94 L 11.52 16.20 Z" fill="#B9BEC4"/><circle cx="0" cy="-11.34" r="3.24" fill="#3A2A24"/><circle cx="-9.00" cy="0.90" r="1.53" fill="#DBA97C"/><circle cx="9.00" cy="0.90" r="1.53" fill="#DBA97C"/><circle cx="0" cy="0" r="9.00" fill="#DBA97C"/><path d="M -9.36 -1.44 C -9.36 -10.26 9.36 -10.26 9.36 -1.44 L 8.46 -3.06 C 4.86 -7.20 -4.86 -7.20 -8.46 -3.06 Z" fill="#3A2A24"/><ellipse cx="-3.06" cy="0.00" rx="0.77" ry="1.04" fill="#2B333B"/><ellipse cx="3.06" cy="0.00" rx="0.77" ry="1.04" fill="#2B333B"/><path d="M -2.70 3.24 Q 0 5.40 2.70 3.24" fill="none" stroke="#2B333B" stroke-width="0.77" stroke-linecap="round"/></g>
 <path d="M 390 571 L 430 537" fill="none" stroke="#A63A2E" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-<text x="410" y="600" font-size="17" fill="#A63A2E" font-weight="600" font-family="'Source Sans 3', 'DejaVu Sans', sans-serif" text-anchor="middle">disjoint</text>
-<text x="462" y="528" font-size="20" fill="#1F2933" font-weight="600" font-family="'Source Sans 3', 'DejaVu Sans', sans-serif">Test  ·  20% holdout (unseen)</text>
+<text x="410" y="600" font-size="17" fill="#A63A2E" font-weight="600" font-family="'Source Sans 3', 'DejaVu Sans', sans-serif" text-anchor="middle">held out</text>
+<text x="462" y="528" font-size="20" fill="#1F2933" font-weight="600" font-family="'Source Sans 3', 'DejaVu Sans', sans-serif">Test  ·  20% holdout (held out)</text>
 <rect x="462" y="542" width="118" height="58" rx="10" fill="none" stroke="#A63A2E" stroke-width="1.6" stroke-dasharray="6 4"/>
 <g transform="translate(490,568)"><path d="M -25.60 36.00 L -21.20 13.20 C -12.00 4.80 12.00 4.80 21.20 13.20 L 25.60 36.00 Z" fill="#B08348"/><circle cx="-16.28" cy="-9.40" r="8.40" fill="#2F2622"/><circle cx="-7.35" cy="-17.31" r="8.40" fill="#2F2622"/><circle cx="6.43" cy="-17.67" r="8.40" fill="#2F2622"/><circle cx="6.43" cy="17.67" r="8.40" fill="#2F2622"/><circle cx="-7.35" cy="17.31" r="8.40" fill="#2F2622"/><circle cx="-16.28" cy="9.40" r="8.40" fill="#2F2622"/><circle cx="-20.00" cy="2.00" r="3.40" fill="#F0C49B"/><circle cx="20.00" cy="2.00" r="3.40" fill="#F0C49B"/><circle cx="0" cy="0" r="20.00" fill="#F0C49B"/><path d="M -20.80 -3.20 C -20.80 -22.80 20.80 -22.80 20.80 -3.20 L 18.80 -6.80 C 10.80 -16.00 -10.80 -16.00 -18.80 -6.80 Z" fill="#2F2622"/><ellipse cx="-6.80" cy="0.00" rx="1.70" ry="2.30" fill="#2B333B"/><ellipse cx="6.80" cy="0.00" rx="1.70" ry="2.30" fill="#2B333B"/><path d="M -6.00 7.20 Q 0 12.00 6.00 7.20" fill="none" stroke="#2B333B" stroke-width="1.70" stroke-linecap="round"/></g>
 <g transform="translate(534,568)"><path d="M -25.60 36.00 L -21.20 13.20 C -12.00 4.80 12.00 4.80 21.20 13.20 L 25.60 36.00 Z" fill="#8A6FA8"/><circle cx="0" cy="-25.20" r="7.20" fill="#6B4A3A"/><circle cx="-20.00" cy="2.00" r="3.40" fill="#E0B089"/><circle cx="20.00" cy="2.00" r="3.40" fill="#E0B089"/><circle cx="0" cy="0" r="20.00" fill="#E0B089"/><path d="M -20.80 -3.20 C -20.80 -22.80 20.80 -22.80 20.80 -3.20 L 18.80 -6.80 C 10.80 -16.00 -10.80 -16.00 -18.80 -6.80 Z" fill="#6B4A3A"/><ellipse cx="-6.80" cy="0.00" rx="1.70" ry="2.30" fill="#2B333B"/><ellipse cx="6.80" cy="0.00" rx="1.70" ry="2.30" fill="#2B333B"/><path d="M -6.00 7.20 Q 0 12.00 6.00 7.20" fill="none" stroke="#2B333B" stroke-width="1.70" stroke-linecap="round"/></g>
@@ -170,7 +170,7 @@
 <rect x="12" y="616" width="558" height="320" rx="12" fill="#FFFFFF" stroke="#DCE0E4" stroke-width="1.2"/>
 <rect x="12" y="616" width="558" height="5" rx="2" fill="#C4633F"/>
 <text x="32" y="656" font-size="25" fill="#1F2933" font-weight="700" font-family="'Source Sans 3', 'DejaVu Sans', sans-serif">Individual level</text>
-<text x="32" y="682" font-size="18" fill="#8A939C" font-weight="400" font-family="'Source Sans 3', 'DejaVu Sans', sans-serif">Unseen respondents, same-era waves, held out by respondent hash</text>
+<text x="32" y="682" font-size="18" fill="#8A939C" font-weight="400" font-family="'Source Sans 3', 'DejaVu Sans', sans-serif">Held-out respondent numbers, same-era waves, held out by hash</text>
 <rect x="48" y="716" width="364" height="56" rx="10" fill="#F5F3EF"/>
 <rect x="432" y="716" width="104" height="56" rx="10" fill="none" stroke="#A63A2E" stroke-width="1.6" stroke-dasharray="6 4"/>
 <circle cx="62" cy="744" r="13" fill="#5E7E96"/>
@@ -184,7 +184,7 @@
 <circle cx="446" cy="744" r="13" fill="#FFFFFF" stroke="#A63A2E" stroke-width="2.2"/>
 <circle cx="494" cy="744" r="13" fill="#FFFFFF" stroke="#A63A2E" stroke-width="2.2"/>
 <text x="48" y="800" font-size="17" fill="#55606B" font-weight="600" font-family="'Source Sans 3', 'DejaVu Sans', sans-serif">train (80%)</text>
-<text x="432" y="800" font-size="17" fill="#A63A2E" font-weight="600" font-family="'Source Sans 3', 'DejaVu Sans', sans-serif">unseen (20%)</text>
+<text x="432" y="800" font-size="17" fill="#A63A2E" font-weight="600" font-family="'Source Sans 3', 'DejaVu Sans', sans-serif">held out (20%)</text>
 <text x="32" y="858" font-size="18" fill="#55606B" font-weight="400" font-family="'Source Sans 3', 'DejaVu Sans', sans-serif">MAE  ·  Pearson r  ·  choice accuracy (argmax + tie-aware)</text>
 <rect x="32" y="884" width="176" height="32" rx="8" fill="#E7F0FA" stroke="#C6DBF0" stroke-width="1.2"/>
 <text x="46" y="906" font-size="17" fill="#1D4E89" font-weight="600" font-family="'Source Sans 3', 'DejaVu Sans', sans-serif">Results: Table 3.1</text>

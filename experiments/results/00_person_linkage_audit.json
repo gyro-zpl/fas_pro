@@ -1,0 +1,268 @@
+{
+  "raw_id_summary": [
+    {
+      "year": 2016,
+      "rows": 1200,
+      "unique_ids": 1200,
+      "id_min": 1.0,
+      "id_max": 1200.0,
+      "id_kind": "integer"
+    },
+    {
+      "year": 2018,
+      "rows": 2500,
+      "unique_ids": 2500,
+      "id_min": 1.0,
+      "id_max": 2779.0,
+      "id_kind": "integer"
+    },
+    {
+      "year": 2019,
+      "rows": 3165,
+      "unique_ids": 3165,
+      "id_min": 1.0,
+      "id_max": 3165.0,
+      "id_kind": "integer"
+    },
+    {
+      "year": 2020,
+      "rows": 3080,
+      "unique_ids": 3080,
+      "id_min": null,
+      "id_max": null,
+      "id_kind": "random string"
+    },
+    {
+      "year": 2022,
+      "rows": 1585,
+      "unique_ids": 1585,
+      "id_min": 1.0,
+      "id_max": 1585.0,
+      "id_kind": "integer"
+    },
+    {
+      "year": 2024,
+      "rows": 1909,
+      "unique_ids": 1909,
+      "id_min": 1.0,
+      "id_max": 1909.0,
+      "id_kind": "integer"
+    }
+  ],
+  "raw_cross_wave": [
+    {
+      "a": 2016,
+      "b": 2018,
+      "overlap_ids": 1092,
+      "overlap_rows": 1092,
+      "birthyr_match": 0.0173992673992674,
+      "gender_match": 0.4935897435897436
+    },
+    {
+      "a": 2016,
+      "b": 2019,
+      "overlap_ids": 1200,
+      "overlap_rows": 1200,
+      "birthyr_match": 0.025833333333333333,
+      "gender_match": 0.5166666666666667
+    },
+    {
+      "a": 2016,
+      "b": 2022,
+      "overlap_ids": 1200,
+      "overlap_rows": 1200,
+      "birthyr_match": 0.016666666666666666,
+      "gender_match": 0.4925
+    },
+    {
+      "a": 2016,
+      "b": 2024,
+      "overlap_ids": 1200,
+      "overlap_rows": 1200,
+      "birthyr_match": 0.016666666666666666,
+      "gender_match": 0.0
+    },
+    {
+      "a": 2018,
+      "b": 2019,
+      "overlap_ids": 2500,
+      "overlap_rows": 2500,
+      "birthyr_match": 0.0196,
+      "gender_match": 0.5132
+    },
+    {
+      "a": 2018,
+      "b": 2022,
+      "overlap_ids": 1417,
+      "overlap_rows": 1417,
+      "birthyr_match": 0.014820042342978124,
+      "gender_match": 0.47776993648553284
+    },
+    {
+      "a": 2018,
+      "b": 2024,
+      "overlap_ids": 1695,
+      "overlap_rows": 1695,
+      "birthyr_match": 0.013569321533923304,
+      "gender_match": 0.0
+    },
+    {
+      "a": 2019,
+      "b": 2022,
+      "overlap_ids": 1585,
+      "overlap_rows": 1585,
+      "birthyr_match": 0.01829652996845426,
+      "gender_match": 0.4794952681388013
+    },
+    {
+      "a": 2019,
+      "b": 2024,
+      "overlap_ids": 1909,
+      "overlap_rows": 1909,
+      "birthyr_match": 0.011524358302776323,
+      "gender_match": 0.0
+    },
+    {
+      "a": 2022,
+      "b": 2024,
+      "overlap_ids": 1585,
+      "overlap_rows": 1585,
+      "birthyr_match": 0.015772870662460567,
+      "gender_match": 0.0
+    }
+  ],
+  "processed_cross_wave": [
+    {
+      "a": 2016,
+      "b": 2018,
+      "number_overlap": 1200,
+      "birthyr_match": 0.01618646811265782,
+      "gender_match": 0.5150343724411098
+    },
+    {
+      "a": 2016,
+      "b": 2019,
+      "number_overlap": 1198,
+      "birthyr_match": 0.02630718954248366,
+      "gender_match": 0.5172521786492374
+    },
+    {
+      "a": 2016,
+      "b": 2020,
+      "number_overlap": 1198,
+      "birthyr_match": 0.008419390110557649,
+      "gender_match": 0.0
+    },
+    {
+      "a": 2016,
+      "b": 2022,
+      "number_overlap": 1200,
+      "birthyr_match": 0.0,
+      "gender_match": 0.4933345763027874
+    },
+    {
+      "a": 2016,
+      "b": 2024,
+      "number_overlap": 1083,
+      "birthyr_match": 0.01755472945064023,
+      "gender_match": 0.0
+    },
+    {
+      "a": 2018,
+      "b": 2019,
+      "number_overlap": 2496,
+      "birthyr_match": 0.019094903979217752,
+      "gender_match": 0.5155381291121416
+    },
+    {
+      "a": 2018,
+      "b": 2020,
+      "number_overlap": 2498,
+      "birthyr_match": 0.012774562144928156,
+      "gender_match": 0.0
+    },
+    {
+      "a": 2018,
+      "b": 2022,
+      "number_overlap": 1585,
+      "birthyr_match": 0.0,
+      "gender_match": 0.5132537891002902
+    },
+    {
+      "a": 2018,
+      "b": 2024,
+      "number_overlap": 1712,
+      "birthyr_match": 0.012421618393550313,
+      "gender_match": 0.0
+    },
+    {
+      "a": 2019,
+      "b": 2020,
+      "number_overlap": 3070,
+      "birthyr_match": 0.01770116816423273,
+      "gender_match": 0.0
+    },
+    {
+      "a": 2019,
+      "b": 2022,
+      "number_overlap": 1583,
+      "birthyr_match": 0.0,
+      "gender_match": 0.4800534981321773
+    },
+    {
+      "a": 2019,
+      "b": 2024,
+      "number_overlap": 1710,
+      "birthyr_match": 0.012340389065044133,
+      "gender_match": 0.0
+    },
+    {
+      "a": 2020,
+      "b": 2022,
+      "number_overlap": 1583,
+      "birthyr_match": 0.0,
+      "gender_match": 0.0
+    },
+    {
+      "a": 2020,
+      "b": 2024,
+      "number_overlap": 1710,
+      "birthyr_match": 0.014255844896407526,
+      "gender_match": 0.0
+    },
+    {
+      "a": 2022,
+      "b": 2024,
+      "number_overlap": 1413,
+      "birthyr_match": 0.0,
+      "gender_match": 0.0
+    }
+  ],
+  "v3_split_number_overlap": {
+    "r": {
+      "train_split": "train_r",
+      "train_rows": 5094,
+      "test_rows": 6014,
+      "train_numbers": 2131,
+      "test_numbers": 192,
+      "test_numbers_seen_in_train": 0,
+      "test_rows_from_seen_numbers": 0,
+      "in_dist_rows": 2726,
+      "in_dist_rows_from_seen_numbers": 0,
+      "note": "respondent_id is a within-wave number; this overlap is number-level, not person-level"
+    },
+    "t": {
+      "train_split": "train_t",
+      "train_rows": 6516,
+      "test_rows": 6014,
+      "train_numbers": 2720,
+      "test_numbers": 192,
+      "test_numbers_seen_in_train": 170,
+      "test_rows_from_seen_numbers": 5443,
+      "in_dist_rows": 2726,
+      "in_dist_rows_from_seen_numbers": 2492,
+      "note": "respondent_id is a within-wave number; this overlap is number-level, not person-level"
+    }
+  },
+  "conclusion": "The released raw CSV caseid is a within-wave 1..N number, not a cross-wave person key; the processed respondent_id is 0..N-1. Cross-wave birth-year agreement is near chance (~2%), and 2020 only carries a random ResponseId. Person-level v4 splits cannot be built from these files. Fallback B applies: report held-out respondent numbers within a wave, and state that person-level isolation is unverified."
+}

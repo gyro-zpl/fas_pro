@@ -2,7 +2,7 @@
 
 ### 5.1 Setup
 
-We fine-tune Qwen3-8B with LoRA on the `train_r` pool (5,094 rows from 2,131 respondents) described in Section 3.5, using three seeds (42, 43, 44). The main in-distribution evaluation uses the respondent protocol (R) restricted to the 2016, 2018, and 2019 waves: 2,726 rating rows from the 20% hash holdout, whose respondents do not appear in `train_r`. The 2020 wave is treated as a near-domain set, and 2022/2024 form the temporal test analyzed in Section 7. We report MAE, Pearson correlation, rating-induced choice accuracy, and chance accuracy. Baselines are HistGB and Ridge trained on `train_r` on the same tabular features, plus the base model with the same prompts but no fine-tuning. All confidence intervals are bootstrap 95% intervals (Efron and Tibshirani, 1993) over rows (MAE, correlation) or respondent-year groups (choice).
+We fine-tune Qwen3-8B with LoRA on the `train_r` pool (5,094 rows from 2,131 respondents) described in Section 3.5, using three seeds (42, 43, 44). The main in-distribution evaluation uses the respondent protocol (R) restricted to the 2016, 2018, and 2019 waves: 2,726 rating rows from the 20% hash holdout, whose respondent numbers do not appear in `train_r`. The 2020 wave is treated as a near-domain set, and 2022/2024 form the temporal test analyzed in Section 7. We report MAE, Pearson correlation, rating-induced choice accuracy, and chance accuracy. Baselines are HistGB and Ridge trained on `train_r` on the same tabular features, plus the base model with the same prompts but no fine-tuning. All confidence intervals are bootstrap 95% intervals (Efron and Tibshirani, 1993) over rows (MAE, correlation) or respondent-year groups (choice).
 
 ### 5.2 In-distribution results
 
@@ -14,7 +14,7 @@ The gap to the prompt-only model is large. On the same in-distribution rows, the
 
 ### 5.3 Per-year behavior
 
-Table 3 and Figure 2 break the result down by wave for the temporal-protocol model on the held-out respondent rows; the respondent-disjoint models show the same ordering with slightly higher MAE. Performance is best in 2019 (MAE 19.20, correlation 0.722, choice 0.663 against chance 0.150) and weaker in 2016 (22.45, 0.588, 0.329 against 0.112). HistGB shows the same ordering, with a higher correlation in all three waves (0.611, 0.729, 0.746) and a similar choice profile (0.256, 0.544, 0.639). The LLM narrows the gap in 2019 but does not overtake the baseline.
+Table 3 and Figure 2 break the result down by wave for the temporal-protocol model on the held-out respondent rows; the respondent-held-out models show the same ordering with slightly higher MAE. Performance is best in 2019 (MAE 19.20, correlation 0.722, choice 0.663 against chance 0.150) and weaker in 2016 (22.45, 0.588, 0.329 against 0.112). HistGB shows the same ordering, with a higher correlation in all three waves (0.611, 0.729, 0.746) and a similar choice profile (0.256, 0.544, 0.639). The LLM narrows the gap in 2019 but does not overtake the baseline.
 
 This pattern is consistent with the interpretation that both models recover the same partisan and ideological structure; the LLM's advantage, if any, is not in average accuracy but in the form of its output. Figure 4 shows the corresponding density: predictions are correlated with the ground truth but are compressed toward the middle of the scale, with a visible band at 50. The compression is a property of the fine-tuned readout, not of the correlation alone, and it motivates the anchor readout discussed next.
 
@@ -28,4 +28,4 @@ On the in-distribution years, where predictions do vary, generation is the prima
 
 Three conclusions follow. First, structured fine-tuning is necessary: the base model is both biased and unstable, and its 2020 correlation is negative. Second, the fine-tuned model is a credible individual-level simulator in-distribution, but it does not beat a feature-engineered GBM; the contribution of the language model must therefore be argued on other grounds. Third, the readout matters: a low ECE can be an artifact of prediction collapse, so calibration claims must be paired with correlation and spread.
 
-The results support a narrow form of C1: structured survey data alignment gives a compact LLM genuine individual-level signal on unseen respondents in the same era. They do not support a claim of LLM superiority over tabular baselines, and we do not make one.
+The results support a narrow form of C1: structured survey data alignment gives a compact LLM genuine individual-level signal on held-out respondents in the same era. They do not support a claim of LLM superiority over tabular baselines, and we do not make one.
