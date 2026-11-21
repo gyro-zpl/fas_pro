@@ -32,6 +32,15 @@ is by year rather than by respondent. Choice is rating-induced, not observed vot
 the fine-tuned models emit integer ratings with many ties, so tie-aware scoring
 is reported alongside the standard argmax accuracy.
 
+\textbf{Covariate availability.} The waves are not comparable in what the model
+sees: 2024 has no party, ideology, or education item, 2020 has no ideology item
+and a reversed partisanship scale, and 2018 stores partisanship as a sentinel.
+Appendix~\ref{app:covariates} quantifies this. The individual- and
+temporal-level claims are bounded accordingly: the 2024 collapse is confounded
+with the missing covariates, and 2020 is not a clean in-domain wave. The
+LLM-versus-baseline comparison is unaffected because both consume the same
+features.
+
 \textbf{Ablations and FAS.} Ablations use one seed; effects are small. FAS covers
 two configurations; EHC is weaker and its joint symmetric KL moves opposite for
 direct SFT. Temporal extrapolation is validated only for 2024, and only one

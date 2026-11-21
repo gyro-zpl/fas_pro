@@ -135,6 +135,58 @@ also seen in training; 2,492 of the 2,726 in-distribution rows do. R has 0 of
 not a held-out-person guarantee.
 \end{table}
 
+\section{Covariate Availability Audit}
+\label{app:covariates}
+
+The per-year analysis in Chapter~\ref{ch:temporal} assumes that the model sees
+comparable inputs in every wave. That assumption fails. Table~\ref{tab:covariates}
+reports, for each wave, how often the political covariates are blank and how many
+distinct political profiles survive the prompt builder, which substitutes a
+default for a blank value (party 4 = Independent, ideology 3 = Moderate,
+education 3 = High school).
+
+\begin{table}[h]
+\centering
+\small
+\caption{Covariate availability and coding by wave. ``Profiles'' counts the
+distinct party/alignment lines the prompt can actually render; a wave with one
+profile shows every respondent as the same voter.}
+\label{tab:covariates}
+\begin{tabular}{lrrrrr}
+\toprule
+Wave & Rows & \texttt{pid7} blank & \texttt{ideo5} blank & \texttt{educ} blank & Profiles \\
+\midrule
+2016 & 10,727 & 1\% & 0\% & 0\% & 69 \\
+2018 & 12,161 & 0\%$^{\dagger}$ & 0\% & 0\% & 10 \\
+2019 & 21,347 & 0\% & 0\% & 0\% & 75 \\
+2020 & 47,334 & 0\%$^{\ddagger}$ & 100\% & 0\% & 15 \\
+2022 & 3,169 & 0\%$^{\S}$ & 0\% & 0\% & 71 \\
+2024 & 3,421 & 100\% & 100\% & 100\% & 1 \\
+\bottomrule
+\end{tabular}
+\par\smallskip\footnotesize
+$^{\dagger}$ every row carries the sentinel $-4$; $^{\ddagger}$ the scale is
+reversed (Section~\ref{app:covariates}); $^{\S}$ 256 rows carry out-of-range
+sentinels. In 2024 all 3,421 prompts render the same political line, so the wave
+contains no party or ideology signal at all.
+\end{table}
+
+Two coding defects accompany the missing values. First, \texttt{pid7} in 2020 is
+reversed: it correlates $+0.658$ with liberal--conservative self-placement
+(\texttt{lcself}) in 2016 and $+0.708$ in 2019, but $-0.546$ in 2020, and
+co-partisanship correlates $-0.223$ with the rating in 2020 against $+0.466$ in
+2019. Second, 2018 stores \texttt{pid7} as the sentinel $-4$ for every row, so the
+derived alignment marks all respondents as Democrats while the prompt still
+renders them as ``Independent'', producing contradictory instructions for 727 of
+the 2,726 main-table rows (27\%).
+
+These defects do not affect the comparison between the LLM and the tabular
+baseline, which consume the same features, and they do not affect the FAS
+results. They do bound the temporal claims: the 2024 collapse cannot be
+separated from the absence of the political covariates, and the 2019--2020 drop
+cannot be read as a wave effect while 2020 recodes partisanship in the opposite
+direction. Section~\ref{ch:temporal} states the resulting scope.
+
 \section{Sampling Strategies}
 
 The training pool is drawn with nine complementary strategies: balanced coverage

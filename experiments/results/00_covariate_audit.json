@@ -1,0 +1,218 @@
+{
+  "missing_share": {
+    "2016": {
+      "pid7": 0.0117,
+      "ideo5": 0.0,
+      "lcself": 0.0,
+      "educ": 0.0,
+      "gender_resp": 0.0,
+      "race_resp": 0.0,
+      "birthyr_resp": 0.0
+    },
+    "2018": {
+      "pid7": 0.0,
+      "ideo5": 0.0,
+      "lcself": 0.0,
+      "educ": 0.0,
+      "gender_resp": 0.0,
+      "race_resp": 0.0,
+      "birthyr_resp": 0.0
+    },
+    "2019": {
+      "pid7": 0.0,
+      "ideo5": 0.0,
+      "lcself": 0.0,
+      "educ": 0.0,
+      "gender_resp": 0.0,
+      "race_resp": 0.0,
+      "birthyr_resp": 0.0
+    },
+    "2020": {
+      "pid7": 0.0,
+      "ideo5": 1.0,
+      "lcself": 0.0,
+      "educ": 0.0,
+      "gender_resp": 1.0,
+      "race_resp": 0.0,
+      "birthyr_resp": 0.0
+    },
+    "2022": {
+      "pid7": 0.0,
+      "ideo5": 0.0,
+      "lcself": 1.0,
+      "educ": 0.0,
+      "gender_resp": 0.0,
+      "race_resp": 1.0,
+      "birthyr_resp": 1.0
+    },
+    "2024": {
+      "pid7": 1.0,
+      "ideo5": 1.0,
+      "lcself": 1.0,
+      "educ": 1.0,
+      "gender_resp": 0.0,
+      "race_resp": 0.0,
+      "birthyr_resp": 0.0
+    }
+  },
+  "sentinels": {
+    "2016": {
+      "pid7_value_counts": {
+        "1": 2687,
+        "4": 1839,
+        "7": 1421,
+        "2": 1295,
+        "6": 1038,
+        "5": 993,
+        "3": 970,
+        "8": 358
+      },
+      "n_out_of_range": 358
+    },
+    "2018": {
+      "pid7_value_counts": {
+        "-4": 12161
+      },
+      "n_out_of_range": 12161
+    },
+    "2019": {
+      "pid7_value_counts": {
+        "1": 4752,
+        "7": 4146,
+        "4": 3489,
+        "5": 2391,
+        "3": 2238,
+        "2": 2033,
+        "6": 1628,
+        "8": 670
+      },
+      "n_out_of_range": 670
+    },
+    "2020": {
+      "pid7_value_counts": {
+        "7": 12088,
+        "1": 10103,
+        "4": 6278,
+        "6": 6009,
+        "2": 4946,
+        "5": 4591,
+        "3": 3271,
+        "9": 48
+      },
+      "n_out_of_range": 48
+    },
+    "2022": {
+      "pid7_value_counts": {
+        "1": 698,
+        "7": 562,
+        "4": 490,
+        "2": 312,
+        "5": 300,
+        "6": 300,
+        "3": 251,
+        "-7": 132,
+        "8": 124
+      },
+      "n_out_of_range": 256
+    },
+    "2024": {
+      "pid7_value_counts": {},
+      "n_out_of_range": 0
+    }
+  },
+  "prompt_profiles": {
+    "2016": {
+      "n_rows": 10727,
+      "n_distinct_profiles": 69,
+      "examples": [
+        "- Political: Strong Democrat, Moderate | - Party alignment: Same party",
+        "- Political: Independent, Liberal | - Party alignment: Independent voter",
+        "- Political: Republican, Conservative | - Party alignment: Different party"
+      ]
+    },
+    "2018": {
+      "n_rows": 12161,
+      "n_distinct_profiles": 10,
+      "examples": [
+        "- Political: Independent, Moderate | - Party alignment: Same party",
+        "- Political: Independent, Liberal | - Party alignment: Same party",
+        "- Political: Independent, Conservative | - Party alignment: Same party"
+      ]
+    },
+    "2019": {
+      "n_rows": 21347,
+      "n_distinct_profiles": 75,
+      "examples": [
+        "- Political: Democrat, Conservative | - Party alignment: Same party",
+        "- Political: Republican, Conservative | - Party alignment: Different party",
+        "- Political: Strong Democrat, Moderate | - Party alignment: Same party"
+      ]
+    },
+    "2020": {
+      "n_rows": 47334,
+      "n_distinct_profiles": 15,
+      "examples": [
+        "- Political: Democrat, Moderate | - Party alignment: Different party",
+        "- Political: Strong Democrat, Moderate | - Party alignment: Different party",
+        "- Political: Independent, Moderate | - Party alignment: Independent voter"
+      ]
+    },
+    "2022": {
+      "n_rows": 3169,
+      "n_distinct_profiles": 71,
+      "examples": [
+        "- Political: Independent, Moderate | - Party alignment: Different party",
+        "- Political: Strong Republican, Very Conservative | - Party alignment: Same party",
+        "- Political: Lean Republican, Conservative | - Party alignment: Same party"
+      ]
+    },
+    "2024": {
+      "n_rows": 3421,
+      "n_distinct_profiles": 1,
+      "examples": [
+        "- Political: Independent, Moderate | - Party alignment: Independent voter"
+      ]
+    }
+  },
+  "pid7_direction": {
+    "2016": 0.6578,
+    "2018": null,
+    "2019": 0.708,
+    "2020": -0.5457,
+    "2022": null,
+    "2024": null
+  },
+  "party_match_corr": {
+    "2016": 0.3672,
+    "2018": 0.0519,
+    "2019": 0.4655,
+    "2020": -0.2233,
+    "2022": 0.4842,
+    "2024": NaN
+  },
+  "splits": {
+    "train_r": {
+      "2016": 629,
+      "2018": 691,
+      "2019": 1229,
+      "2020": 2545
+    },
+    "test_r": {
+      "2016": 697,
+      "2018": 727,
+      "2019": 1302,
+      "2020": 2868,
+      "2022": 194,
+      "2024": 226
+    },
+    "train_t": {
+      "2016": 806,
+      "2018": 892,
+      "2019": 1580,
+      "2020": 3238
+    },
+    "test_t": {
+      "2024": 3421
+    }
+  }
+}

@@ -1049,6 +1049,16 @@ small (226 rows). Person-level isolation is not verified, and a
 genuinely new respondent observed only in a future wave cannot be
 isolated from these files.
 
+\textbf{Covariate availability.} The waves are not comparable in what the
+model sees. The 2024 file carries no party, ideology, or education item, so
+all 3,421 prompts render the same political profile; 2020 has no ideology
+item and a reversed partisanship scale (correlation with liberal--conservative
+self-placement $-0.546$, against $+0.658$ in 2016 and $+0.708$ in 2019); and
+2018 stores partisanship as a sentinel. The 2024 collapse is therefore
+confounded with the missing covariates, and 2020 is not a clean in-domain
+wave. The LLM-versus-baseline comparison is unaffected, since both consume
+the same features.
+
 \textbf{Choice metric.} Choice accuracy is rating-induced: we compare
 the model's highest-scoring candidate with the candidate with the
 highest ground-truth thermometer score, not with an observed vote. This
