@@ -61,7 +61,7 @@ def replace_refs(text: str) -> str:
 
 def insert_tables(text: str) -> str:
     anchors = [
-        ("and 0.450.", "tables/table2_pas"),
+        ("therefore not specific to Qwen3-8B.", "tables/table2_pas"),
         ("does not overtake the baseline.",
          "tables/table3_year"),
         ("the LLM-versus-base comparison.", "tables/table4_fas"),

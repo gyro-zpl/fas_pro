@@ -47,7 +47,7 @@
 │   ├── 03_进度与执行/     # 时间线、执行记录、运行快照、最终总结
 │   └── 04_论文稿件/       # 完整初稿、分章 md、图
 ├── doc_latex/             # ACL LaTeX 版本（main.tex / main.pdf / references.bib）
-├── thesis/                # UMAC 英文毕业论文（main.tex / main.pdf，正文 15 页）
+├── thesis/                # UMAC 英文毕业论文（main.tex / main.pdf，正文 17 页）
 └── environment.yml
 ```
 
@@ -150,7 +150,7 @@ python -m experiments.eval.cross_pressure
 ### LaTeX 版本
 
 - `doc_latex/main.tex`：ACL 模板（`[review]` 模式）
-- `doc_latex/main.pdf`：已编译版本（17 页）
+- `doc_latex/main.pdf`：已编译版本（18 页）
 - **注意**：`doc_latex/` 与 `docs/04_论文稿件/chapters/` 已同步到 R 协议 + FAS prior 基线；`body_final.tex` 是当前 ACL 编译源。`build_md.py` + pandoc + `assemble.py` 默认写 `body_from_md.tex`，不会覆盖 `body_final.tex`；确认两者一致后才用 `--force`。
 - `doc_latex/references.bib`：参考文献
 - `doc_latex/tables/`、`doc_latex/figures/`：表格与图
@@ -166,7 +166,7 @@ python -m experiments.eval.cross_pressure
 ### 英文毕业论文（UMAC 模板）
 
 - `thesis/main.tex`：UMAC FST 硕士论文模板（A4、12pt Times、1.5 倍行距）
-- `thesis/main.pdf`：已编译版本（**正文 15 页**，总 35 页）
+- `thesis/main.pdf`：已编译版本（**正文 17 页**，总 39 页）
 - `thesis/chapters/`：5 章正文；`thesis/appendix/`：4 个附录（含第二模型 checkpoint DeepSeek-R1-Distill-Llama-8B）
 - 编译：`cd thesis && tectonic main.tex`
 - 作者：CHENYU YUAN；导师：PENGYANG WANG；日期：April 2027

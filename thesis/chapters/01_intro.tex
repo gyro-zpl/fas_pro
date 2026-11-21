@@ -23,39 +23,50 @@ the American National Election Studies (ANES), aligns a compact 8B model with th
 resulting distribution through LoRA fine-tuning, and evaluates the model at the
 individual, population, and temporal levels.
 
-The thesis is organized around three research questions. \textbf{RQ1}: can
-structured fine-tuning make a compact LLM a credible individual-level respondent,
-and how does it compare with a strong feature-engineered baseline? \textbf{RQ2}:
-can the same pipeline reproduce population-level survey distributions, and does
-the fine-tuned model add anything beyond the reconstructed prior? \textbf{RQ3}:
-how does the behaviour transfer across survey waves? The thesis is therefore a
-boundary study: it asks when structured alignment helps, not whether a language
-model is universally better than existing methods.
+The thesis is organized around three questions. \textbf{RQ1}: how much does
+structured fine-tuning buy, measured as the share of the distance from a
+no-information baseline to a strong tabular model that it closes? \textbf{RQ2}:
+where is that gain located---is it uniform across the rating scale, or does the
+model improve some regions and lose others? \textbf{RQ3}: what does it not buy,
+at the population level and across survey waves? The thesis is therefore a
+boundary study: it asks what structured alignment buys and where, not whether a
+language model is universally better than existing methods.
 
 The thesis makes four contributions. First, it provides a reproducible data
-construction and audit: 8,165 rows carry trailing-period candidate names (8,141
-duplicate rows are removed after normalization), group targets stored in the
-candidate column (23,060 rows) are separated, and 3,588 missing or out-of-range
-scores are removed, reducing 132,948 raw rows to 98,159 clean interaction-level
-rows. We report two protocols separately: a temporal split and a within-wave
-respondent-number holdout; neither is a person-level split.
-Second, on held-out respondent numbers in 2016--2019, the fine-tuned model reaches an
-MAE of 21.35, a correlation of 0.666, and a choice accuracy of 0.525 across
-seeds against chance 0.163; a gradient-boosted baseline reaches 20.73, 0.703, and
-0.543. The MAE difference is small and seed-dependent, and the baseline has a
-higher correlation and a tie-aware choice advantage. The
-value of the LLM is not superior point prediction; it is a unified interface that
-also produces a rating distribution and extends to population-level generation.
-Third, on GSS policy attitudes, fine-tuning moves an 8B model toward a
-reconstructed joint distribution, but direct sampling from that prior is more
-accurate: on EDC the prior reaches marginal and joint Jensen--Shannon divergences
-of 0.0004 and 0.0076, versus 0.0040 and 0.0215 for the fully covered fine-tuned
-run.
-Supervised fine-tuning, not retrieval or quota sampling, drives the LLM's
-movement toward the prior; the LLM does not beat the prior on unconditional
-distribution matching. Fourth, across 2016--2024, individual-level correlation
-falls from 0.722 in 2019 to $-0.056$ in 2024, and the tabular baseline collapses
-in the same way; adding the 2022 wave does not help.
+construction and benchmark: 8,165 rows carry trailing-period candidate names
+(8,141 duplicate rows are removed after normalization), group targets stored in
+the candidate column (23,060 rows) are separated, and 3,588 missing or
+out-of-range scores are removed, reducing 132,948 raw rows to 98,159 clean
+interaction-level rows. We report two protocols separately, a temporal split and
+a within-wave respondent-number holdout; neither is a person-level split. The
+benchmark also includes the two validity audits that the later chapters rely on:
+a person-linkage audit and a covariate-availability audit.
+
+Second, the thesis quantifies how much fine-tuning buys. On held-out respondent
+numbers in 2016--2019, the fine-tuned model reaches an MAE of 21.35, a
+correlation of 0.666, and a choice accuracy of 0.525 against chance 0.163; the
+base model reaches 24.15, 0.594, and 0.478, and HistGB reaches 20.73, 0.703, and
+0.543. Fine-tuning therefore closes 82\% of the MAE gap between the base model
+and HistGB, 66\% of the correlation gap, and 72\% of the choice gap, but it does
+not close the remaining 18\% of that gap.
+
+Third, the thesis shows where the gain sits. The improvement is not uniform: the
+LLM is better than HistGB at the low and high ends of the true-score
+distribution and worse in the middle, and the two models' error--extremity
+correlations have opposite signs ($-0.18$ versus $+0.25$). The average MAE hides
+this redistribution of error; the error profile is a more informative summary of
+what alignment changes.
+
+Fourth, the thesis maps what the LLM does not buy. On GSS policy attitudes,
+fine-tuning moves an 8B model toward a reconstructed joint distribution, but
+direct sampling from that prior is more accurate: on EDC the prior reaches
+marginal and joint Jensen--Shannon divergences of 0.0004 and 0.0076, versus
+0.0040 and 0.0215 for the fully covered fine-tuned run. Supervised fine-tuning,
+not retrieval or quota sampling, drives the movement toward the prior, but the
+LLM does not beat the prior on unconditional distribution matching. Across
+waves, temporal generalization is not established: the apparent 2024 collapse
+is dominated by covariate loss in the processed table, and the repaired table is
+a validity check rather than a retrained result.
 
 \section{Related Work}
 
@@ -82,6 +93,9 @@ alignment. For population-level generation, iterative proportional fitting
 classical tools.
 
 Much of this prior work evaluates on a single wave or a pooled sample, which can
-hide temporal decay. The per-year analysis in Chapter~\ref{ch:temporal} reports a monotonic
-decay for both a fine-tuned LLM and a tabular baseline on the same evaluation
-rows.
+hide temporal decay. The per-year analysis in Chapter~\ref{ch:temporal} reports
+an apparent decay for both a fine-tuned LLM and a tabular baseline, but it also
+shows that the later waves are not a clean temporal test: 2020 is corrupted,
+2022 is a validation wave with protocol-dependent results, and 2024 loses its
+political covariates in the processed table. We therefore treat temporal
+generalization as unproven rather than as a headline negative result.

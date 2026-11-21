@@ -1973,9 +1973,9 @@
   <div class="canvas-card">
     <header class="chrome-min" data-anim="line">
       <div class="l">07 / 12 · PAS 主结果</div>
-      <div class="r">R 切分 · n = 2,726 · 柱高 = MAE</div>
+      <div class="r">R 切分 · n = 2,726 · 微调吃掉 82% 差距</div>
     </header>
-    <h2 class="h-xl-zh">微调有用，表格仍领先</h2>
+    <h2 class="h-xl-zh">吃掉 82%，但没有反超</h2>
     <div class="bar-towers">
       <div class="bar-tower">
         <div class="cap"><i data-lucide="message-square" class="lucide"></i></div>
@@ -2077,7 +2077,7 @@
       <div class="l">10 / 12 · 时间</div>
       <div class="r">Pearson r · 不是准确率</div>
     </header>
-    <h2 class="h-xl-zh">2024，高低分不开了</h2>
+    <h2 class="h-xl-zh">2024：输入缺失，不是时间结论</h2>
     <div class="stacked-ledger" data-anim="ledger">
       <div class="ledger-row">
         <span class="ledger-num">0.722</span>
@@ -2227,9 +2227,9 @@ const SPEAKER_NOTES = [
    purpose:'拦住“大模型不如树模型”这句话讲得过满。',
    talk:['HistGB 现在是强对照，还不是同输入对照。','多出来的是综合相似度这类派生列。','对齐实验还没跑，这页只立边界。'],
    transition:'在这个前提下，看主表的误差。'},
-  {id:'pas-results', title:'微调有用，表格仍领先', section:'PAS', minutes:1.4,
-   purpose:'把改善的参照物说成未微调模型，不是传统方法。',
-   talk:['柱子越矮越好，因为画的是 MAE。','21.35 相对 24.15 大约降了 11.6%。','加减号是三种子的标准差。DeepSeek 单种子 21.37，只作补充。','r 是 0.666 对 HistGB 的 0.703；tie-aware choice 是 0.481 对 0.555。'],
+  {id:'pas-results', title:'吃掉 82%，但没有反超', section:'PAS', minutes:1.4,
+   purpose:'把效果说成阶梯：无信息→base→微调→HistGB。',
+   talk:['柱子越矮越好，因为画的是 MAE。','无信息 32.65，base 24.15，微调 21.35，HistGB 20.73；微调吃掉 base→HistGB 差距的 82%。','但最后 18% 没吃掉：r 是 0.666 对 0.703，tie-aware choice 是 0.481 对 0.555。','更关键的是形状：两端 LLM 更准，中间更差，误差-极值相关符号相反。'],
    transition:'个体结果停在这里。群体任务是另一套数据。'},
   {id:'fas-flow', title:'2024 真卷只接到评估端', section:'FAS', minutes:1.1,
    purpose:'说明模型学的是重建分布，不是真卷。',
@@ -2239,9 +2239,9 @@ const SPEAKER_NOTES = [
    purpose:'把 FAS 定位成已经做完、但没有超过先验的尝试。',
    talk:['蓝色短柱是不用语言模型、直接从 Q 星抽样。','直接 SFT 的 EDC 有效行是 381，v3 是 400。','还没有充分测自然语言控制，不能说学到了通用能力。'],
    transition:'群体边界定了，回到 2024 的留出编号。'},
-  {id:'year-2024', title:'2024，高低分不开了', section:'时间', minutes:1.2,
-   purpose:'确认现象，拒绝因果解释。',
-   talk:['这是相关性，不是准确率。','T 和 R 的 2024 数字分开报。','加入 2022 的一次补充训练没有把相关拉回来。','不能直接说成政治环境变化：2024 处理表里只有 1 种政治档案（原始 CSV 有文本党派/意识形态/教育，可映射）；把 2019 的政治块抹掉后 corr 从 0.71 掉到 0.17，大部分是输入缺失，残余很小。'],
+  {id:'year-2024', title:'2024：输入缺失，不是时间结论', section:'时间', minutes:1.2,
+   purpose:'把 2024 降为 validity 小节，不再当时间主线。',
+   talk:['这是相关性，不是准确率。','T 和 R 的 2024 数字分开报。','加入 2022 的一次补充训练没有把相关拉回来。','2024 处理表里只有 1 种政治档案；把 2019 的政治块抹掉后 corr 从 0.71 掉到 0.17，大部分是输入缺失，残余很小。'],
    transition:'现象够用了。剩下的是还要做什么。'},
   {id:'next-steps', title:'先收口，再决定补什么', section:'计划', minutes:0.8,
    purpose:'把必须做的和可选的分开。',

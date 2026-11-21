@@ -1,19 +1,17 @@
-\chapter{Temporal Analysis and Ablations}
+\chapter{Temporal and Validity Analysis}
 \label{ch:temporal}
 
-\section{Per-Year Decay}
+\section{Per-Year Results and the Limits of the Comparison}
 
-The temporal protocol trains on 2016--2020 and tests on 2024. This is a dataset-shift
-evaluation \citep{quinonero2009dataset,ovadia2019shift}. Figure~\ref{fig:temporal}
-and the full table in Appendix~\ref{app:results} report a per-year view of the
-temporal-protocol model on the respondent-protocol rows: for each wave from 2016
-to 2024, the model is evaluated on the rows contributed by the 20\% hash-selected
-respondent numbers. The temporal model is trained on 2016--2020 for all
-respondents, so this view does not hold out respondent numbers; it isolates the
-year while holding the respondent pool fixed. The held-out-number models show the same 2024
-collapse on the full 2024 test set (correlation $-0.02$ to $-0.06$); on the
-strict 226-row T$\times$R cell the LLM correlations are $-0.09$ to $-0.15$
-(Appendix~\ref{app:second}).
+The temporal protocol trains on 2016--2020 and tests on 2024. This is a
+dataset-shift evaluation \citep{quinonero2009dataset,ovadia2019shift}.
+Figure~\ref{fig:temporal} and the full table in Appendix~\ref{app:results}
+report a per-year view of the temporal-protocol model on the respondent-protocol
+rows: for each wave from 2016 to 2024, the model is evaluated on the rows
+contributed by the 20\% hash-selected respondent numbers. The temporal model is
+trained on 2016--2020 for all respondents, so this view does not hold out
+respondent numbers; it isolates the year while holding the respondent pool
+fixed.
 
 \begin{figure}[t]
 \centering
@@ -23,18 +21,24 @@ HistGB. Shaded bands are standard deviations over three seeds.}
 \label{fig:temporal}
 \end{figure}
 
-For the fine-tuned LLM, the correlation is 0.722 in 2019, 0.478 in 2020, 0.408 in
-2022, and $-0.056$ in 2024; MAE rises from 19.20 to 25.39, 27.76, and 37.30.
-HistGB decays later but collapses in the same way: 0.746, 0.560, 0.657, and
-$-0.008$; MAE 18.85, 23.41, 27.98, and 35.52. Performance drops between 2019 and
-2020, but this drop should not be read as a wave effect: as
-Appendix~\ref{app:covariates} shows, 2020 has no 5-point ideology item (its 7-point \texttt{lcself} is present) and its
-partisanship scale is reversed, so the 2020 rows give the model contradictory
-inputs. The temporal boundary proper appears in 2022 and 2024. The LLM decays
-earlier than the tabular baseline: by 2022 its correlation is 0.408 while HistGB
-is still at 0.657.
+The raw table looks like a steep decay. For the fine-tuned LLM, the correlation
+is 0.722 in 2019, 0.478 in 2020, 0.408 in 2022, and $-0.056$ in 2024; MAE rises
+from 19.20 to 25.39, 27.76, and 37.30. HistGB moves in the same direction:
+0.746, 0.560, 0.657, and $-0.008$; MAE 18.85, 23.41, 27.98, and 35.52. It is
+tempting to read this as a temporal boundary, but three of the six waves cannot
+support that reading.
 
-\section{The 2024 Collapse and a Failed Mitigation}
+First, 2020 is not a clean in-domain wave: as Appendix~\ref{app:covariates}
+shows, it has no 5-point ideology item (its 7-point \texttt{lcself} is present)
+and its partisanship scale is reversed, so the model receives contradictory
+inputs. Second, 2022 is a validation wave with only 194 held-out rows, and the
+protocol changes the picture: the temporal-protocol model reaches a correlation
+of 0.408, while the R models on the same rows reach 0.55--0.68 and HistGB reaches
+0.59. Third, 2024 loses the political covariates in the processed table. The
+per-year table is therefore descriptive; it is not a clean four-year
+extrapolation.
+
+\section{The 2024 Case: Input Availability, Not a Clean Temporal Test}
 
 On the full 2024 test set the fine-tuned LLM reaches an MAE of 36.47 $\pm$ 0.75
 but a correlation of $-0.029$ $\pm$ 0.021; HistGB reaches 35.06 and $-0.030$. A
@@ -43,34 +47,40 @@ candidate-mean baseline reaches 34.84; the LLM's and HistGB's aggregate MAEs are
 therefore at or above the no-signal baseline. The MAE should not be read as
 evidence of individual-level signal; the correlation and prediction spread carry
 that information. The predictions concentrate on the middle of the scale: 3,173
-of 3,421 LLM
-predictions are exactly 50, and every Biden row is predicted as 50 (standard
-deviation 0.0), while Trump rows have a standard deviation of 17.4 and a
-correlation of $-0.014$. The anchor readout does not rescue the signal: its
+of 3,421 LLM predictions are exactly 50, and every Biden row is predicted as 50
+(standard deviation 0.0), while Trump rows have a standard deviation of 17.4 and
+a correlation of $-0.014$. The anchor readout does not rescue the signal: its
 correlation is 0.003 with a prediction standard deviation of 2.1, so its low ECE
-is an artefact of near-constant predictions. This is not LLM-specific: HistGB,
-which has no language-model component, also loses the individual signal. The
-comparison is nonetheless confounded: all 3,421 prompts for 2024 render the same
-political profile, because party identification, ideology, and education are
-absent from the processed 2024 table (Appendix~\ref{app:covariates}, Table~\ref{tab:covariates}).
-The 2024 evaluation therefore measures what both models do when the political
-covariates are removed, not only what four years of political change do.
+is an artefact of near-constant predictions.
+
+This is not LLM-specific: HistGB, which has no language-model component, also
+loses the individual signal. The comparison is nonetheless confounded: all 3,421
+prompts for 2024 render the same political profile, because party identification,
+ideology, and education are absent from the processed 2024 table
+(Appendix~\ref{app:covariates}, Table~\ref{tab:covariates}). The raw 2024 CSV is
+not missing these items---it stores them as text labels---but the current
+extraction does not map them to numeric columns. The 2024 evaluation therefore
+measures what both models do when the political covariates are removed, not what
+four years of political change do.
 
 A covariate-dropout probe estimates the size of this input effect
-(Appendix~\ref{app:covariates}, Table~\ref{tab:covariate_probe}). Replacing
-the political block in the 2019 held-out prompts with the 2024 defaults lowers
-the LLM correlation from 0.714 to 0.166 and HistGB from 0.734 to 0.172; MAE
-rises from 19.34 to 31.67 and from 19.04 to 31.46. The actual 2024 values for
-the same seed-42 R model and HistGB are $-0.055$/$+0.015$ correlation and
-37.78/35.11 MAE. Missing covariates therefore account for most, but not all, of
-the collapse: a smaller residual year or candidate-set shift remains, and the
-2024 result should not be read as a clean effect of political change.
+(Appendix~\ref{app:covariates}, Table~\ref{tab:covariate_probe}). Replacing the
+political block in the 2019 held-out prompts with the 2024 defaults lowers the
+LLM correlation from 0.714 to 0.166 and HistGB from 0.734 to 0.172; MAE rises
+from 19.34 to 31.67 and from 19.04 to 31.46. The actual 2024 values for the same
+seed-42 R model and HistGB are $-0.055$/$+0.015$ correlation and 37.78/35.11 MAE.
+Missing covariates therefore account for most, but not all, of the collapse: a
+smaller residual year or candidate-set shift remains. The 2024 case is a
+validity warning, not the thesis's temporal headline.
+
+\section{A Failed Mitigation}
 
 A natural mitigation is to add the most recent wave to training. The model is
 fine-tuned on the union of the 2016--2020 pool and the 2022 validation rows
 (9,017 rows) and evaluated on 2024. The result is unchanged: MAE 36.62,
-correlation $-0.030$, choice 0.525. Adding 2022 does not restore the signal,
-which points to a genuine distribution shift rather than a lack of recent data.
+correlation $-0.030$, choice 0.525. Adding 2022 does not restore the signal
+under the processed table. The result is consistent with an input-availability
+explanation and does not establish a temporal mechanism.
 
 \section{Ablations}
 
@@ -91,9 +101,18 @@ MAE by roughly half a point and lowers correlation by about 0.02. Because each
 ablation uses one seed, the thesis does not claim that each component is
 individually necessary; the full table is in Appendix~\ref{app:results}.
 
-The cross-pressure analysis on the R models gives a
-finer-grained view. The fine-tuned LLM is substantially better than HistGB on
-CP3, the identity-versus-party conflict (MAE 15.06--17.69 versus 20.67), and
-comparable on CP1 (18.94--21.73 versus 21.16). It is slightly worse on CP2
-(23.59--25.80 versus 23.06) and on non-conflict rows (21.15--21.48 versus 20.35).
-The cells are small, so the result is descriptive.
+The cross-pressure analysis is reported in Appendix~\ref{app:results} as an
+observation on the unrepaired table. It is not used as a main result: the CP3
+advantage is concentrated in 2018, whose processed partisanship column is a
+placeholder, and the cells are small.
+
+\section{What the Temporal Analysis Can and Cannot Support}
+
+The temporal analysis supports one narrow statement: under the processed table,
+both the LLM and the tabular baseline lose individual-level signal in the later
+waves, and adding the 2022 wave does not restore it. It does not support a claim
+that four years of political change cause the loss, because the 2024 input is
+degenerate and the 2020 input is corrupted. The corrected covariate table is a
+validity check; it is not used for a retrain in this thesis. A clean temporal
+claim would require a repaired feature table, a retrain, and a wave whose
+covariates are complete; we leave that to future work.

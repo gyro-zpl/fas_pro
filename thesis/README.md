@@ -38,7 +38,7 @@ pdflatex main
 pdflatex main
 ```
 
-The compiled PDF is `main.pdf` (35 pages total, 15-page main body).
+The compiled PDF is `main.pdf` (39 pages total, 17-page main body).
 
 ## Structure
 

@@ -1052,16 +1052,16 @@ def main(data_dir: Optional[str] = None,
     print(f"\n" + "="*80)
     print("步骤3: 合并所有年份数据")
     print("="*80)
-        
-        df_all = pd.concat(all_data, axis=0, ignore_index=True)
+
+    df_all = pd.concat(all_data, axis=0, ignore_index=True)
     print(f"\n合并后数据形状: {df_all.shape}")
     print(f"包含年份: {sorted(df_all['year'].unique())}")
     print(f"包含候选人数: {len(df_all['candidate'].unique())}")
-        
-        # 保存合并数据
-        merged_file = os.path.join(output_dir, 'anes_all_years_with_features.csv')
-        save_processed_data(df_all, merged_file)
-        
+
+    # 保存合并数据
+    merged_file = os.path.join(output_dir, 'anes_all_years_with_features.csv')
+    save_processed_data(df_all, merged_file)
+
     # 6. 准备训练数据
     print(f"\n" + "="*80)
     print("步骤4: 准备训练数据")

@@ -75,28 +75,24 @@ Master of Computer Science, Department of Computer Science
 \vspace{0.4cm}
 
 Large language models are increasingly used as virtual survey respondents, but
-most evaluations treat surveys as one-shot prompting tasks. This thesis presents
-a data-centric pipeline that reconstructs voter--candidate interactions from the
-American National Election Studies (ANES), aligns compact 8B models with survey
-distributions through LoRA fine-tuning, and evaluates them at the individual,
-population, and temporal levels. On held-out respondent numbers in the 2016--2019
-waves, the fine-tuned model reaches a mean absolute error of 21.35, a
-correlation of 0.666, and a rating-induced choice accuracy of 0.525 across three
-seeds against a chance level of 0.163. A gradient-boosted baseline on the same
-features reaches 20.73, 0.703, and 0.543; the MAE difference is small and
-seed-dependent, the baseline has a higher correlation, and tie-aware choice also
-favors the baseline. On
-General Social Survey policy attitudes, fine-tuning moves the model toward a
-reconstructed joint distribution, but direct sampling from that prior is more
-accurate: the prior reaches marginal and joint Jensen--Shannon divergences of
-0.0004 and 0.0076 on EDC, versus 0.0040 and 0.0215 for the fully covered
-fine-tuned run.
-The thesis then reports a sharp temporal boundary: individual-level correlation
-falls from 0.722 in 2019 to near zero in 2024, and both the language model and
-the tabular baseline collapse in 2024. Adding the 2022 wave to training does not
-help. The results suggest that structured alignment is necessary but not
-sufficient for social simulation, and that temporal distribution shift should be
-treated as a first-class evaluation axis.
+most evaluations ask whether a model can role-play a profile in one shot. This
+thesis builds a reproducible benchmark that reconstructs voter--candidate
+interactions from the American National Election Studies (ANES), aligns compact
+8B models with the resulting distribution through LoRA fine-tuning, and asks not
+whether the LLM wins, but how much structured alignment buys and where. On
+held-out respondent numbers in the 2016--2019 waves, fine-tuning lowers mean
+absolute error from 24.15 for the base model to 21.35 and closes 82\% of the
+MAE gap to a gradient-boosted baseline at 20.73, but it does not surpass that
+baseline; the gain is U-shaped, with lower error at the extremes of the rating
+scale and higher error in the middle, and the two models' error--extremity
+correlations have opposite signs. On General Social Survey policy attitudes, the
+same pipeline approaches but does not beat a reconstructed prior: the prior
+reaches marginal and joint Jensen--Shannon divergences of 0.0004 and 0.0076 on
+EDC, versus 0.0040 and 0.0215 for the fully covered fine-tuned run. Temporal
+generalization remains unproven, because the apparent 2024 collapse is dominated
+by covariate loss in the processed table rather than by a clean four-year shift.
+Structured alignment buys a usable, localized survey simulator, not a uniformly
+better one.
 
 \pagenumbering{roman}
 \setcounter{page}{0}

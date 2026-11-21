@@ -1,54 +1,90 @@
 \chapter{Results}
 \label{ch:results}
 
-\section{Individual-Level Results}
+\section{The Individual-Level Effect Ladder}
 
-The main in-distribution evaluation uses the respondent protocol restricted to
-the 2016, 2018, and 2019 waves: 2,726 rating rows from the 20\% hash holdout,
-whose respondent numbers do not appear in \texttt{train\_r}. Baselines are HistGB, a
+The individual-level question is not whether the LLM is the best predictor. It
+is how much of the distance from a no-information baseline to a strong tabular
+model is closed by structured alignment, and where that gain sits. The main
+in-distribution evaluation uses the respondent protocol restricted to the 2016,
+2018, and 2019 waves: 2,726 rating rows from the 20\% hash holdout, whose
+respondent numbers do not appear in \texttt{train\_r}. Baselines are HistGB, a
 gradient-boosting model \citep{friedman2001gbm}, and Ridge trained on
 \texttt{train\_r} with the same features, plus the base model with the same
 prompts but no fine-tuning. Confidence intervals are bootstrap 95\% intervals
 based on the nonparametric bootstrap \citep{efron1993bootstrap}, over rows for
 MAE and correlation and over respondent--year groups for choice.
 
-Table~\ref{tab:pas} reports the result. The fine-tuned LLM reaches an MAE of 21.35
-[20.87, 21.83], a correlation of 0.666 [0.652, 0.680], and a choice accuracy of
-0.525 $\pm$ 0.033 across seeds (range 0.490--0.569; tie-aware scoring gives
-0.481) against chance 0.163. HistGB reaches 20.73 [20.16, 21.26], 0.703 [0.684,
-0.724], and 0.543; Ridge is weaker at 22.86, 0.639, and 0.450. A
-second checkpoint, DeepSeek-R1-Distill-Llama-8B, trained under the same recipe
-reaches 21.37, 0.665, and 0.572 (Appendix~\ref{app:second}); the in-distribution
-signal is therefore not specific to Qwen3-8B.
-
 \input{tables/table2_pas}
 
-The honest reading is that the LLM is competitive with, but not superior to, a
-strong tabular baseline. A paired bootstrap over the same rows gives an
-LLM--GBM MAE difference of $+0.59$ $[-0.17,+1.32]$ for seed 42, $+0.42$
-$[-0.34,+1.19]$ for seed 43, and $+0.89$ $[+0.10,+1.67]$ for seed 44; the
-difference is small and only the seed-44 interval excludes zero, with the
-baseline never worse. The argmax choice difference is mixed ($+0.026$
-$[-0.005,+0.057]$, $-0.028$ $[-0.067,+0.010]$, and $-0.052$
-$[-0.103,-0.002]$), while tie-aware choice consistently favors the baseline
-($-0.057$ $[-0.092,-0.023]$, $-0.082$ $[-0.122,-0.040]$, and $-0.083$
-$[-0.134,-0.036]$). The correlation difference is consistently negative
-($-0.040$, $-0.033$, and $-0.039$). A respondent-level cluster bootstrap on
-seed 42 widens the MAE interval from $[-0.17,+1.32]$ to $[-0.40,+1.61]$ and
-keeps the correlation interval negative ($[-0.062,-0.019]$); the conclusions are
-unchanged. Fine-tuning, by contrast, improves MAE by 2.5--3.0 relative to the
-base model (seed 42: $-2.85$ $[-3.74,-2.03]$; seed 43: $-3.01$
-$[-3.95,-2.08]$; seed 44: $-2.54$ $[-3.50,-1.64]$), with a correlation gain of
-about $+0.07$ and a choice gain of $+0.01$ to $+0.09$ depending on seed. The
-language model therefore adds a unified interface and a rating distribution, not
-superior point prediction.
+Table~\ref{tab:pas} arranges the models as a ladder. The no-information
+baseline, which predicts the training mean for every row, reaches an MAE of
+32.65. The base model reaches 24.15, so prompting alone already carries
+substantial signal. Fine-tuning lowers MAE to 21.35, and HistGB reaches 20.73.
+The fine-tuned model therefore closes 82\% of the MAE gap between the base model
+and HistGB, 66\% of the correlation gap, and 72\% of the choice gap, but it does
+not close the remaining 18\% of that gap: the MAE difference is 0.62, the correlation
+is 0.037 lower, and tie-aware choice also favors HistGB (0.481 versus 0.555).
+A second checkpoint, DeepSeek-R1-Distill-Llama-8B, trained under the same recipe
+reaches 21.37, 0.665, and 0.572 (Appendix~\ref{app:second}); the signal is not
+specific to Qwen3-8B.
 
-Predictions are correlated with the truth but compressed toward the middle of the
-scale: on the in-distribution rows the LLM's prediction standard deviation is
-about 40, versus 24 for HistGB. The per-year breakdown and the 2024 collapse are
-reported in Chapter~\ref{ch:temporal}.
+The paired bootstrap tells the same story. The LLM--GBM MAE difference is
+$+0.59$ $[-0.17,+1.32]$ for seed 42, $+0.42$ $[-0.34,+1.19]$ for seed 43, and
+$+0.89$ $[+0.10,+1.67]$ for seed 44; only the seed-44 interval excludes zero,
+with the baseline never worse. The correlation difference is consistently
+negative ($-0.040$, $-0.033$, and $-0.039$), and tie-aware choice consistently
+favors the baseline ($-0.057$, $-0.082$, and $-0.083$). A respondent-level
+cluster bootstrap on seed 42 widens the MAE interval to $[-0.40,+1.61]$ and
+keeps the correlation interval negative ($[-0.062,-0.019]$). The honest reading
+is that structured alignment buys a usable predictor, not a uniformly better
+one.
 
-\section{Population-Level Results}
+\section{Where the Gain Sits: The Error Profile}
+
+\input{tables/table3b_profile}
+
+The average hides a structural pattern. Table~\ref{tab:profile} divides each
+wave into true-score quartiles. In every year the LLM is better than HistGB in
+Q1 and Q4, the lowest and highest true scores, and worse in Q2 and Q3, the middle
+of the scale. The pattern is not a small fluctuation: in 2019 the LLM's Q1 MAE
+is 13.6 against 19.5 for HistGB, and its Q4 MAE is 17.8 against 24.2, while its
+Q2 and Q3 MAEs are 26.5 and 22.0 against 16.9 and 15.5. The same crossing
+appears in 2016 and 2018 and in all three seeds.
+
+The error-extreme correlation summarizes the shape. Across the in-distribution
+rows, the correlation between absolute error and distance from the mean true
+score is $-0.18$ for the LLM and $+0.25$ for HistGB. The two models make errors
+in opposite regions: the LLM is relatively accurate at the tails and loses in
+the middle; HistGB is accurate in the middle and regresses toward the mean at the
+tails. This is consistent with the prediction spread: the LLM's standard
+deviation is about 40, versus 24 for HistGB. The LLM does not uniformly improve
+the mapping; it redistributes error from the tails to the middle, and the
+average MAE is nearly unchanged because the two effects offset.
+
+The profile is computed on the pre-repair table and should be read as a
+structural observation, not as a claim that survives every preprocessing choice.
+It is, however, stable across the three in-distribution waves and three seeds,
+and it explains why the average comparison is a poor summary of what alignment
+buys.
+
+\section{What the LLM Adds}
+
+Fine-tuning is necessary for the model to behave like a survey respondent rather
+than a generic assistant. On the same in-distribution rows, the base LLM reaches
+an MAE of 24.15, a correlation of 0.594, and a choice accuracy of 0.478; on the
+2020 wave it degrades to an MAE of 44.89 and a correlation of $-0.389$.
+Fine-tuning improves MAE by 2.5--3.0 relative to the base model, with a
+correlation gain of about $+0.07$ and a choice gain of $+0.01$ to $+0.09$
+depending on seed. This is a real change in behaviour, not a prompt artifact.
+
+What the LLM adds is not superior point prediction. It is a single model that
+consumes the same survey vignette, produces a rating distribution rather than a
+point estimate, and extends to population-level generation. The price is that
+the gain is localized: the LLM is better at the tails and worse in the middle,
+and a feature-engineered baseline remains stronger on average and in ranking.
+
+\section{Population-Level Results: What Was Not Bought}
 
 For each GSS configuration (EDC and EHC), the 2024 joint distribution is
 reconstructed from eight historical waves, and 400 synthetic respondents are

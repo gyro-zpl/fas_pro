@@ -6,13 +6,14 @@
 \toprule
 Model & MAE [95\% CI] & Correlation [95\% CI] & Choice [95\% CI] \\
 \midrule
-Fine-tuned LLM (3 seeds) & 21.35 [20.87, 21.83] & 0.666 [0.652, 0.680] & 0.525 [0.478, 0.573] \\
-HistGB & 20.73 [20.16, 21.26] & \textbf{0.703} [0.684, 0.724] & 0.543 [0.495, 0.591] \\
-Ridge & 22.86 [22.31, 23.48] & 0.639 [0.617, 0.661] & 0.450 [0.400, 0.502] \\
+No information (train mean) & 32.65 & -- & -- \\
 Base LLM & 24.15 [23.44, 24.89] & 0.594 [0.567, 0.619] & 0.478 [0.428, 0.529] \\
+Ridge & 22.86 [22.31, 23.48] & 0.639 [0.617, 0.661] & 0.450 [0.400, 0.502] \\
+Fine-tuned LLM (3 seeds) & 21.35 [20.87, 21.83] & 0.666 [0.652, 0.680] & 0.525 [0.478, 0.573] \\
+HistGB & \textbf{20.73} [20.16, 21.26] & \textbf{0.703} [0.684, 0.724] & \textbf{0.543} [0.495, 0.591] \\
 DeepSeek-R1-Distill (1 seed) & 21.37 [20.62, 22.25] & 0.665 [0.640, 0.687] & 0.572 [0.524, 0.617] \\
 \bottomrule
 \end{tabular}}
-\caption{PAS in-distribution results on held-out respondent numbers (2016--2019). Chance choice accuracy is 0.163. Choice is the per-seed argmax mean; tie-aware scoring gives 0.481 for the LLM and 0.555 for HistGB. The R protocol holds out respondent numbers within each wave; the same person may appear under another number in another wave.}
+\caption{PAS effect ladder on held-out respondent numbers (2016--2019). Fine-tuning closes 82\% of the MAE gap between the base model and HistGB (66\% of the correlation gap, 72\% of the choice gap), but 0.62 MAE remains. Chance choice accuracy is 0.163. Choice is the per-seed argmax mean; tie-aware scoring gives 0.481 for the LLM and 0.555 for HistGB. The R protocol holds out respondent numbers within each wave; the same person may appear under another number in another wave.}
 \label{tab:pas}
 \end{table}
