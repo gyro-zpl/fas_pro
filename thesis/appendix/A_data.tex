@@ -139,7 +139,7 @@ not a held-out-person guarantee.
 \label{app:covariates}
 
 The per-year analysis in Chapter~\ref{ch:temporal} assumes that the model sees
-comparable inputs in every wave. That assumption fails. Table~\ref{tab:covariates}
+comparable inputs in every wave. That assumption fails in the processed table. Table~\ref{tab:covariates}
 reports, for each wave, how often the political covariates are blank and how many
 distinct political profiles survive the prompt builder, which substitutes a
 default for a blank value (party 4 = Independent, ideology 3 = Moderate,
@@ -170,6 +170,11 @@ reversed (Section~\ref{app:covariates}); $^{\S}$ 256 rows carry out-of-range
 sentinels. In 2024 all 3,421 prompts render the same political line, so the wave
 contains no party or ideology signal at all.
 \end{table}
+
+The raw 2024 CSV is not missing these items: it stores party, ideology, and
+education as text labels, and the current extraction does not map them to the
+numeric columns. The 2018 placeholder \texttt{pid7} and the reversed 2020
+\texttt{pid7} are likewise pipeline issues, not absent ANES items.
 
 Two coding defects accompany the missing values. First, \texttt{pid7} in 2020 is
 reversed: it correlates $+0.658$ with liberal--conservative self-placement

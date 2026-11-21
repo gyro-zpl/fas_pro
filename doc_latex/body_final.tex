@@ -885,9 +885,9 @@ the same collapse: on the full 2024 test set their correlation is
 \$-\$0.09 to \$-\$0.15. The comparison is nonetheless confounded by
 covariate availability: all 3,421 prompts for 2024 render the same
 political profile, because party identification, ideology, and education
-are absent from that wave. The 2024 evaluation therefore measures what
-both models do when the political covariates are removed, not only what
-four years of political change do.
+are absent from the processed 2024 table. The 2024 evaluation therefore
+measures what both models do when the political covariates are removed,
+not only what four years of political change do.
 
 A covariate-dropout probe on the 2019 held-out rows replaces the
 political block with the 2024 defaults (Independent, Moderate, High
@@ -1064,15 +1064,17 @@ genuinely new respondent observed only in a future wave cannot be
 isolated from these files.
 
 \textbf{Covariate availability.} The waves are not comparable in what
-the model sees: 2024 has no party, ideology, or education item, so all
-3,421 prompts render one political profile; 2020 has no ideology item
-and a reversed partisanship scale (correlation with
-liberal--conservative self-placement \(-0.546\), against \(+0.658\) in
-2016); and 2018 stores partisanship as a sentinel. A dropout probe on
-the 2019 held-out rows lowers the LLM correlation from 0.714 to 0.166,
-so most of the 2024 collapse is input loss, with a smaller residual
-shift. The LLM-versus-baseline comparison is unaffected, since both
-consume the same features.
+the model sees: the processed 2024 table has no usable party, ideology,
+or education item, so all 3,421 prompts render one political profile
+(the raw file stores them as text labels that the current extraction
+does not map); 2020 has no 5-point ideology item and a reversed
+partisanship scale (correlation with liberal--conservative
+self-placement \(-0.546\), against \(+0.658\) in 2016); and the
+processed 2018 table uses the placeholder \texttt{pid7} instead of
+\texttt{pid7x}. A dropout probe on the 2019 held-out rows lowers the LLM
+correlation from 0.714 to 0.166, so most of the 2024 collapse is input
+loss, with a smaller residual shift. The LLM-versus-baseline comparison
+is unaffected, since both consume the same features.
 
 \textbf{Choice metric.} Choice accuracy is rating-induced: we compare
 the model's highest-scoring candidate with the candidate with the

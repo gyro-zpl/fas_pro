@@ -28,7 +28,7 @@ For the fine-tuned LLM, the correlation is 0.722 in 2019, 0.478 in 2020, 0.408 i
 HistGB decays later but collapses in the same way: 0.746, 0.560, 0.657, and
 $-0.008$; MAE 18.85, 23.41, 27.98, and 35.52. Performance drops between 2019 and
 2020, but this drop should not be read as a wave effect: as
-Appendix~\ref{app:covariates} shows, 2020 has no ideology item at all and its
+Appendix~\ref{app:covariates} shows, 2020 has no 5-point ideology item (its 7-point \texttt{lcself} is present) and its
 partisanship scale is reversed, so the 2020 rows give the model contradictory
 inputs. The temporal boundary proper appears in 2022 and 2024. The LLM decays
 earlier than the tabular baseline: by 2022 its correlation is 0.408 while HistGB
@@ -52,7 +52,7 @@ is an artefact of near-constant predictions. This is not LLM-specific: HistGB,
 which has no language-model component, also loses the individual signal. The
 comparison is nonetheless confounded: all 3,421 prompts for 2024 render the same
 political profile, because party identification, ideology, and education are
-absent from that wave (Appendix~\ref{app:covariates}, Table~\ref{tab:covariates}).
+absent from the processed 2024 table (Appendix~\ref{app:covariates}, Table~\ref{tab:covariates}).
 The 2024 evaluation therefore measures what both models do when the political
 covariates are removed, not only what four years of political change do.
 

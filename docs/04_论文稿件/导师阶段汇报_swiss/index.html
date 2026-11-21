@@ -2101,7 +2101,7 @@
       </div>
       <div class="ledger-row">
         <span class="ledger-num">35.05</span>
-        <span class="ledger-label">大量预测是 50；常数 50 的 MAE 已接近这个数。抹掉 2019 政治块后 corr 0.71→0.17，2024 主要是输入缺失。</span>
+        <span class="ledger-label">大量预测是 50；常数 50 的 MAE 已接近这个数。抹掉 2019 政治块后 corr 0.71→0.17，2024 主要是处理表输入缺失。</span>
         <i data-lucide="circle-dot" class="ledger-icon lucide"></i>
       </div>
     </div>
@@ -2241,7 +2241,7 @@ const SPEAKER_NOTES = [
    transition:'群体边界定了，回到 2024 的留出编号。'},
   {id:'year-2024', title:'2024，高低分不开了', section:'时间', minutes:1.2,
    purpose:'确认现象，拒绝因果解释。',
-   talk:['这是相关性，不是准确率。','T 和 R 的 2024 数字分开报。','加入 2022 的一次补充训练没有把相关拉回来。','不能直接说成政治环境变化：2024 的 3,421 条 prompt 只有 1 种政治档案；把 2019 的政治块抹掉后 corr 从 0.71 掉到 0.17，大部分是输入缺失，残余很小。'],
+   talk:['这是相关性，不是准确率。','T 和 R 的 2024 数字分开报。','加入 2022 的一次补充训练没有把相关拉回来。','不能直接说成政治环境变化：2024 处理表里只有 1 种政治档案（原始 CSV 有文本党派/意识形态/教育，可映射）；把 2019 的政治块抹掉后 corr 从 0.71 掉到 0.17，大部分是输入缺失，残余很小。'],
    transition:'现象够用了。剩下的是还要做什么。'},
   {id:'next-steps', title:'先收口，再决定补什么', section:'计划', minutes:0.8,
    purpose:'把必须做的和可选的分开。',
