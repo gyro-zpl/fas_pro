@@ -235,6 +235,13 @@ Group splits:
    splits but included in the 2020 block split.
 4. **Group coverage is uneven by year** (2016: 3, 2018: 6, 2019: 4, 2020: 9, 2022: 2),
    so group temporal splitting is not meaningful.
+5. **The feature pipeline does not reproduce the benchmark table**:
+   `codes/ANES_PAS/feature_engineer/create_interaction_features.py` currently fails to
+   import (`IndentationError` at line 1056), and re-running its feature functions on
+   unchanged rows disagrees with `data/anes/v3/anes_candidates_clean.csv` on 23 derived
+   columns (`demographic_similarity` 24,720 rows, `year_normalized` 22,193,
+   `race_match` 17,736). Treat the released table and splits as fixed artifacts; a
+   repaired retrain needs a single-year parity test first.
 5. **Prompt collisions**: 715 prompts have conflicting targets because different
    respondents can share every visible attribute. This is irreducible label noise,
    not leakage.
