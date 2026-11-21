@@ -1,4 +1,4 @@
-# Respondent-disjoint protocol (train_r -> test_r)
+# Respondent-held-out protocol (train_r -> test_r)
 
 In-distribution rows: 2016, 2018, 2019.
 

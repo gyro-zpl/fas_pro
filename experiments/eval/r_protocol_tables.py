@@ -1,4 +1,4 @@
-"""Tables for the respondent-disjoint protocol (train_r -> test_r).
+"""Tables for the respondent-held-out protocol (train_r -> test_r).
 
 Reads:
     experiments/results/preds/qwen3_r_seed{42,43,44}_test_r_generate.predictions.jsonl
@@ -307,7 +307,7 @@ def main() -> None:
     def fmt(x, nd=4):
         return f"{x:.{nd}f}"
 
-    lines = ["# Respondent-disjoint protocol (train_r -> test_r)", ""]
+    lines = ["# Respondent-held-out protocol (train_r -> test_r)", ""]
     lines.append("In-distribution rows: 2016, 2018, 2019.")
     lines.append("")
     lines.append("| Model | n | MAE | corr | choice | tie-aware | pred std |")
