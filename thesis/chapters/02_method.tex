@@ -31,12 +31,14 @@ similar but different-party).
 
 \section{Evaluation Protocols}
 
-The 2016--2024 ANES waves re-interview the same respondents, and no respondent
-appears only in 2022 or 2024, so a temporal split measures transfer to a later
-wave rather than generalization to new people. The analysis table, however,
-records only a within-wave respondent number: the same number in a different
-wave is a different person, and person-level linkage comes from the original
-case identifiers, which the table does not carry. The temporal protocol (T)
+The 2016--2024 ANES waves are designed as a panel, but the released files do
+not carry a cross-wave person key: the raw \texttt{caseid} is a within-wave
+1..N number, cross-wave birth-year agreement is 1.2--2.6\%, and the 2020 file
+carries only a random \texttt{ResponseId} (Appendix~\ref{app:person_linkage}).
+The analysis table records only a within-wave respondent number as well, so the
+same number in a different wave is a different person. A temporal split can
+therefore measure transfer to a later wave, but it cannot isolate
+generalization to new people. The temporal protocol (T)
 trains on 2016--2020 (6,516 rows), validates on 2022 (2,501), and tests on 2024
 (3,421). The respondent protocol (R) holds out 20\% of respondent numbers by a
 hash and builds the training pool from the existing sampled pool restricted to
