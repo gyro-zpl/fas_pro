@@ -136,6 +136,36 @@ python -m experiments.data.audit_person_linkage \
 Output: `results/00_person_linkage_audit.md` / `.json`. See
 `docs/03_进度与执行/人物级链接审计_2026-11-20.md` for the interpretation.
 
+## Covariate audit and dropout probe
+
+The per-year analysis is sensitive to what each wave actually measures. The
+audit reports missingness, the number of political profiles the prompt can
+render, and coding direction:
+
+```bash
+python -m experiments.data.audit_covariates
+```
+
+Output: `results/00_covariate_audit.md` / `.json`. In 2024 all 3,421 prompts
+render one political profile; 2020 has no ideology item and a reversed `pid7`;
+2018 stores `pid7` as a sentinel.
+
+The dropout probe asks whether that input loss explains the 2024 collapse. It
+reuses the committed seed-42 2019 predictions, runs the same LoRA adapter on the
+same rows with the political block replaced by the 2024 defaults, and evaluates
+HistGB on the original and ablated features:
+
+```bash
+CUDA_VISIBLE_DEVICES=3 HF_HUB_OFFLINE=1 python -m \
+  experiments.diagnostics.covariate_dropout_probe \
+  --lora /path/to/qwen3_8b_r_seed42
+```
+
+Output: `results/diagnostics/covariate_dropout_probe.md` / `.json` and the
+ablated predictions. On 1,302 2019 rows, LLM correlation falls from 0.714 to
+0.166 and HistGB from 0.734 to 0.172; MAE rises from 19.34 to 31.67 and 19.04 to
+31.46. Most of the 2024 loss is input loss, with a smaller residual shift.
+
 ## Model registry
 
 `config.MODELS` currently contains:

@@ -1,0 +1,142 @@
+{
+  "config": {
+    "split": "/home/jpzhao_team/cyyuan/bishe/fas_pro/data/anes/v3/splits/test_r.jsonl",
+    "preds": "/home/jpzhao_team/cyyuan/bishe/fas_pro/experiments/results/preds/qwen3_r_seed42_test_r_generate.predictions.jsonl",
+    "year": 2019,
+    "n_rows": 1302,
+    "lora": "/home/jpzhao_team/cyyuan/FAS_PRO/sft/sft_models/qwen3_8b_r_seed42",
+    "model": "qwen3-8b",
+    "prompt_profiles_original": 423,
+    "prompt_profiles_ablated": 1,
+    "example_original": "- Education: Bachelor's degree | - Political: Democrat, Liberal | - Party alignment: Different party | - Ideology distance: 4.0 (on 7-point scale)",
+    "example_ablated": "- Education: High school | - Political: Independent, Moderate | - Party alignment: Independent voter | - Ideology distance: 0.0 (on 7-point scale)"
+  },
+  "llm": {
+    "original": {
+      "n": 1302,
+      "mae": 19.3394777265745,
+      "rmse": 28.335384402132078,
+      "pearson": 0.7141655566170305,
+      "spearman": 0.7090408366222581,
+      "relaxed_acc": 0.5622119815668203,
+      "ece": 11.356374807987708,
+      "choice": {
+        "accuracy": 0.6649214659685864,
+        "n_groups": 191,
+        "n_candidates_mean": 6.816753926701571,
+        "chance": 0.15003739715781594,
+        "by_year": {
+          "2019": {
+            "accuracy": 0.6649214659685864,
+            "n_groups": 191,
+            "chance": 0.15003739715781572
+          }
+        }
+      },
+      "pairwise": {
+        "accuracy": 0.6737203317128968,
+        "n_pairs": 3497
+      },
+      "pred_std": 38.93124912914235,
+      "pred_mean": 43.614439324116745,
+      "n_distinct_pred": 10
+    },
+    "ablated": {
+      "n": 1302,
+      "mae": 31.667434715821813,
+      "rmse": 36.82890027607823,
+      "pearson": 0.1657711766069087,
+      "spearman": 0.16600840422181357,
+      "relaxed_acc": 0.22119815668202766,
+      "ece": 9.343317972350228,
+      "choice": {
+        "accuracy": 0.35602094240837695,
+        "n_groups": 191,
+        "n_candidates_mean": 6.816753926701571,
+        "chance": 0.15003739715781594,
+        "by_year": {
+          "2019": {
+            "accuracy": 0.35602094240837695,
+            "n_groups": 191,
+            "chance": 0.15003739715781572
+          }
+        }
+      },
+      "pairwise": {
+        "accuracy": 0.5376036602802402,
+        "n_pairs": 3497
+      },
+      "pred_std": 12.179832536740186,
+      "pred_mean": 52.363287250384026,
+      "n_distinct_pred": 3
+    },
+    "parse_rate": 1.0,
+    "raw_examples": [
+      "99",
+      "99",
+      "50",
+      "99",
+      "50"
+    ]
+  },
+  "tabular": {
+    "original": {
+      "n": 1302,
+      "mae": 19.037501793789865,
+      "rmse": 24.20844098532908,
+      "pearson": 0.7335929291734822,
+      "spearman": 0.7227724267416414,
+      "relaxed_acc": 0.45314900153609833,
+      "ece": 1.7840524690223931,
+      "choice": {
+        "accuracy": 0.6492146596858639,
+        "n_groups": 191,
+        "n_candidates_mean": 6.816753926701571,
+        "chance": 0.15003739715781594,
+        "by_year": {
+          "2019": {
+            "accuracy": 0.6492146596858639,
+            "n_groups": 191,
+            "chance": 0.15003739715781572
+          }
+        }
+      },
+      "pairwise": {
+        "accuracy": 0.6988847583643123,
+        "n_pairs": 3497
+      },
+      "pred_std": 24.996470559325722,
+      "pred_mean": 42.51847711662881,
+      "n_distinct_pred": 1284
+    },
+    "ablated": {
+      "n": 1302,
+      "mae": 31.4597799461614,
+      "rmse": 35.103181121599405,
+      "pearson": 0.1719629138548883,
+      "spearman": 0.1506322376549715,
+      "relaxed_acc": 0.14516129032258066,
+      "ece": 2.2302528046826495,
+      "choice": {
+        "accuracy": 0.35602094240837695,
+        "n_groups": 191,
+        "n_candidates_mean": 6.816753926701571,
+        "chance": 0.15003739715781594,
+        "by_year": {
+          "2019": {
+            "accuracy": 0.35602094240837695,
+            "n_groups": 191,
+            "chance": 0.15003739715781572
+          }
+        }
+      },
+      "pairwise": {
+        "accuracy": 0.5865027166142408,
+        "n_pairs": 3497
+      },
+      "pred_std": 6.985902952954062,
+      "pred_mean": 41.257372162790396,
+      "n_distinct_pred": 955
+    }
+  }
+}

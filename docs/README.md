@@ -55,7 +55,7 @@
   - Qwen3-8B base `test_t` zero-shot：MAE 46.20，choice 52.3%
   - **seed42 微调（100 条快速检查）**：`generate` MAE 34.56 / choice 0.64；`anchor` MAE 32.60 / choice 0.54；base 为 MAE 43.52、pred mean 86.7
 - **LaTeX 版本**：`doc_latex/main.pdf`（17 页，ACL 模板；源码 `doc_latex/main.tex`，已推送 GitHub）。
-- **英文毕业论文（UMAC 模板）**：`thesis/main.pdf`（**正文 13 页**，总 32 页；5 章 + 4 附录）。P0/P1 修改已完成，第二模型 checkpoint DeepSeek-R1-Distill-Llama-8B 已补入 Appendix D；FAS 已补 prior-only 基线（prior 优于 LLM）。
+- **英文毕业论文（UMAC 模板）**：`thesis/main.pdf`（**正文 15 页**，总 35 页；5 章 + 4 附录）。P0/P1 修改已完成，第二模型 checkpoint DeepSeek-R1-Distill-Llama-8B 已补入 Appendix D；FAS 已补 prior-only 基线（prior 优于 LLM）。
 - **关键判断（11-12 更新）**：微调在 `test_r` 上与 HistGB 持平，未显著超过；2024 完全塌缩（corr≈0，pred std 2–12）。论文主张定为：C1 在同分布年份（2016–2019）成立（row-level）；C2 FAS 中 LLM 接近但不超过重建 prior；C3 时间边界（2020→2024 单调衰减）。第二轮 review 见 `03_进度与执行/论文评审_第二轮_2026-11-12.md`。
 - **阻塞 / 已定决策**：Llama-3.1-8B 权重缺失，默认底座改为 Qwen3-8B；群体任务降为附录；配额退火不进正文。
 

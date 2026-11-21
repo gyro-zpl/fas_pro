@@ -28,8 +28,7 @@ For the fine-tuned LLM, the correlation is 0.722 in 2019, 0.478 in 2020, 0.408 i
 HistGB decays later but collapses in the same way: 0.746, 0.560, 0.657, and
 $-0.008$; MAE 18.85, 23.41, 27.98, and 35.52. Performance drops between 2019 and
 2020, but this drop should not be read as a wave effect: as
-Appendix~
-ef{app:covariates} shows, 2020 has no ideology item at all and its
+Appendix~\ref{app:covariates} shows, 2020 has no ideology item at all and its
 partisanship scale is reversed, so the 2020 rows give the model contradictory
 inputs. The temporal boundary proper appears in 2022 and 2024. The LLM decays
 earlier than the tabular baseline: by 2022 its correlation is 0.408 while HistGB
@@ -53,10 +52,19 @@ is an artefact of near-constant predictions. This is not LLM-specific: HistGB,
 which has no language-model component, also loses the individual signal. The
 comparison is nonetheless confounded: all 3,421 prompts for 2024 render the same
 political profile, because party identification, ideology, and education are
-absent from that wave (Appendix~ef{app:covariates}, Table~ef{tab:covariates}).
+absent from that wave (Appendix~\ref{app:covariates}, Table~\ref{tab:covariates}).
 The 2024 evaluation therefore measures what both models do when the political
-covariates are removed, not only what four years of political change do; a wave
-with complete covariates would be needed to separate the two.
+covariates are removed, not only what four years of political change do.
+
+A covariate-dropout probe estimates the size of this input effect
+(Appendix~\ref{app:covariates}, Table~\ref{tab:covariate_probe}). Replacing
+the political block in the 2019 held-out prompts with the 2024 defaults lowers
+the LLM correlation from 0.714 to 0.166 and HistGB from 0.734 to 0.172; MAE
+rises from 19.34 to 31.67 and from 19.04 to 31.46. The actual 2024 values for
+the same seed-42 R model and HistGB are $-0.055$/$+0.015$ correlation and
+37.78/35.11 MAE. Missing covariates therefore account for most, but not all, of
+the collapse: a smaller residual year or candidate-set shift remains, and the
+2024 result should not be read as a clean effect of political change.
 
 A natural mitigation is to add the most recent wave to training. The model is
 fine-tuned on the union of the 2016--2020 pool and the 2022 validation rows
