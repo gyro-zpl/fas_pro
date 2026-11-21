@@ -629,7 +629,7 @@
       <article class="level">
         <span class="level-tag">个体 · PAS</span>
         <div class="level-num">21.35</div>
-        <p>没见过的受访者上，微调 Qwen3-8B 的 MAE；强 GBM 是 20.73。LLM 与 GBM 持平，但略差。</p>
+        <p>同一波内留出的编号上，微调 Qwen3-8B 的 MAE；强 GBM 是 20.73。LLM 与 GBM 持平，但略差。</p>
       </article>
       <article class="level">
         <span class="level-tag">群体 · FAS</span>
@@ -763,7 +763,7 @@
   <section class="section" id="individual">
     <div class="section-head"><span class="section-num">05</span><h2>结果一：个体级</h2></div>
     <div class="prose">
-      <p>主结果使用 R 协议，2016/2018/2019 的 test_r：2,726 行、192 名没见过的受访者。chance choice = 0.163。</p>
+      <p>主结果使用 R 协议，2016/2018/2019 的 test_r：2,726 行、192 个留出编号（同一波内未出现在训练侧）。chance choice = 0.163。</p>
     </div>
 
     <div class="table-wrap">
@@ -957,7 +957,7 @@
         <h3>四个贡献</h3>
         <ol class="contrib-list">
           <li><strong>可复现的数据审计。</strong>把尾点重复名、群体目标混入、坏评分量化并清洗；给出 T / R 两套协议，明确面板数据的限制。</li>
-          <li><strong>个体级的诚实边界。</strong>在真正没见过的受访者上，8B 模型与强 GBM 持平但略差；微调显著优于 prompt-only；LLM 的价值是统一接口和评分分布。</li>
+          <li><strong>个体级的诚实边界。</strong>在同一波内留出的编号上，8B 模型与强 GBM 持平但略差；微调显著优于 prompt-only；LLM 的价值是统一接口和评分分布。</li>
           <li><strong>群体级的边界。</strong>prior-only 比所有 LLM 条件都准；LLM 接近先验但不超越；群体级贡献必须从“无条件分布匹配”转向“条件生成 / 自然语言控制”。</li>
           <li><strong>时间级的负面结果。</strong>四年后 LLM 和 GBM 都失去个体信号；recency 不缓解；strict T×R 也复现。时间偏移应成为一等评测轴。</li>
         </ol>
@@ -995,7 +995,7 @@
     <dl class="glossary">
       <div><dt>ANES / GSS</dt><dd>美国选举研究调查 / 美国综合社会调查。</dd></div>
       <div><dt>PAS / FAS</dt><dd>个体级“选民–候选人”评分预测 / 群体级联合分布生成。</dd></div>
-      <div><dt>T 协议 / R 协议</dt><dd>按年份切分 / 按受访者切分；R 协议测没见过的受访者。</dd></div>
+      <div><dt>T 协议 / R 协议</dt><dd>按年份切分 / 按编号切分；R 协议测同一波内留出的编号（人物级未验证）。</dd></div>
       <div><dt>LoRA</dt><dd>轻量微调，只训练小的低秩适配器；不重训整个 8B 模型。</dd></div>
       <div><dt>IPF</dt><dd>迭代比例拟合：调整列联表，使边际和联合约束匹配。</dd></div>
       <div><dt>Q*</dt><dd>从历史 GSS 外推 + IPF 重建出的 2024 联合分布。</dd></div>

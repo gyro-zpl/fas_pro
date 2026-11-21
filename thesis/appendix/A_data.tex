@@ -95,10 +95,12 @@ Year & Rows & Raw ID field & ID range & Birth-year match with 2016 \\
 \end{tabular}
 \par\smallskip\footnotesize
 Birth-year match is the share of overlapping IDs with the same birth year. Gender
-agreement ranges from 0\% to 52\%, also near chance. The processed
-\texttt{respondent\_id} (0--$N-1$) gives birth-year agreement of 0--2.6\% across
-waves. Raw rows and unique IDs are equal within every wave, so the failure is
-cross-wave linkage, not within-wave duplication.
+agreement is 48--52\% where both waves code gender numerically; the 0\% cells
+come from a missing or string-coded field (2020, 2024) and are not evidence
+either way. The processed \texttt{respondent\_id} (0--$N-1$) gives birth-year
+agreement of 0--2.6\% across waves; its 0\% cells come from waves that carry no
+birth year (2022). Raw rows and unique IDs are equal within every wave, so the
+failure is cross-wave linkage, not within-wave duplication.
 \end{table}
 
 Table~\ref{tab:number_overlap} separates the number-level guarantee from the
