@@ -45,3 +45,4 @@ r043,tables,r_protocol_tables.py,,test_r,,,done,2026-11-16 00:16,experiments/res
 r044,audit,audit_person_linkage.py,,,,done,2026-11-20 22:40,experiments/results/00_person_linkage_audit.md,experiments/results/00_person_linkage_audit
 r045,audit,audit_covariates.py,,,,done,2026-11-21 15:20,experiments/results/00_covariate_audit.md,experiments/results/00_covariate_audit
 r046,diagnostic,covariate_dropout_probe.py,qwen3_r_seed42,test_r,zero,generate,done,2026-11-21 16:20,experiments/results/diagnostics/covariate_dropout_probe.md,experiments/results/diagnostics/covariate_dropout_probe
+r047,repair,repair_covariates.py,,,,done,2026-11-21 18:35,experiments/results/00_covariate_repair.md,data/anes/v4_covariates

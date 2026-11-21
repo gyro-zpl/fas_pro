@@ -1,0 +1,134 @@
+{
+  "mapping": {
+    "2018": "raw pid7x instead of the placeholder pid7",
+    "2020": "reverse pid7 (8 - pid7); ideo5 from lcself",
+    "2024": "text pid7/ideo5/educ mapped to numeric; lcself from ideology_lcself",
+    "2016/2019/2022": "v3 values restricted to valid ranges"
+  },
+  "coverage": {
+    "2016": {
+      "rows": 10727,
+      "before": {
+        "pid7": 0.9883,
+        "ideo5": 1.0,
+        "educ": 1.0,
+        "lcself": 1.0
+      },
+      "after": {
+        "pid7": 0.9549,
+        "ideo5": 0.9259,
+        "educ": 1.0,
+        "lcself": 0.9962
+      }
+    },
+    "2018": {
+      "rows": 12161,
+      "before": {
+        "pid7": 1.0,
+        "ideo5": 1.0,
+        "educ": 1.0,
+        "lcself": 1.0
+      },
+      "after": {
+        "pid7": 0.9646,
+        "ideo5": 0.8881,
+        "educ": 1.0,
+        "lcself": 0.9975
+      }
+    },
+    "2019": {
+      "rows": 21347,
+      "before": {
+        "pid7": 1.0,
+        "ideo5": 1.0,
+        "educ": 1.0,
+        "lcself": 1.0
+      },
+      "after": {
+        "pid7": 0.9686,
+        "ideo5": 0.9254,
+        "educ": 1.0,
+        "lcself": 0.9988
+      }
+    },
+    "2020": {
+      "rows": 47334,
+      "before": {
+        "pid7": 1.0,
+        "ideo5": 0.0,
+        "educ": 1.0,
+        "lcself": 1.0
+      },
+      "after": {
+        "pid7": 0.999,
+        "ideo5": 1.0,
+        "educ": 0.9364,
+        "lcself": 1.0
+      }
+    },
+    "2022": {
+      "rows": 3169,
+      "before": {
+        "pid7": 1.0,
+        "ideo5": 1.0,
+        "educ": 1.0,
+        "lcself": 0.0
+      },
+      "after": {
+        "pid7": 0.9192,
+        "ideo5": 0.9148,
+        "educ": 1.0,
+        "lcself": 0.0
+      }
+    },
+    "2024": {
+      "rows": 3421,
+      "before": {
+        "pid7": 0.0,
+        "ideo5": 0.0,
+        "educ": 0.0,
+        "lcself": 0.0
+      },
+      "after": {
+        "pid7": 0.945,
+        "ideo5": 0.9006,
+        "educ": 1.0,
+        "lcself": 0.9982
+      }
+    }
+  },
+  "profiles": {
+    "2016": {
+      "before": 1156,
+      "after": 1075
+    },
+    "2018": {
+      "before": 287,
+      "after": 1021
+    },
+    "2019": {
+      "before": 1330,
+      "after": 1209
+    },
+    "2020": {
+      "before": 588,
+      "after": 1337
+    },
+    "2022": {
+      "before": 353,
+      "after": 306
+    },
+    "2024": {
+      "before": 1,
+      "after": 575
+    }
+  },
+  "direction": {
+    "2016": 0.6578,
+    "2018": 0.7268,
+    "2019": 0.708,
+    "2020": 0.5457,
+    "2022": null,
+    "2024": 0.7142
+  }
+}

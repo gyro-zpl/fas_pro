@@ -166,6 +166,29 @@ ablated predictions. On 1,302 2019 rows, LLM correlation falls from 0.714 to
 0.166 and HistGB from 0.734 to 0.172; MAE rises from 19.34 to 31.67 and 19.04 to
 31.46. Most of the 2024 loss is input loss, with a smaller residual shift.
 
+## Covariate repair (v4_covariates)
+
+The v3 table loses the 2024 political covariates because the raw file stores
+them as text labels; 2018 uses the placeholder `pid7` instead of `pid7x`, and
+2020's `pid7` is reverse-coded. The repair script rebuilds the covariates from
+the raw CSVs without touching v3:
+
+```bash
+python -m experiments.data.repair_covariates   --raw-dir /path/to/FAS_PRO/data/anes/raw_data
+```
+
+Outputs:
+
+| File | Content |
+|---|---|
+| `data/anes/v4_covariates/anes_covariates_repaired.csv` | respondent-level repaired covariates |
+| `data/anes/v4_covariates/anes_candidates_base_v4cov.csv` | row-level base table (not training-ready) |
+| `results/00_covariate_repair.md` / `.json` | coverage before/after and profile counts |
+
+2024 recovers 94% `pid7`, 90% `ideo5`, 100% `educ`, and 1 → 575 political
+profiles; 2018 `pid7x` is 96% valid; 2020 `8 - pid7` gives a +0.55 correlation
+with `lcself`. The interaction features must be recomputed before any retrain.
+
 ## Model registry
 
 `config.MODELS` currently contains:
