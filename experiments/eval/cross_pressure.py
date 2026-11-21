@@ -1,8 +1,8 @@
 """Cross-pressure subgroup analysis (in-distribution 2016-2019).
 
 Outputs:
-    experiments/results/paper_tables/cross_pressure.json
-    experiments/results/paper_tables/cross_pressure.md
+    experiments/results/paper_tables/legacy/cross_pressure.json
+    experiments/results/paper_tables/legacy/cross_pressure.md
 """
 from __future__ import annotations
 
@@ -54,7 +54,7 @@ def main() -> None:
             }
         out[name] = entry
 
-    out_dir = config.RESULTS / "paper_tables"
+    out_dir = config.RESULTS / "paper_tables" / "legacy"
     with open(out_dir / "cross_pressure.json", "w") as f:
         json.dump(out, f, indent=2, ensure_ascii=False)
 

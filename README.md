@@ -124,15 +124,17 @@ $PY -m experiments.eval.r_protocol_tables --seeds 42,43,44
 论文表与图：
 
 ```bash
-python -m experiments.eval.paper_tables
+python -m experiments.eval.paper_tables        # T 协议按年（legacy 用途）
 python -m experiments.eval.ablation_table
-python -m experiments.eval.bootstrap_main
-python -m experiments.eval.paired_bootstrap
 python -m experiments.eval.gss_tables
 python -m experiments.eval.fas_coverage
-python -m experiments.eval.cross_pressure
 python -m experiments.eval.make_figures
-python -m experiments.eval.r_protocol_tables --seeds 42,43,44
+python -m experiments.eval.r_protocol_tables --seeds 42,43,44   # 主表
+
+# T 协议的旧表：只写到 paper_tables/legacy/，不要引用
+python -m experiments.eval.bootstrap_main
+python -m experiments.eval.paired_bootstrap
+python -m experiments.eval.cross_pressure
 ```
 
 ---

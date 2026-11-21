@@ -1,8 +1,8 @@
 """Paired bootstrap: LLM vs GBM vs base on the same in-distribution rows.
 
 Outputs:
-    experiments/results/paper_tables/paired_bootstrap.json
-    experiments/results/paper_tables/paired_bootstrap.md
+    experiments/results/paper_tables/legacy/paired_bootstrap.json
+    experiments/results/paper_tables/legacy/paired_bootstrap.md
 """
 from __future__ import annotations
 
@@ -84,7 +84,7 @@ def main() -> None:
     table["base_minus_gbm"] = _paired(base, gbm)
     table["llm_seed42_minus_base"] = _paired(llm[42], base)
 
-    out_dir = config.RESULTS / "paper_tables"
+    out_dir = config.RESULTS / "paper_tables" / "legacy"
     with open(out_dir / "paired_bootstrap.json", "w") as f:
         json.dump(table, f, indent=2, ensure_ascii=False)
 

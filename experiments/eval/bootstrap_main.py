@@ -1,8 +1,8 @@
 """Bootstrap 95% CIs for the main PAS results.
 
 Outputs:
-    experiments/results/paper_tables/bootstrap_main.json
-    experiments/results/paper_tables/bootstrap_main.md
+    experiments/results/paper_tables/legacy/bootstrap_main.json
+    experiments/results/paper_tables/legacy/bootstrap_main.md
 """
 from __future__ import annotations
 
@@ -72,7 +72,7 @@ def main() -> None:
             "all": _bootstrap(df),
         }
 
-    out_dir = config.RESULTS / "paper_tables"
+    out_dir = config.RESULTS / "paper_tables" / "legacy"
     with open(out_dir / "bootstrap_main.json", "w") as f:
         json.dump(table, f, indent=2, ensure_ascii=False)
 

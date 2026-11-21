@@ -17,14 +17,17 @@
 | `pas_by_year.md` | T 协议按年（时间分析用） | `paper_tables.py` | T |
 | `ablation.md` | 消融 A1–A3 | `ablation_table.py` | T，1 seed |
 
-## legacy（勿引用）
+## legacy/（勿引用）
+
+`legacy/` 存放 T 协议时期的旧表。对应的三个脚本（`bootstrap_main.py`、`paired_bootstrap.py`、
+`cross_pressure.py`）现在也只写入这个目录，不会污染顶层。
 
 | 文件 | 为什么过时 |
 |---|---|
-| `bootstrap_main.md/.json` | 用 T 协议模型 + 池化 choice（0.518）算的旧主表；已被 `r_protocol.md` 取代 |
-| `second_family.md` | 旧 T 协议下的第二 checkpoint 对比 |
-| `cross_pressure.md` | 旧 T 协议交叉压力；R 版见 `r_cross_pressure.md` |
-| `paired_bootstrap.md` | 旧 T 协议配对检验 |
+| `legacy/bootstrap_main.md/.json` | 用 T 协议模型 + 池化 choice（0.518）算的旧主表；已被 `r_protocol.md` 取代 |
+| `legacy/second_family.md` | 旧 T 协议下的第二 checkpoint 对比（无生成脚本，手工表） |
+| `legacy/cross_pressure.md` | 旧 T 协议交叉压力；R 版见 `r_cross_pressure.md` |
+| `legacy/paired_bootstrap.md` | 旧 T 协议配对检验 |
 
 ## 未落盘的数字
 
