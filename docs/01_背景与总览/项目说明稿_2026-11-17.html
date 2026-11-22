@@ -583,7 +583,7 @@
       </div>
       <aside class="thesis-card">
         <span class="label">一句话结论</span>
-        <p>结构化对齐是必要的，但不是充分的。</p>
+        <p>买到了“能用”，没买到“更好”；而且“能用”是有形状的。</p>
       </aside>
     </div>
     <div class="byline">
@@ -629,7 +629,7 @@
       <article class="level">
         <span class="level-tag">个体 · PAS</span>
         <div class="level-num">21.35</div>
-        <p>同一波内留出的编号上，微调 Qwen3-8B 的 MAE；强 GBM 是 20.73。LLM 与 GBM 持平，但略差。</p>
+        <p>微调 Qwen3-8B 的 MAE；强 GBM 是 20.73。吃掉 base→GBM 差距的 82%，但不反超。</p>
       </article>
       <article class="level">
         <span class="level-tag">群体 · FAS</span>
@@ -639,7 +639,7 @@
       <article class="level">
         <span class="level-tag">时间 · 2019 → 2024</span>
         <div class="level-num">0.72 → −0.06</div>
-        <p>个体相关性塌缩；GBM 也从 0.75 掉到 −0.01。不是 LLM 特有，是分布偏移。</p>
+        <p>表观相关性接近零；2024 的政治协变量在处理表里全丢，把 2019 的政治块抹掉也能复现大部分损失。</p>
       </article>
     </div>
   </section>
@@ -660,7 +660,7 @@
       <article class="rq">
         <span class="tag">RQ3 · 时间</span>
         <h3>行为能不能跨调查波次迁移？</h3>
-        <p>四年后还能用吗？答案：2019 到 2024 个体信号塌缩；LLM 和 GBM 都一样。</p>
+        <p>四年后还能用吗？答案：表观相关性接近零，但 2024 的政治协变量在处理表里全丢；输入缺失本身就能复现大部分损失，所以不是干净的四年外推。</p>
       </article>
     </div>
   </section>
@@ -868,9 +868,9 @@
   </section>
 
   <section class="section" id="temporal">
-    <div class="section-head"><span class="section-num">07</span><h2>结果三：时间级</h2></div>
+    <div class="section-head"><span class="section-num">07</span><h2>结果三：时间——没有干净结论</h2></div>
     <div class="prose">
-      <p>T 协议：2016–2020 训练，2024 测试。按年看，个体相关性从 2019 年的 0.72 掉到 2024 年的约 0。GBM 同样塌缩。</p>
+      <p>T 协议：2016–2020 训练，2024 测试。按年看，个体相关性从 2019 年的 0.72 掉到 2024 年的约 0，GBM 同样下降。但 2020 缺 5 点意识形态且党派反向、2022 只有 194 行、2024 的政治协变量全丢，所以这不是干净的四年外推。</p>
     </div>
 
     <figure class="chart">
@@ -1012,9 +1012,9 @@
       <div class="qa"><p class="q">为什么不用 GPT-4？</p><p class="a">用开源 8B 模型是为了可复现、可本地训练、成本可控；GPT-4 不能本地微调，API 也会变。更大的模型和更多家族是 future work。</p></div>
       <div class="qa"><p class="q">为什么 GBM 这么强？</p><p class="a">因为特征工程把党派、意识形态、候选人属性、交互都显式编码了；GBM 在小数据上非常强。LLM 的价值不是“点预测更强”，而是统一接口、评分分布、可扩展到群体生成。</p></div>
       <div class="qa"><p class="q">为什么 prior 比 LLM 还准？</p><p class="a">因为 prior 就是用历史 GSS 外推 + IPF 重建出来的；LLM 是在学习这个 prior 的采样。直接采样 prior 当然更准。LLM 的潜在价值在条件生成 / 自然语言控制，不是无条件分布匹配。</p></div>
-      <div class="qa"><p class="q">2024 塌缩是不是因为模型没看过 2024？</p><p class="a">不是。加入 2022 年数据不缓解；GBM 也塌缩；R 模型也塌缩。这是分布偏移，不是“缺最近数据”。</p></div>
+      <div class="qa"><p class="q">2024 塌缩是不是因为模型没看过 2024？</p><p class="a">不是。2024 的党派、意识形态、教育在处理表里全丢了，3,421 条 prompt 只有 1 种政治档案。把 2019 的政治块抹掉，相关性从 0.714 掉到 0.166——输入缺失本身就能复现大部分损失。所以是输入退化，不是干净的时间结论。</p></div>
       <div class="qa"><p class="q">“LLM 与 GBM 持平”是不是说明 LLM 没用？</p><p class="a">不是。它说明在这个任务、这个数据、这个 8B 模型上，LLM 没有超过强特征工程；但 LLM 提供了统一接口和分布输出，且能扩展到群体生成。论文的价值是把边界说清楚，而不是夸大。</p></div>
-      <div class="qa"><p class="q">这篇论文最大的贡献是什么？</p><p class="a">三件事：可复现的数据审计与 T/R 协议；个体、群体、时间三个层面的边界量化；诚实的负面结果（GBM 更强、prior 更强、四年后塌缩）。</p></div>
+      <div class="qa"><p class="q">这篇论文最大的贡献是什么？</p><p class="a">三件事：可复现的基准与两套协议；用“阶梯 + 误差剖面”回答结构化对齐买到了什么（82%、两端更好中间更差）；两项有效性审计（人物级链接、协变量可用性），说明表观的时间塌缩主要来自输入退化。</p></div>
     </div>
   </section>
 
@@ -1025,8 +1025,8 @@
         <li><strong>问题</strong>：LLM 能不能当虚拟受访者？不是“演得像不像”，而是个体、群体、时间三个层面。</li>
         <li><strong>数据</strong>：ANES 2016–2024（132,948 → 98,159 行）；GSS 2004–2022 → 2024。</li>
         <li><strong>方法</strong>：Qwen3-8B + LoRA；R 协议主结果；T 协议时间；FAS 外推 + IPF + SFT；prior-only 基线。</li>
-        <li><strong>结果</strong>：个体 21.35/0.666/0.525 vs GBM 20.73/0.703/0.543；群体 prior 0.0076/0.0225 vs LLM 0.0215/0.0363；时间 0.722 → −0.056。</li>
-        <li><strong>结论</strong>：结构化对齐必要但不充分；时间偏移是一等评测轴。</li>
+        <li><strong>结果</strong>：阶梯 32.65 → 24.15 → 21.35 → 20.73（吃掉 82% 差距、不反超）；误差剖面两端 LLM 更好、中间 HistGB 更好；群体 prior 0.0076/0.0225 vs LLM 0.0215/0.0363；时间没有干净证据。</li>
+        <li><strong>结论</strong>：结构化对齐买到“能用”，没买到“更好”；评测要同时看平均、看位置、看输入是否有效。</li>
         <li><strong>态度</strong>：不夸大、不隐藏负面结果；把边界量化，让后续工作更容易校准。</li>
       </ul>
     </div>

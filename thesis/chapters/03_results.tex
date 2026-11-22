@@ -19,12 +19,18 @@ MAE and correlation and over respondent--year groups for choice.
 
 Table~\ref{tab:pas} arranges the models as a ladder. The no-information
 baseline, which predicts the training mean for every row, reaches an MAE of
-32.65. The base model reaches 24.15, so prompting alone already carries
-substantial signal. Fine-tuning lowers MAE to 21.35, and HistGB reaches 20.73.
+32.65. Predicting each candidate's training mean instead reaches 32.35 with a
+correlation of 0.155 and a choice accuracy of 0.304, so candidate identity alone
+supplies some signal. The base model reaches 24.15, so prompting alone already
+carries substantial signal. Fine-tuning lowers MAE to 21.35, and HistGB reaches 20.73.
 The fine-tuned model therefore closes 82\% of the MAE gap between the base model
 and HistGB, 66\% of the correlation gap, and 72\% of the choice gap, but it does
 not close the remaining 18\% of that gap: the MAE difference is 0.62, the correlation
 is 0.037 lower, and tie-aware choice also favors HistGB (0.481 versus 0.555).
+Measured against the no-information baseline rather than the base model,
+fine-tuning closes 95\% of the total distance to HistGB, and prompting alone
+already closes 71\%; the two denominators answer different questions and both
+are reported.
 A second checkpoint, DeepSeek-R1-Distill-Llama-8B, trained under the same recipe
 reaches 21.37, 0.665, and 0.572 (Appendix~\ref{app:second}); the signal is not
 specific to Qwen3-8B.

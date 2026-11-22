@@ -19,7 +19,7 @@ Follows the UMAC FST master's thesis template:
 - Front matter: title page, abstract, TOC, list of figures, list of tables, list of abbreviations
 - Page numbers: preliminary pages bottom center (TOC first page unnumbered); text pages top center; first page of each chapter/bibliography/appendix counted but unnumbered
 - Table captions above tables; figure captions below figures
-- Main body: Chapters 1--5, **13 pages**
+- Main body: Chapters 1--5, **17 pages**
 - Back matter: bibliography, appendices A--D, vita (not listed in TOC)
 
 ## Build
