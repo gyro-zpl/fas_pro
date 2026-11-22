@@ -32,7 +32,8 @@ fine-tuning closes 95\% of the total distance to HistGB, and prompting alone
 already closes 71\%; the two denominators answer different questions and both
 are reported.
 A second checkpoint, DeepSeek-R1-Distill-Llama-8B, trained under the same recipe
-reaches 21.37, 0.665, and 0.572 (Appendix~\ref{app:second}); the signal is not
+reaches 21.37, 0.665, and 0.572 (Appendix~\ref{app:second},
+Table~\ref{tab:second}); the signal is not
 specific to Qwen3-8B.
 
 The paired bootstrap tells the same story. The LLM--GBM MAE difference is
@@ -97,7 +98,8 @@ reconstructed from eight historical waves, and 400 synthetic respondents are
 sampled and compared with the empirical 2024 sample (1,601 for EDC, 1,552 for
 EHC). JS divergence is reported on the three marginals and the three pairwise
 joints; lower is better. As a reference, we also draw 400 rows directly from the
-reconstructed joint $Q^{\ast}$ without a language model.
+reconstructed joint $Q^{\ast}$ without a language model. Table~\ref{tab:fas}
+reports the result.
 
 \input{tables/table3_fas}
 
@@ -125,7 +127,8 @@ model from v3 on both configurations (EDC marginal 0.0552 [0.0476, 0.0644] vs 0.
 separate the prior from v3 on the joint metric (EDC 0.0076 [0.0070, 0.0141] vs
 0.0215 [0.0181, 0.0305]; EHC 0.0225 [0.0192, 0.0308] vs 0.0363 [0.0332,
 0.0458]). The SFT and v3 intervals overlap, so the two SFT runs are not ranked.
-The full table is in Appendix~\ref{app:fas}.
+The full table is in Appendix~\ref{app:fas} (Tables~\ref{tab:fas_full}
+and~\ref{tab:fas_ci}).
 
 Component analysis shows that RAG alone is close to the base model (EDC 0.0473,
 EHC 0.0404) and that RAG plus SFT performs like direct SFT. The movement

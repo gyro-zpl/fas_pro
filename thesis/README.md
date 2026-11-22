@@ -50,8 +50,8 @@ thesis/
 ├── chapters/
 │   ├── 01_intro.tex      # introduction + related work
 │   ├── 02_method.tex     # data construction + method
-│   ├── 03_results.tex    # individual + population results
-│   ├── 04_temporal.tex   # temporal analysis + ablations
+│   ├── 03_results.tex    # effect ladder + error profile + population
+│   ├── 04_temporal.tex   # temporal and validity analysis + ablations
 │   └── 05_conclusion.tex # limitations + conclusion
 ├── appendix/
 │   ├── A_data.tex        # data audit, splits, sampling, features
@@ -59,8 +59,9 @@ thesis/
 │   ├── C_fas.tex         # full FAS table, prompts, hyperparameters
 │   └── D_second_family.tex # DeepSeek-R1-Distill-Llama-8B robustness check
 ├── tables/
-│   ├── table2_pas.tex
-│   └── table3_fas.tex
+│   ├── table2_pas.tex        # effect ladder
+│   ├── table3_fas.tex        # population-level JS
+│   └── table3b_profile.tex   # error profile by true-score quartile
 ├── figures/
 │   ├── fig1_pipeline.pdf      # architecture of the PAS and FAS pipelines
 │   ├── fig2_temporal_decay.pdf
