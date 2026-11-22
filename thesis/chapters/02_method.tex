@@ -122,3 +122,14 @@ averaged; because the model emits integer ratings, ties are common, and a
 tie-aware variant is reported in Section~\ref{ch:results}. FAS reports
 Jensen--Shannon divergence \citep{lin1991js} and symmetric KL on each marginal
 and pairwise joint, averaged over attributes or pairs.
+
+\paragraph{Analysis plan.} The thesis reports two pre-specified quantities and
+treats the second as its primary inferential test. The first is the share of the
+base-to-HistGB gap that fine-tuning closes, reported with paired bootstrap
+intervals over rows and, for choice, over respondent--year groups. The second is
+the middle-minus-tail contrast in the error profile: the mean MAE difference
+between the two middle true-score quartiles and the two outer ones, tested with a
+paired permutation test over respondents and a respondent-cluster bootstrap.
+Per-cell intervals use Holm correction across the 12 year-by-quartile cells; all
+other comparisons are reported as estimates with intervals rather than as
+hypothesis tests.

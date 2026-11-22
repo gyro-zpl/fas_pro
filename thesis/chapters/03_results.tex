@@ -33,7 +33,10 @@ already closes 71\%; the two denominators answer different questions and both
 are reported. Removing the 2018 wave, whose processed partisanship is a
 placeholder, leaves 1,999 rows on which the base model reaches 22.23, the
 fine-tuned model 20.76, and HistGB 20.31: fine-tuning then closes 77\% of that
-gap instead of 82\%, and the ordering is unchanged.
+gap instead of 82\%, and the ordering is unchanged. Both denominators compare
+two models trained and read on the same processed table, so the ladder measures
+relative distance on these inputs, not distance to an absolute ceiling; the
+77--82\% bracket is the honest range.
 A second checkpoint, DeepSeek-R1-Distill-Llama-8B, trained under the same recipe
 reaches 21.37, 0.665, and 0.572 (Appendix~\ref{app:second},
 Table~\ref{tab:second}); the signal is not
@@ -66,7 +69,8 @@ The crossing is not a small-sample artefact. Across the 12 year-by-quartile
 cells the predicted sign holds in all 12 (paired permutation $p=0.0003$, 20,000
 permutations), and every cell remains significant after Holm correction
 (maximum $p=0.0139$). The middle-minus-tail contrast is $+16.45$ MAE
-points $[14.78, 18.09]$, one-sided $p<0.0001$. Per-cell respondent-cluster
+points $[14.78, 18.09]$, one-sided $p<0.0001$; this contrast is the primary
+hypothesis test of the thesis, as fixed in Section~\ref{ch:method}. Per-cell respondent-cluster
 bootstrap intervals for the LLM--HistGB difference exclude zero in every cell.
 
 The error--extremity correlation summarizes the shape. Across the in-distribution

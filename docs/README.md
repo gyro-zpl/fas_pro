@@ -15,7 +15,7 @@
 答辩投影用架构图：[16:9 PDF](01_背景与总览/架构图_16x9.pdf) · [PNG](01_背景与总览/架构图_16x9.png)。
 
 > **毕设**：From Prompting to Social Cognition — PAS/FAS 框架的机制深化
-> **最后更新**：2026-11-12 22:30
+> **最后更新**：2026-11-22（定稿版）
 > **项目根目录**：`/home/jpzhao_team/cyyuan/FAS_PRO`
 
 ---

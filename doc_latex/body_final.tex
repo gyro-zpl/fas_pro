@@ -550,6 +550,15 @@ Jensen--Shannon divergence \citep{lin1991js}, abbreviated JS, and
 symmetric KL divergence on each marginal and on each pairwise joint,
 averaged over the three attributes or three pairs.
 
+\paragraph{Analysis plan.} Two quantities are pre-specified. The first is
+the share of the base-to-HistGB gap that fine-tuning closes, reported with
+paired bootstrap intervals. The second is the middle-minus-tail contrast in
+the error profile---the mean MAE difference between the two middle
+true-score quartiles and the two outer ones---tested with a paired
+permutation test over respondents and a respondent-cluster bootstrap, with
+Holm correction across the 12 year-by-quartile cells. The second is the
+paper's primary inferential test.
+
 All results are produced by scripts under \texttt{experiments/};
 predictions are saved per row, and every table in the paper is generated
 from those files. The main PAS results use three seeds; the ablations
@@ -584,8 +593,12 @@ which predicts the training mean for every row, reaches an MAE of 32.65.
 The base LLM reaches 24.15, Ridge 22.86, the fine-tuned LLM 21.35, and
 HistGB 20.73. Fine-tuning therefore closes 82\% of the MAE gap between
 the base model and HistGB, 66\% of the correlation gap, and 72\% of the
-choice gap, but it does not close the remaining 18\% of that gap: the
-MAE difference is 0.62, the correlation is 0.037 lower, and tie-aware
+choice gap, but it does not close the remaining 18\% of that gap. Both
+models are read on the same processed table, so the ladder measures
+relative distance on these inputs rather than distance to an absolute
+ceiling; excluding the 2018 wave, whose processed partisanship is a
+placeholder, closes 77\% of the base-to-HistGB gap over 1,999 rows.
+The remaining difference is 0.62 MAE, the correlation is 0.037 lower, and tie-aware
 choice favors HistGB (0.481 versus 0.555). A second checkpoint,
 DeepSeek-R1-Distill-Llama-8B, trained on \texttt{train\_r} with one
 seed, reaches 21.37, 0.665, and 0.572; the in-distribution signal is
