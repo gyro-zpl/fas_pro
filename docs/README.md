@@ -55,7 +55,7 @@
   - Qwen3-8B base `test_t` zero-shot：MAE 46.20，choice 52.3%
   - **seed42 微调（100 条快速检查）**：`generate` MAE 34.56 / choice 0.64；`anchor` MAE 32.60 / choice 0.54；base 为 MAE 43.52、pred mean 86.7
 - **LaTeX 版本**：源码 `doc_latex/main.tex` + `body_final.tex`（ACL 模板，最近一次编译 18 页）；Overleaf 包 `fas_pro_overleaf_acl.zip`，PDF 不入库。
-- **英文毕业论文（UMAC 模板）**：`thesis/`（源码，正文 17 页、总 39 页；5 章 + 4 附录）；Overleaf 包 `fas_pro_overleaf_thesis.zip`，PDF 不入库。
+- **英文毕业论文（UMAC 模板）**：`thesis/`（源码，正文 18 页、总 40 页；5 章 + 4 附录）；Overleaf 包 `fas_pro_overleaf_thesis.zip`，PDF 不入库。
 - **关键判断（11-22 更新）**：叙事已改为“多少 / 哪里 / 没买到”——微调吃掉 base→HistGB 差距的 82%，但不反超；增益集中在量表两端（U 形）；群体接近 prior 但不超越；时间没有干净证据（2024 表观塌缩主要来自协变量缺失）。见 [口径总表](口径总表_2026-11-21.md) 与 [论文骨架 v2](02_计划与清单/论文骨架_v2_效果剖面_2026-11-22.md)。
 - **阻塞 / 已定决策**：Llama-3.1-8B 权重缺失，默认底座改为 Qwen3-8B；群体任务降为附录；配额退火不进正文。
 

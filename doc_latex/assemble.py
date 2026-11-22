@@ -64,7 +64,7 @@ def insert_tables(text: str) -> str:
         ("therefore not specific to Qwen3-8B.", "tables/table2_pas"),
         ("does not overtake the baseline.",
          "tables/table3_year"),
-        ("the LLM-versus-base comparison.", "tables/table4_fas"),
+        ("LLM-versus-base comparison.", "tables/table4_fas"),
         ("A3 reaches 21.45, 0.657, and 0.565.", "tables/table5_ablation"),
     ]
     for anchor, table in anchors:

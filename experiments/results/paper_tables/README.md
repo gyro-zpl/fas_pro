@@ -14,6 +14,7 @@
 | `gss_fas.md` | FAS 全部条件（JS/KL） | `gss_tables.py` | FAS |
 | `fas_bootstrap.md` | FAS 行级 bootstrap CI | `fas_bootstrap.py` | FAS |
 | `fas_coverage.md` | coverage-adjusted FAS | `fas_coverage.py` | FAS |
+| `prior_baseline.md/.json` | prior-only 基线、CI、10 个采样种子范围、与 LLM 条件的独立 bootstrap 差 | `prior_baseline.py` | FAS |
 | `pas_by_year.md` | T 协议按年（时间分析用） | `paper_tables.py` | T |
 | `ablation.md` | 消融 A1–A3 | `ablation_table.py` | T，1 seed |
 
@@ -29,8 +30,18 @@
 | `legacy/cross_pressure.md` | 旧 T 协议交叉压力；R 版见 `r_cross_pressure.md` |
 | `legacy/paired_bootstrap.md` | 旧 T 协议配对检验 |
 
-## 未落盘的数字
+## Prior-only 基线（已落盘）
 
-`prior-only` 基线（EDC 0.0004/0.0076、EHC 0.0011/0.0225）由
-`docs/03_进度与执行/prior_baseline_check.py` 在服务器上生成，需要 GSS 2004–2022
-原始 CSV（仓库未包含），目前没有对应的 results 文件。引用时注明来源与运行命令。
+`prior_baseline.md/.json` 由 `experiments/eval/prior_baseline.py` 生成，包含：
+
+- 从重建的 $Q^*$ 直接抽 400 行的点估计与 1,000 次行级 bootstrap CI；
+- 10 个采样种子（42–51）的范围；
+- 与 v3 / SFT / base 的独立 bootstrap 差值 CI。
+
+重建 $Q^*$ 需要 GSS 2004–2022 原始 CSV，仓库未包含；运行时用 `--data-dir`
+指向这些文件所在目录。完整命令见 `prior_baseline.md` 的 Reproduce 段。
+
+上一版正文里的种子范围（EDC 0.0004–0.0012 / 0.0064–0.0076，EHC
+0.0011–0.0028 / 0.0190–0.0225）没有对应的已提交脚本，现已替换为当前脚本和
+种子 42–51 的结果：EDC 0.0003–0.0009 / 0.0034–0.0076，EHC 0.0009–0.0033 /
+0.0150–0.0239。点估计与旧值一致，所有抽样仍远低于 v3。

@@ -68,10 +68,12 @@ be read as the behaviour of these models, not as learning from scratch.
 per condition. The reported 95\% CIs resample these generated rows; they quantify
 row-sampling variability but not generation-to-generation variability, because
 each condition was generated once. They also treat the empirical 2024 sample as
-fixed and therefore do not include target-sampling uncertainty. Differences
-between adjacent LLM conditions (e.g., 91\% vs 93\%) should be read as
-descriptive, and the prior-only baseline is more accurate than every LLM
-condition.
+fixed and therefore do not include target-sampling uncertainty. For the
+prior-only baseline we additionally report a 10-seed range, which remains below
+every LLM condition; generation-to-generation variability for the LLM conditions
+is not available because each was generated once. Differences between adjacent
+LLM conditions (e.g., 91\% vs 93\%) should be read as descriptive, and the
+prior-only baseline is more accurate than every LLM condition.
 
 \textbf{Ethics.} Synthetic respondents are not a substitute for real participants.
 A model trained on historical data can reproduce and amplify its biases. The
@@ -98,7 +100,8 @@ for the base model to 21.35 and closes 82\% of the MAE gap to HistGB at 20.73,
 predictor, not a uniformly better one. \emph{Where}: the gain is U-shaped. The
 LLM is better than HistGB at the low and high ends of the true-score
 distribution and worse in the middle, and the two models' error--extremity
-correlations have opposite signs. The average MAE hides this redistribution of
+correlations have opposite signs. The 12-cell sign pattern survives a paired
+permutation test ($p=0.0003$). The average MAE hides this redistribution of
 error; the error profile is the more informative summary. \emph{What was not
 bought}: a tabular baseline remains stronger on average and in ranking, a
 classical prior remains stronger at unconditional population matching, and

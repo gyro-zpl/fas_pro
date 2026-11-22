@@ -26,7 +26,7 @@ voter--candidate and voter--group interactions from the American
 National Election Studies (ANES), aligns a compact 8B model with the
 resulting distribution via LoRA, and evaluates the model at both the
 individual and the population level. We then use the same pipeline to
-study when this alignment stops working.
+ask how much this alignment buys and where the gain is located.
 
 Our first contribution is a reproducible data construction and audit.
 The raw ANES feature table contains three data issues that are easy to
@@ -48,18 +48,20 @@ wave, not generalization to new individuals. We report both a temporal
 protocol and a respondent-held-out-number protocol, and we make the
 distinction explicit throughout.
 
-Our second contribution is an individual-level evaluation that is
-deliberately conservative. On held-out respondent numbers in the
-2016--2019 waves, the fine-tuned model reaches an MAE of 21.35, a
-correlation of 0.666, and a rating-induced choice accuracy of 0.525
-against a chance level of 0.163. A gradient-boosted model on the same
-features reaches 20.73, 0.703, and 0.543. The MAE difference is small
-and seed-dependent; the correlation is consistently higher for the
-tabular baseline, and tie-aware choice also favors it. We report this
-result rather than hiding it. The value of the LLM is not that it is a
-better point predictor; it is that the same model can produce a
-distribution over the rating scale and can be extended to
-population-level generation.
+Our second contribution is an effect ladder for individual-level
+prediction. On held-out respondent numbers in 2016--2019, a
+no-information baseline reaches an MAE of 32.65 and the candidate-mean
+baseline 32.35 with a correlation of 0.155, so candidate identity alone
+carries some signal; the base LLM reaches 24.15, Ridge 22.86, the
+fine-tuned LLM 21.35, and HistGB 20.73. Fine-tuning therefore closes
+82\% of the MAE gap between the base model and HistGB, 66\% of the
+correlation gap, and 72\% of the choice gap, but it does not close the
+remaining 18\% of that gap. The gain is also not uniform: the LLM is
+better than HistGB at the low and high ends of the true-score
+distribution and worse in the middle, and the two models'
+error--extremity correlations have opposite signs (\$-\$0.184 versus
+\$+\$0.251). The average MAE hides this redistribution of error; the
+error profile is the more informative summary.
 
 Our third contribution is a population-level evaluation. On the GSS
 policy-attitude data, fine-tuning moves the model toward a reconstructed
@@ -71,15 +73,16 @@ supervised fine-tuning, not by retrieval or quota sampling. The prior
 remains the stronger distributional baseline; the LLM does not beat it
 on unconditional distribution matching.
 
-Our fourth contribution is a temporal boundary analysis. Across the
-2016--2024 waves, individual-level correlation falls from 0.722 in 2019
-to 0.478 in 2020, 0.408 in 2022, and \$-\$0.056 in 2024. The tabular
-baseline decays later but collapses in the same way (0.746, 0.560,
-0.657, \$-\$0.008). Adding the 2022 wave to training does not help. The
-failure is in the survey distribution, not in the language model alone.
-We argue that temporal shift should be treated as a first-class
-evaluation axis for LLM survey simulation, alongside individual accuracy
-and distributional alignment.
+Our fourth contribution is a validity analysis of the temporal
+comparison. The per-year table appears to decay from 0.722 in 2019 to
+\$-\$0.056 in 2024, but it is not a clean four-year test: 2020 has no
+5-point ideology item and a reversed partisanship scale, 2022 is a
+validation wave with only 194 held-out rows and protocol-dependent
+results, and 2024 loses its political covariates in the processed table.
+A covariate-dropout probe on 2019 reproduces most of the 2024 loss, and
+the raw 2024 file contains the items as text labels. We therefore treat
+temporal generalization as unproven, not as a demonstrated failure, and
+argue that a covariate audit must precede any temporal claim.
 
 The remainder of the paper is organized as follows. Section 2 reviews
 related work. Section 3 describes the data construction, cleaning,
@@ -228,10 +231,10 @@ We therefore normalize target names by lower-casing and stripping
 trailing periods, separate candidate targets from group targets, drop
 rows with missing or out-of-range scores (3,588), and deduplicate on
 \texttt{(respondent,\ year,\ target)} (8,141 rows). The resulting
-candidate table contains \textbf{98,159} interaction-level rows (132,948
-− 23,060 − 3,588 − 8,141). We retain the original row index so that
-every cleaned row can be traced back to the raw table. Table~\ref{tab:audit}
-summarizes the audit.
+candidate table contains \textbf{98,159} interaction-level rows
+(\(132{,}948 - 23{,}060 - 3{,}588 - 8{,}141\)). We retain the original
+row index so that every cleaned row can be traced back to the raw table.
+Table~\ref{tab:audit} summarizes the audit.
 
 \input{tables/table1_data}
 
@@ -576,17 +579,39 @@ correlation) or respondent-year groups (choice).
 
 \subsection{In-distribution results}\label{in-distribution-results}
 
-Table~\ref{tab:pas} reports the main result. The fine-tuned LLM reaches an MAE of
-21.35 {[}20.87, 21.83{]}, a correlation of 0.666 {[}0.652, 0.680{]}, and
-a choice accuracy of 0.525 {[}0.478, 0.573{]} against a chance level of
-0.163. HistGB reaches 20.73 {[}20.16, 21.26{]}, 0.703 {[}0.684,
-0.724{]}, and 0.543 {[}0.495, 0.591{]}; Ridge is weaker at 22.86, 0.639,
-and 0.450.
+Table~\ref{tab:pas} reports the result as a ladder. The no-information baseline,
+which predicts the training mean for every row, reaches an MAE of 32.65.
+The base LLM reaches 24.15, Ridge 22.86, the fine-tuned LLM 21.35, and
+HistGB 20.73. Fine-tuning therefore closes 82\% of the MAE gap between
+the base model and HistGB, 66\% of the correlation gap, and 72\% of the
+choice gap, but it does not close the remaining 18\% of that gap: the
+MAE difference is 0.62, the correlation is 0.037 lower, and tie-aware
+choice favors HistGB (0.481 versus 0.555). A second checkpoint,
+DeepSeek-R1-Distill-Llama-8B, trained on \texttt{train\_r} with one
+seed, reaches 21.37, 0.665, and 0.572; the in-distribution signal is
+therefore not specific to Qwen3-8B.
 
 \input{tables/table2_pas}
- A second checkpoint, DeepSeek-R1-Distill-Llama-8B, trained on
-\texttt{train\_r} with one seed, reaches 21.37, 0.665, and 0.572; the
-in-distribution signal is therefore not specific to Qwen3-8B.
+
+
+The average hides a structural pattern. Dividing each wave into
+true-score quartiles, the LLM is better than HistGB in Q1 and Q4 in
+every in-distribution year and worse in Q2 and Q3. In 2019, its Q1 MAE
+is 13.6 against 19.5 for HistGB, and its Q4 MAE is 17.8 against 24.2,
+while its Q2 and Q3 MAEs are 26.4 and 22.0 against 16.9 and 15.5. The
+12-cell sign pattern is not a small-sample artefact: the predicted sign
+holds in all 12 year-by-quartile cells (paired permutation
+\(p=0.0003\)), every cell remains significant after Holm correction
+(maximum \(p=0.0139\)), and the middle-minus-tail contrast is \(+16.45\)
+MAE points \([14.78, 18.09]\), one-sided \(p<0.0001\). Across all
+in-distribution rows, the correlation between absolute error and
+distance from the mean true score is \(-0.184\) \([-0.241,-0.127]\) for
+the LLM and \(+0.251\) \([0.204,0.297]\) for HistGB; the difference is
+\(-0.435\) \([-0.479,-0.392]\) (paired permutation \(p<0.0001\)). The
+LLM redistributes error from the tails to the middle; the average MAE is
+nearly unchanged because the two effects offset. This profile is
+computed on the pre-repair table but is stable across three waves and
+three seeds.
 
 The honest reading is that the LLM is \textbf{competitive with, but not
 superior to, a strong tabular baseline}. A paired bootstrap over the
@@ -706,16 +731,20 @@ training or sampling procedure changes.
 
 Table~\ref{tab:fas} and Figure~\ref{fig:fas} summarize the results. The prior-only baseline
 reaches marginal and joint JS of 0.0004 and 0.0076 on EDC and 0.0011 and
-0.0225 on EHC, lower than every LLM condition. The LLM results are
-therefore movement toward \(Q^{\ast}\): on EDC, the base model produces
-0.0552 and 0.1181; direct SFT reduces these to 0.0048 and 0.0160 (91\%
-and 86\%), and v3 reaches 0.0040 and 0.0215 (93\% and 82\%). On EHC, the
-base model starts at 0.0319 and 0.1001; direct SFT reaches 0.0167 and
-0.0470 (48\% and 53\%), and v3 reaches 0.0077 and 0.0363 (76\% and
-64\%). Fine-tuning moves the LLM substantially toward \(Q^{\ast}\), but
-it does not surpass \(Q^{\ast}\): the prior remains better on both
-marginal and joint JS in both configurations. The large-reduction claim
-is scoped to the LLM-versus-base comparison.
+0.0225 on EHC, lower than every LLM condition. The prior result is
+stable across sampling seeds: over 10 draws of 400 rows (seeds 42--51),
+EDC marginal/joint JS ranges 0.0003--0.0009 / 0.0034--0.0076 and EHC
+0.0009--0.0033 / 0.0150--0.0239; every draw remains below the v3 values.
+The LLM results are therefore movement toward \(Q^{\ast}\): on EDC, the
+base model produces 0.0552 and 0.1181; direct SFT reduces these to
+0.0048 and 0.0160 (91\% and 86\%), and v3 reaches 0.0040 and 0.0215
+(93\% and 82\%). On EHC, the base model starts at 0.0319 and 0.1001;
+direct SFT reaches 0.0167 and 0.0470 (48\% and 53\%), and v3 reaches
+0.0077 and 0.0363 (76\% and 64\%). Fine-tuning moves the LLM
+substantially toward \(Q^{\ast}\), but it does not surpass \(Q^{\ast}\):
+the prior remains better on both marginal and joint JS in both
+configurations. The large-reduction claim is scoped to the
+LLM-versus-base comparison.
 
 \input{tables/table4_fas}
 
@@ -729,10 +758,13 @@ is scoped to the LLM-versus-base comparison.
 Bootstrap 95\% CIs over the generated or prior-sampled rows separate the
 prior from v3 on the joint metric (EDC 0.0076 {[}0.0070, 0.0141{]}
 versus 0.0215 {[}0.0181, 0.0305{]}; EHC 0.0225 {[}0.0192, 0.0308{]}
-versus 0.0363 {[}0.0332, 0.0458{]}). The EHC result is weaker than EDC:
-the marginal reduction is large in the best run, but the joint reduction
-is only about two thirds. We report both configurations rather than
-selecting the favorable one.
+versus 0.0363 {[}0.0332, 0.0458{]}). The direct prior-minus-v3
+difference is negative in both configurations (EDC \(-0.0138\)
+\([-0.0210, -0.0067]\); EHC \(-0.0138\) \([-0.0232, -0.0059]\)), so the
+comparison does not rely on non-overlapping marginal intervals. The EHC
+result is weaker than EDC: the marginal reduction is large in the best
+run, but the joint reduction is only about two thirds. We report both
+configurations rather than selecting the favorable one.
 
 The two metrics do not always agree. On EHC, the symmetric KL of the
 joint distribution increases from 0.4289 (base) to 0.5487 (direct SFT)
@@ -832,15 +864,15 @@ is additionally evaluated on the full 3,421-row test set (all
 respondents), and we compare with HistGB trained on the same features.
 The R models are evaluated separately on 2024 (Section 7.3).
 
-\subsection{The decay is monotonic and
-steep}\label{the-decay-is-monotonic-and-steep}
+\subsection{The decay is not a clean temporal
+test}\label{the-decay-is-not-a-clean-temporal-test}
 
 Table~\ref{tab:year} and Figure~\ref{fig:temporal} report the per-year results. For the fine-tuned
 LLM, the correlation with the ground truth is 0.722 in 2019, 0.478 in
 2020, 0.408 in 2022, and \$-\$0.056 in 2024; MAE rises from 19.20 to
 25.39, 27.76, and 37.30 over the same waves. HistGB shows the same
-direction but decays later: 0.746 in 2019, 0.560 in 2020, 0.657 in 2022,
-and \$-\$0.008 in 2024; MAE rises from 18.85 to 23.41, 27.98, and 35.52.
+direction: 0.746 in 2019, 0.560 in 2020, 0.657 in 2022, and \$-\$0.008
+in 2024; MAE rises from 18.85 to 23.41, 27.98, and 35.52.
 \begin{figure*}[t]
 \centering
 \includegraphics[width=\linewidth]{figures/fig2_temporal_decay.pdf}
@@ -848,18 +880,19 @@ and \$-\$0.008 in 2024; MAE rises from 18.85 to 23.41, 27.98, and 35.52.
 \label{fig:temporal}
 \end{figure*}
 
-Two features of this pattern matter. First, the decay is not a sudden
-break at 2024; performance drops between 2019 and 2020. But 2020 is in
-the training window, so the 2019--2020 drop is an in-domain wave effect,
-not temporal extrapolation; the temporal boundary proper appears in 2022
-and 2024. Second, the LLM decays earlier than the tabular baseline: by
-2022 its correlation has fallen to 0.408 while HistGB is still at 0.657.
-A model that relies on a learned representation of partisan and
-ideological structure is apparently more sensitive to a changing
-political context than a model that relies on a small set of explicit
-features.
+The table looks like a steep decay, but three of the six waves cannot
+support a temporal claim. First, 2020 is in the training window and is
+corrupted: it has no 5-point ideology item and a reversed partisanship
+scale (Section 9), so the model receives contradictory political inputs.
+Second, 2022 is a validation wave with only 194 held-out rows, and the
+protocol changes the picture: the temporal-protocol model reaches a
+correlation of 0.408, while the R models on the same rows reach
+0.55--0.68 and HistGB reaches 0.59. Third, 2024 loses the political
+covariates in the processed table. The per-year table is therefore
+descriptive, not a clean four-year extrapolation.
 
-\subsection{The 2024 collapse}\label{the-2024-collapse}
+\subsection{The 2024 case: input availability, not a clean temporal
+test}\label{the-2024-case-input-availability-not-a-clean-temporal-test}
 
 On the full 2024 test set the collapse is complete. The fine-tuned LLM
 reaches an MAE of 36.47 \(\pm\) 0.75 but a correlation of \$-\$0.029
@@ -881,9 +914,21 @@ This is not an LLM-specific failure. HistGB, which has no language-model
 component, also loses the individual signal in 2024. The R models show
 the same collapse: on the full 2024 test set their correlation is
 \$-\$0.02 to \$-\$0.06, and on the strict 226-row T×R cell it is
-\$-\$0.09 to \$-\$0.15. The common factor is distribution shift;
-possible contributors include the changed candidate set and the shifted
-distribution, which our design does not separate.
+\$-\$0.09 to \$-\$0.15. The comparison is nonetheless confounded by
+covariate availability: all 3,421 prompts for 2024 render the same
+political profile, because party identification, ideology, and education
+are absent from the processed 2024 table. The 2024 evaluation therefore
+measures what both models do when the political covariates are removed,
+not only what four years of political change do.
+
+A covariate-dropout probe on the 2019 held-out rows replaces the
+political block with the 2024 defaults (Independent, Moderate, High
+school, Independent voter, distance 0.0). LLM correlation falls from
+0.714 to 0.166 and HistGB from 0.734 to 0.172; MAE rises from 19.34 to
+31.67 and 19.04 to 31.46. The actual 2024 values are
+\(-0.055\)/\(+0.015\) and 37.78/35.11. Missing covariates therefore
+explain most, but not all, of the collapse; a smaller residual year or
+candidate-set shift remains.
 
 \subsection{Adding the most recent wave does not
 help}\label{adding-the-most-recent-wave-does-not-help}
@@ -893,29 +938,27 @@ training. We fine-tune the same model on the union of the 2016--2020
 pool and the 2022 validation rows (9,017 rows) and evaluate on 2024. The
 result is essentially unchanged: MAE 36.62, correlation \$-\$0.030,
 choice 0.525, and a prediction standard deviation of 20.1. Adding 2022
-does not restore the individual signal. This rules out a simple ``the
-model has not seen recent data'' explanation and points to a genuine
-distribution shift that one additional wave does not cover.
+does not restore the individual signal under the processed table. The
+result is consistent with an input-availability explanation and does not
+establish a temporal mechanism.
 
 \subsection{Interpretation}\label{interpretation}
 
-The temporal results support C3 in a strong form. Both the LLM and the
-tabular baseline learn a mapping that is valid for the 2016--2019 era
-but fails four years later. The LLM's earlier decay suggests that its
-representation is more tightly coupled to the training-era political
-structure; the tabular model's explicit features are more robust for one
-additional wave but fail in the same way at 2024. The practical
-implication is that a survey simulator trained on historical waves
-should not be used for a future election without a temporal validation
-protocol and, ideally, a domain-adaptation step. Reporting a single
-aggregate MAE over a pooled 2016--2024 test set would hide the collapse,
-because the pooled number is dominated by the earlier waves.
+The temporal analysis supports one narrow statement: under the processed
+table, both the LLM and the tabular baseline lose individual-level
+signal in the later waves, and adding the 2022 wave does not restore it.
+It does not support a claim that four years of political change cause
+the loss, because the 2024 input is degenerate and the 2020 input is
+corrupted. The practical implication is that a survey simulator trained
+on historical waves should be evaluated with a covariate audit before
+any temporal difference is interpreted. Reporting a single aggregate MAE
+over a pooled 2016--2024 test set would hide the input problem, because
+the pooled number is dominated by the earlier waves.
 
 We therefore recommend that temporal shift be treated as a first-class
-evaluation axis for LLM survey simulation, alongside individual accuracy
-and distributional alignment. The negative result is informative:
-structured alignment is necessary but not sufficient for temporal
-generalization.
+evaluation axis only after the input is audited. The negative result
+here is a validity lesson, not a clean demonstration of temporal
+failure.
 
 \subsection{Relation to the population-level
 results}\label{relation-to-the-population-level-results}
@@ -1049,6 +1092,23 @@ small (226 rows). Person-level isolation is not verified, and a
 genuinely new respondent observed only in a future wave cannot be
 isolated from these files.
 
+\textbf{Covariate availability.} The waves are not comparable in what
+the model sees: the processed 2024 table has no usable party, ideology,
+or education item, so all 3,421 prompts render one political profile
+(the raw file stores them as text labels that the current extraction
+does not map); 2020 has no 5-point ideology item and a reversed
+partisanship scale (correlation with liberal--conservative
+self-placement \(-0.546\), against \(+0.658\) in 2016); and the
+processed 2018 table uses the placeholder \texttt{pid7} instead of
+\texttt{pid7x}. A dropout probe on the 2019 held-out rows lowers the LLM
+correlation from 0.714 to 0.166, so most of the 2024 collapse is input
+loss, with a smaller residual shift. The LLM-versus-baseline comparison
+is unaffected, since both consume the same features. We do not retrain
+on the repaired table: that would require rebuilding the full feature
+pipeline and revalidating every derived feature, which we leave to
+future work; all main-table numbers are computed on the pre-repair
+table.
+
 \textbf{Choice metric.} Choice accuracy is rating-induced: we compare
 the model's highest-scoring candidate with the candidate with the
 highest ground-truth thermometer score, not with an observed vote. This
@@ -1112,24 +1172,29 @@ released with this work.
 
 \section{Conclusion}\label{conclusion}
 
-We presented a data-centric pipeline for LLM survey simulation and
-evaluated it at three levels: the individual respondent, the population,
-and time. The pipeline reconstructs interaction-level data from ANES,
-decouples candidate identity from candidate attributes, encodes partisan
-and ideological structure as explicit features, samples the training
-pool to cover tails and conflict cases, and fine-tunes a compact 8B
-model with LoRA. The same pipeline reconstructs a joint distribution
-from GSS and fine-tunes a model to generate a synthetic population.
+We presented a data-centric benchmark for LLM survey simulation and
+asked what structured alignment buys, and where. The pipeline
+reconstructs interaction-level ANES data, decouples candidate identity
+from attributes, encodes partisan and ideological structure as explicit
+features, samples the training pool to cover tails and conflict cases,
+and fine-tunes a compact 8B model with LoRA. The same pipeline
+reconstructs a GSS joint distribution and fine-tunes a model to generate
+a synthetic population.
 
-The individual-level result is deliberately modest. On held-out
-respondent numbers in the same era, the fine-tuned model reaches an MAE
-of 21.35, a correlation of 0.666, and a choice accuracy of 0.525 against
-a chance level of 0.163. A gradient-boosted baseline on the same
-features reaches 20.73, 0.703, and 0.543. The MAE difference is small
-and seed-dependent, and the baseline has a higher correlation and a
-tie-aware choice advantage. The value of the language model is not
-superior point prediction; it is a unified interface that produces a
-rating distribution and extends to population-level generation.
+The answer has three layers. \textbf{How much}: fine-tuning lowers MAE
+from 24.15 for the base model to 21.35 and closes 82\% of the MAE gap to
+HistGB at 20.73, 66\% of the correlation gap, and 72\% of the choice
+gap. It buys a usable predictor, not a uniformly better one.
+\textbf{Where}: the gain is U-shaped. The LLM is better than HistGB at
+the low and high ends of the true-score distribution and worse in the
+middle, and the two models' error--extremity correlations have opposite
+signs (\$-\$0.18 versus \$+\$0.25). The average MAE hides this
+redistribution of error; the error profile is the more informative
+summary. \textbf{What was not bought}: a tabular baseline remains
+stronger on average and in ranking, a classical prior remains stronger
+at unconditional population matching, and temporal generalization is not
+established. The apparent 2024 collapse is dominated by covariate loss
+in the processed table, not by a clean four-year shift.
 
 The population-level result is a boundary rather than a win. Fine-tuning
 moves the LLM toward the reconstructed joint distribution (EDC
@@ -1139,23 +1204,20 @@ The LLM approaches the prior without surpassing it; its value must lie
 in conditional generation or natural-language control, which the current
 evaluation does not isolate.
 
-The temporal result is the most important negative finding.
-Individual-level correlation falls from 0.722 in 2019 to \$-\$0.056 in
-2024, and the tabular baseline collapses in the same way. A constant
-prediction of 50 has an MAE of 35.05, so the aggregate 2024 MAE is not
-evidence of individual signal. Adding the most recent wave to training
-does not help. The failure is in the survey distribution, not in the
-language model alone. Structured alignment is necessary but not
-sufficient for temporal generalization, and temporal shift should be
-treated as a first-class evaluation axis.
+The lasting result is a boundary map and a validity checklist rather
+than a claim of LLM superiority. Structured alignment is necessary but
+not sufficient: it changes which cases the model handles well, not the
+average ranking of model classes. A credible survey simulator must be
+evaluated against no-information, prompt-only, tabular, and prior
+baselines; must report where the error sits; and must audit person
+linkage and covariate availability before interpreting a temporal
+difference.
 
-Future work has four directions. First, replicate the pipeline on a
-broader set of model families to test whether the individual-level tie
-with the tabular baseline is model-specific. Second, extend the
-evaluation to cross-national surveys and to the group-attitude corpus.
-Third, develop temporal adaptation methods---recency-weighted training,
-domain adaptation, or uncertainty-aware decoding---and evaluate them on
-the 2024 wave that defeats the current model. Fourth, study the choice
-metric against observed vote choice, so that rating-induced choice can
-be validated against behavior. We hope that the negative results
-reported here make the next round of work easier to calibrate.
+Future work has four directions. First, replicate the benchmark on more
+model families to test whether the error profile is model-specific.
+Second, extend the evaluation to cross-national surveys and the
+group-attitude corpus. Third, retrain on a fully repaired feature table
+and isolate conditional generation and natural-language control. Fourth,
+obtain a cross-wave person key and validate rating-induced choice
+against observed vote choice. We hope that the boundary results reported
+here make the next round of work easier to calibrate.

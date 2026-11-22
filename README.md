@@ -47,7 +47,7 @@
 │   ├── 03_进度与执行/     # 时间线、执行记录、运行快照、最终总结
 │   └── 04_论文稿件/       # 完整初稿、分章 md、图
 ├── doc_latex/             # ACL LaTeX 版本（main.tex / body_final.tex / references.bib；PDF 不入库）
-├── thesis/                # UMAC 英文毕业论文（main.tex 源文件，正文 17 页；PDF 不入库）
+├── thesis/                # UMAC 英文毕业论文（main.tex 源文件，正文 18 页；PDF 不入库）
 └── environment.yml
 ```
 
@@ -166,7 +166,7 @@ python -m experiments.eval.cross_pressure
 ### 英文毕业论文（UMAC 模板）
 
 - `thesis/main.tex`：UMAC FST 硕士论文模板（A4、12pt Times、1.5 倍行距）
-- 编译产物**不入库**：Overleaf 包 `fas_pro_overleaf_thesis.zip`；本地 `tectonic main.tex`（最近一次编译 **正文 17 页**，总 39 页）
+- 编译产物**不入库**：Overleaf 包 `fas_pro_overleaf_thesis.zip`；本地 `tectonic main.tex`（最近一次编译 **正文 18 页**，总 40 页）
 - `thesis/chapters/`：5 章正文；`thesis/appendix/`：4 个附录（含第二模型 checkpoint DeepSeek-R1-Distill-Llama-8B）
 - 编译：`cd thesis && tectonic main.tex`
 - 作者：CHENYU YUAN；导师：PENGYANG WANG；日期：April 2027

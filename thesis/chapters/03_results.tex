@@ -56,23 +56,32 @@ wave into true-score quartiles. In every year the LLM is better than HistGB in
 Q1 and Q4, the lowest and highest true scores, and worse in Q2 and Q3, the middle
 of the scale. The pattern is not a small fluctuation: in 2019 the LLM's Q1 MAE
 is 13.6 against 19.5 for HistGB, and its Q4 MAE is 17.8 against 24.2, while its
-Q2 and Q3 MAEs are 26.5 and 22.0 against 16.9 and 15.5. The same crossing
+Q2 and Q3 MAEs are 26.4 and 22.0 against 16.9 and 15.5. The same crossing
 appears in 2016 and 2018 and in all three seeds.
 
-The error-extreme correlation summarizes the shape. Across the in-distribution
+The crossing is not a small-sample artefact. Across the 12 year-by-quartile
+cells the predicted sign holds in all 12 (paired permutation $p=0.0003$, 20,000
+permutations), and every cell remains significant after Holm correction
+(maximum $p=0.0139$). The middle-minus-tail contrast is $+16.45$ MAE
+points $[14.78, 18.09]$, one-sided $p<0.0001$. Per-cell respondent-cluster
+bootstrap intervals for the LLM--HistGB difference exclude zero in every cell.
+
+The error--extremity correlation summarizes the shape. Across the in-distribution
 rows, the correlation between absolute error and distance from the mean true
-score is $-0.18$ for the LLM and $+0.25$ for HistGB. The two models make errors
-in opposite regions: the LLM is relatively accurate at the tails and loses in
-the middle; HistGB is accurate in the middle and regresses toward the mean at the
-tails. This is consistent with the prediction spread: the LLM's standard
-deviation is about 40, versus 24 for HistGB. The LLM does not uniformly improve
-the mapping; it redistributes error from the tails to the middle, and the
-average MAE is nearly unchanged because the two effects offset.
+score is $-0.184$ $[-0.241, -0.127]$ for the LLM and $+0.251$ $[0.204, 0.297]$
+for HistGB; the difference is $-0.435$ $[-0.479, -0.392]$ (paired permutation
+$p<0.0001$). The two models make errors in opposite regions: the LLM is
+relatively accurate at the tails and loses in the middle; HistGB is accurate in
+the middle and regresses toward the mean at the tails. This is consistent with
+the prediction spread: the LLM's standard deviation is about 40, versus 24 for
+HistGB. The LLM does not uniformly improve the mapping; it redistributes error
+from the tails to the middle, and the average MAE is nearly unchanged because
+the two effects offset.
 
 The profile is computed on the pre-repair table and should be read as a
 structural observation, not as a claim that survives every preprocessing choice.
-It is, however, stable across the three in-distribution waves and three seeds,
-and it explains why the average comparison is a poor summary of what alignment
+It is, however, stable across the three in-distribution waves and three seeds.
+It explains why the average comparison is a poor summary of what alignment
 buys.
 
 \section{What the LLM Adds}
@@ -107,9 +116,10 @@ Direct sampling from $Q^{\ast}$ reaches a marginal JS of 0.0004 [0.0002, 0.0023]
 a joint JS of 0.0076 [0.0070, 0.0141] on EDC; on EHC it reaches 0.0011 [0.0006,
 0.0036] and 0.0225 [0.0192, 0.0308]. These are lower than every LLM condition on
 both metrics. The prior is therefore the strongest distributional baseline in
-this task. The result is stable across sampling seeds: over repeated 400-row
-draws, EDC marginal/joint JS ranges 0.0004--0.0012 / 0.0064--0.0076 and EHC
-0.0011--0.0028 / 0.0190--0.0225.
+this task. The result is stable across sampling seeds: over 10 draws of 400
+rows (seeds 42--51), EDC marginal/joint JS ranges 0.0003--0.0009 / 0.0034--0.0076
+and EHC 0.0009--0.0033 / 0.0150--0.0239; every draw remains below the
+corresponding v3 value.
 
 The LLM results should be read against that baseline. On EDC, the base model
 produces 0.0552/0.1181; direct SFT reduces these to 0.0048/0.0160 (91\%/86\%), and
@@ -122,13 +132,17 @@ for the LLM; EHC is weaker, and the large-reduction claim is scoped to the
 LLM-versus-base comparison.
 
 Bootstrap 95\% CIs over the generated or prior-sampled rows separate the base
-model from v3 on both configurations (EDC marginal 0.0552 [0.0476, 0.0644] vs 0.0040 [0.0022,
-0.0077]; EHC joint 0.1001 [0.0874, 0.1188] vs 0.0363 [0.0332, 0.0458]) and
-separate the prior from v3 on the joint metric (EDC 0.0076 [0.0070, 0.0141] vs
-0.0215 [0.0181, 0.0305]; EHC 0.0225 [0.0192, 0.0308] vs 0.0363 [0.0332,
-0.0458]). The SFT and v3 intervals overlap, so the two SFT runs are not ranked.
-The full table is in Appendix~\ref{app:fas} (Tables~\ref{tab:fas_full}
-and~\ref{tab:fas_ci}).
+model from v3 on both configurations. For EDC, the marginal JS is 0.0552
+[0.0476, 0.0644] for the base model and 0.0040 [0.0022, 0.0077] for v3; for
+EHC, the joint JS is 0.1001 [0.0874, 0.1188] and 0.0363 [0.0332, 0.0458]. The
+prior also remains below v3 on the joint metric: EDC 0.0076 [0.0070, 0.0141]
+versus 0.0215 [0.0181, 0.0305], and EHC 0.0225 [0.0192, 0.0308] versus 0.0363
+[0.0332, 0.0458]. The direct prior-minus-v3 difference is negative in both
+configurations (EDC $-0.0138$ $[-0.0210, -0.0067]$; EHC $-0.0138$
+$[-0.0232, -0.0059]$), so the comparison does not rely on the two marginal
+intervals being disjoint. The SFT and v3 intervals overlap, so the two SFT runs
+are not ranked. The full table is in Appendix~\ref{app:fas}
+(Tables~\ref{tab:fas_full} and~\ref{tab:fas_ci}).
 
 Component analysis shows that RAG alone is close to the base model (EDC 0.0473,
 EHC 0.0404) and that RAG plus SFT performs like direct SFT. The movement

@@ -19,7 +19,7 @@ Follows the UMAC FST master's thesis template:
 - Front matter: title page, abstract, TOC, list of figures, list of tables, list of abbreviations
 - Page numbers: preliminary pages bottom center (TOC first page unnumbered); text pages top center; first page of each chapter/bibliography/appendix counted but unnumbered
 - Table captions above tables; figure captions below figures
-- Main body: Chapters 1--5, **17 pages**
+- Main body: Chapters 1--5, **18 pages**
 - Back matter: bibliography, appendices A--D, vita (not listed in TOC)
 
 ## Build
@@ -38,8 +38,8 @@ pdflatex main
 pdflatex main
 ```
 
-The compiled PDF is **not committed**; build it with `tectonic main.tex` (39 pages
-total, 17-page main body at the last build). The Overleaf package is
+The compiled PDF is **not committed**; build it with `tectonic main.tex` (40 pages
+total, 18-page main body at the last build). The Overleaf package is
 `fas_pro_overleaf_thesis.zip`.
 
 ## Structure
@@ -55,7 +55,7 @@ thesis/
 │   └── 05_conclusion.tex # limitations + conclusion
 ├── appendix/
 │   ├── A_data.tex        # data audit, splits, sampling, features
-│   ├── B_results.tex     # per-year table, ablations, cross-pressure
+│   ├── B_results.tex     # per-year, ablations, cross-pressure, profile tests
 │   ├── C_fas.tex         # full FAS table, prompts, hyperparameters
 │   └── D_second_family.tex # DeepSeek-R1-Distill-Llama-8B robustness check
 ├── tables/

@@ -189,6 +189,47 @@ Outputs:
 profiles; 2018 `pid7x` is 96% valid; 2020 `8 - pid7` gives a +0.55 correlation
 with `lcself`. The interaction features must be recomputed before any retrain.
 
+## Error profile (U-shape)
+
+The profile table in Chapter 3 divides each in-distribution wave into true-score
+quartiles and compares the LLM (mean over seeds 42–44) with HistGB. The
+diagnostic adds a respondent-cluster bootstrap and a paired permutation test:
+
+```bash
+python -m experiments.diagnostics.error_profile \
+  --bootstrap 5000 --permutations 20000
+```
+
+Outputs:
+
+| File | Content |
+|---|---|
+| `results/diagnostics/error_profile.md` | per-cell MAE, 95% CI, delta, permutation p (Holm) |
+| `results/diagnostics/error_profile.json` | same, plus U-shape contrast and global tests |
+| `results/diagnostics/error_profile_cells.csv` | flat cell table |
+
+Key result: the U-shape contrast (middle minus tails) is +16.45 MAE points
+[14.78, 18.09], one-sided p < 0.0001; all 12 year-by-quartile cells match the
+predicted sign direction. The error–extremity correlation is −0.184
+[−0.241, −0.127] for the LLM and +0.251 [0.204, 0.297] for HistGB; the
+difference is −0.435 [−0.479, −0.392], p < 0.0001.
+
+## Prior-only FAS baseline
+
+The prior-only numbers are now reproducible and persisted:
+
+```bash
+python -m experiments.eval.prior_baseline \
+  --data-dir /path/to/FAS_PRO/data/gss \
+  --samples 400 --seed 42 --bootstrap 1000
+```
+
+Output: `results/paper_tables/prior_baseline.md` / `.json`. The JSON stores the
+reconstructed 3x3x3 joint $Q^*$, the 400-row point estimate, bootstrap CIs, the
+10-seed range, and independent-bootstrap deltas against v3, SFT, and base.
+Historical GSS CSVs are not in the repository, so `--data-dir` is required when
+they are not under `data/gss`.
+
 ## Model registry
 
 `config.MODELS` currently contains:

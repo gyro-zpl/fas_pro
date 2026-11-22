@@ -9,14 +9,17 @@ is LLM / HistGB MAE; Q1 is the lowest true-score quartile.}
 Year & Q1 & Q2 & Q3 & Q4 \\
 \midrule
 2016 & 19.4 / 25.7 & 27.1 / 18.4 & 19.7 / 16.5 & 24.6 / 30.0 \\
-2018 & 17.0 / 21.1 & 34.4 / 19.1 & 29.8 / 19.2 & 11.3 / 28.1 \\
-2019 & 13.6 / 19.5 & 26.5 / 16.9 & 22.0 / 15.5 & 17.8 / 24.2 \\
+2018 & 17.1 / 21.1 & 34.4 / 19.1 & 29.8 / 19.2 & 11.2 / 28.1 \\
+2019 & 13.6 / 19.5 & 26.4 / 16.9 & 22.0 / 15.5 & 17.8 / 24.2 \\
 \bottomrule
 \end{tabular}
 \par\smallskip\footnotesize
-The LLM is better in Q1 and Q4 and worse in Q2 and Q3 in every year. Across all
+The LLM is better in Q1 and Q4 and worse in Q2 and Q3 in every year (12/12
+cells; paired permutation $p=0.0003$). The middle-minus-tail contrast is
+$+16.45$ MAE points $[14.78, 18.09]$, one-sided $p<0.0001$. Across all
 in-distribution rows, the correlation between absolute error and distance from
-the mean true score is $-0.18$ for the LLM and $+0.25$ for HistGB: the two models
-make errors in opposite regions of the scale. The pattern is descriptive and is
-computed on the pre-repair table.
+the mean true score is $-0.184$ for the LLM and $+0.251$ for HistGB. The
+pattern is computed on the pre-repair table; every cell remains significant
+after Holm correction (maximum $p=0.0139$). Per-cell intervals and adjusted
+$p$-values are in Appendix~\ref{app:results}, Table~\ref{tab:profile_tests}.
 \end{table}
