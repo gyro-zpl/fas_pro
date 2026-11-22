@@ -1102,8 +1102,11 @@ self-placement \(-0.546\), against \(+0.658\) in 2016); and the
 processed 2018 table uses the placeholder \texttt{pid7} instead of
 \texttt{pid7x}. A dropout probe on the 2019 held-out rows lowers the LLM
 correlation from 0.714 to 0.166, so most of the 2024 collapse is input
-loss, with a smaller residual shift. The LLM-versus-baseline comparison
-is unaffected, since both consume the same features. We do not retrain
+loss, with a smaller residual shift. The LLM-versus-baseline comparison keeps its direction, but the two
+models do not see identical information: on the 814 of 2,726 rows whose
+\texttt{pid7} falls outside the scale, the rendered prompt and the
+tabular feature disagree, which disadvantages the LLM; dropping 2018
+leaves the ordering unchanged. We do not retrain
 on the repaired table: that would require rebuilding the full feature
 pipeline and revalidating every derived feature, which we leave to
 future work; all main-table numbers are computed on the pre-repair

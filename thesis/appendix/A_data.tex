@@ -184,12 +184,17 @@ reversed: it correlates $+0.658$ with liberal--conservative self-placement
 co-partisanship correlates $-0.223$ with the rating in 2020 against $+0.466$ in
 2019. Second, 2018 stores \texttt{pid7} as the sentinel $-4$ for every row, so the
 derived alignment marks all respondents as Democrats while the prompt still
-renders them as ``Independent'', producing contradictory instructions for 727 of
-the 2,726 main-table rows (27\%).
+renders them as ``Independent'', producing contradictory instructions for 814 of
+the 2,726 main-table rows (29.9\%): every 2018 row, plus 27 rows in 2016 and 60
+in 2019 whose \texttt{pid7} falls outside the scale.
 
-These defects do not affect the comparison between the LLM and the tabular
-baseline, which consume the same features, and they do not affect the FAS
-results. They do bound the temporal claims: the 2024 collapse cannot be
+These defects bound the individual-level comparison rather than invalidate it.
+The two models read the same underlying table, but for the rows above the
+rendered prompt and the tabular feature disagree---the prompt shows an
+independent voter while \texttt{party\_match} records a co-partisan---so the
+comparison is not on identical information, and the discrepancy disadvantages
+the LLM. Excluding 2018 leaves 1,999 rows on which the ordering is unchanged
+(Section~\ref{ch:results}). They do not affect the FAS results. They do bound the temporal claims: the 2024 collapse cannot be
 separated from the absence of the political covariates, and the 2019--2020 drop
 cannot be read as a wave effect while 2020 recodes partisanship in the opposite
 direction. Section~\ref{ch:temporal} states the resulting scope.

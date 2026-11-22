@@ -41,8 +41,11 @@ Table~\ref{tab:covariate_probe} shows that removing the political block from
 2019 reproduces most of the 2024 loss (LLM correlation 0.714 to 0.166). The
 individual- and temporal-level claims are bounded accordingly: the apparent 2024 collapse
 is mostly an input-availability artifact with a smaller residual shift, and 2020
-is not a clean in-domain wave. The LLM-versus-baseline comparison is unaffected
-because both consume the same features.
+is not a clean in-domain wave. The LLM-versus-baseline comparison keeps its
+direction but is not on identical information: on the 814 rows whose
+\texttt{pid7} falls outside the scale, the rendered prompt and the tabular
+feature disagree, which disadvantages the LLM; excluding 2018 leaves the
+ordering unchanged (Section~\ref{ch:results}).
 
 \textbf{Repaired table and retraining.} The covariate audit repairs the
 covariates in a separate table, but this thesis does not retrain on it.

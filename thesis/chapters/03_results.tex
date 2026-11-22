@@ -30,7 +30,10 @@ is 0.037 lower, and tie-aware choice also favors HistGB (0.481 versus 0.555).
 Measured against the no-information baseline rather than the base model,
 fine-tuning closes 95\% of the total distance to HistGB, and prompting alone
 already closes 71\%; the two denominators answer different questions and both
-are reported.
+are reported. Removing the 2018 wave, whose processed partisanship is a
+placeholder, leaves 1,999 rows on which the base model reaches 22.23, the
+fine-tuned model 20.76, and HistGB 20.31: fine-tuning then closes 77\% of that
+gap instead of 82\%, and the ordering is unchanged.
 A second checkpoint, DeepSeek-R1-Distill-Llama-8B, trained under the same recipe
 reaches 21.37, 0.665, and 0.572 (Appendix~\ref{app:second},
 Table~\ref{tab:second}); the signal is not
@@ -72,7 +75,11 @@ score is $-0.184$ $[-0.241, -0.127]$ for the LLM and $+0.251$ $[0.204, 0.297]$
 for HistGB; the difference is $-0.435$ $[-0.479, -0.392]$ (paired permutation
 $p<0.0001$). The two models make errors in opposite regions: the LLM is
 relatively accurate at the tails and loses in the middle; HistGB is accurate in
-the middle and regresses toward the mean at the tails. This is consistent with
+the middle and regresses toward the mean at the tails. Part of the pattern is
+therefore mechanical: any predictor with a narrower spread is weaker at the
+tails. What the mechanism does not explain is the reversal---the LLM gains at
+both ends and loses in the middle, and the sign holds in all 12 cells. This is
+consistent with
 the prediction spread: the LLM's standard deviation is about 40, versus 24 for
 HistGB. The LLM does not uniformly improve the mapping; it redistributes error
 from the tails to the middle, and the average MAE is nearly unchanged because
