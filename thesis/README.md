@@ -38,7 +38,9 @@ pdflatex main
 pdflatex main
 ```
 
-The compiled PDF is `main.pdf` (39 pages total, 17-page main body).
+The compiled PDF is **not committed**; build it with `tectonic main.tex` (39 pages
+total, 17-page main body at the last build). The Overleaf package is
+`fas_pro_overleaf_thesis.zip`.
 
 ## Structure
 
@@ -64,7 +66,7 @@ thesis/
 │   ├── fig2_temporal_decay.pdf
 │   └── figure1.svg            # editable source of fig1_pipeline.pdf
 ├── references.bib
-└── main.pdf
+└── OVERLEAF_README.md
 ```
 
 `archive/` contains the earlier, longer chapter drafts (not compiled; excluded

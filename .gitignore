@@ -30,3 +30,7 @@ experiments/results/logs/
 .DS_Store
 Thumbs.db
 *.log
+
+# Compiled thesis PDFs are not committed (build via the Overleaf packages)
+thesis/main.pdf
+doc_latex/main.pdf
