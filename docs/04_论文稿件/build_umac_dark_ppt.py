@@ -34,8 +34,8 @@ GRAY = RGBColor(0x59, 0x59, 0x59)
 LIGHT = RGBColor(0xF2, 0xF4, 0xF7)
 WHITE = RGBColor(0xFF, 0xFF, 0xFF)
 
-LATIN = "Arial"
-EA = "微软雅黑"
+LATIN = "Times New Roman"
+EA = "黑体"
 
 W, H = 13.333, 7.5
 SECTIONS = ["1  研究问题", "2  方法", "3  结果", "4  边界"]
