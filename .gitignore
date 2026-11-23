@@ -34,3 +34,6 @@ Thumbs.db
 # Compiled thesis PDFs are not committed (build via the Overleaf packages)
 thesis/main.pdf
 doc_latex/main.pdf
+
+# Derived deck assets (regenerated from the template)
+docs/04_论文稿件/_assets/
