@@ -195,7 +195,7 @@ def note(slide, text, y=6.55, size=10.5, color=GRAY):
     para(box, text, size, color=color, first=True)
 
 
-def footer(slide, text="University of Macau  ·  Faculty of Science and Technology  ·  Department of Computer Science"):
+def footer(slide, text="University of Macau  ·  Faculty of Science and Technology"):
     rect(slide, 0, H - 0.36, W, 0.012, RGBColor(0xC9, 0xD6, 0xE4))
     box = textbox(slide, 0.45, H - 0.33, 9.0, 0.24)
     para(box, text, 8.5, color=GRAY, first=True)
@@ -215,7 +215,7 @@ def build() -> None:
         sldIdLst.remove(sldId)
 
     blank = prs.slide_layouts[6]
-    total = 13
+    total = 14
 
     # 1 cover -----------------------------------------------------------------
     s = new_slide(prs, blank)
@@ -269,8 +269,17 @@ def build() -> None:
         card(s, x0 + c * (cw + gx), y0 + r * (ch + gy), cw, ch, num, head, desc, accent=accent)
     footer(s); slide_number(s, 3, total)
 
+    # 4 architecture ----------------------------------------------------------
+    s = new_slide(prs, blank); nav(s, 1, 4, total); title(s, "方法总览：两条 pipeline，三层评测")
+    fig = ASSETS / "fig1_pipeline.png"
+    if not fig.exists():
+        fig = ROOT / "thesis" / "figures" / "fig1_pipeline.png"
+    s.shapes.add_picture(str(fig), Inches(1.93), Inches(1.52), height=Inches(5.25))
+    note(s, "左：个体级 PAS（画像 → prompt → LoRA → 读出 → 留出评测）。右：群体级 FAS（外推 → IPF → 合成人口，与 prior 抽样对照）。底部：个体 / 群体 / 时间三层评测。", y=6.86, size=9.5)
+    footer(s); slide_number(s, 4, total)
+
     # 4 data ------------------------------------------------------------------
-    s = new_slide(prs, blank); nav(s, 1, 4, total); title(s, "数据：先把它做对，再谈效果")
+    s = new_slide(prs, blank); nav(s, 1, 5, total); title(s, "数据：先把它做对，再谈效果")
     body_bullets(s, 0.55, 1.7, 6.1, [
         ("ANES 六个波次：", "132,948 行清洗到 98,159 行。"),
         ("三类容易漏的问题：", "8,165 行尾点候选人名（其中 8,141 行重复）、23,060 行社会群体温度计混入候选人列、3,588 行缺失或越界评分。"),
@@ -293,10 +302,10 @@ def build() -> None:
                       color=WHITE if r == 0 else INK,
                       bg=NAVY if r == 0 else (LIGHT if r % 2 == 0 else WHITE))
     note(s, "主表用 2016 / 2018 / 2019 的 test_r：2,726 行。", y=5.05, size=10.5)
-    footer(s); slide_number(s, 4, total)
+    footer(s); slide_number(s, 5, total)
 
     # 5 PAS task --------------------------------------------------------------
-    s = new_slide(prs, blank); nav(s, 1, 5, total); title(s, "个体级任务：从画像到 0–100 分")
+    s = new_slide(prs, blank); nav(s, 1, 6, total); title(s, "个体级任务：从画像到 0–100 分")
     steps = [
         ("选民画像", "年龄 / 性别 / 种族 / 教育 / 党派 / 意识形态"),
         ("候选人属性", "党派 / 意识形态 / 年龄 / 职位"),
@@ -319,10 +328,10 @@ def build() -> None:
         ("读出：", "generation（贪心解码取整数）为主；anchor likelihood 作校准诊断。"),
         ("指标：", "MAE、Pearson、rating-induced choice（含 tie-aware）。"),
     ], size=13.5, gap=10)
-    footer(s); slide_number(s, 5, total)
+    footer(s); slide_number(s, 6, total)
 
     # 6 two inputs ------------------------------------------------------------
-    s = new_slide(prs, blank); nav(s, 1, 6, total); title(s, "两种输入，并不相同")
+    s = new_slide(prs, blank); nav(s, 1, 7, total); title(s, "两种输入，并不相同")
     rect(s, 0.55, 1.7, 5.95, 3.9, LIGHT, shape=MSO_SHAPE.ROUNDED_RECTANGLE, radius=0.05)
     lb = textbox(s, 0.85, 1.9, 5.35, 3.5)
     para(lb, "LLM · core prompt", 14, bold=True, color=NAVY_MID, first=True, space_after=8)
@@ -336,10 +345,10 @@ def build() -> None:
                  "结果：814 行（29.9%）上，两边信息不同"]:
         para(rb, "· " + line, 12.5, color=INK, space_after=8, line=1.25)
     note(s, "这个差异对 LLM 不利，所以 82% 是下限；去掉 2018 后是 77%。", y=5.78, size=12, color=NAVY)
-    footer(s); slide_number(s, 6, total)
+    footer(s); slide_number(s, 7, total)
 
     # 7 ladder ----------------------------------------------------------------
-    s = new_slide(prs, blank); nav(s, 2, 7, total); title(s, "效果阶梯：吃掉 82%，但没有反超")
+    s = new_slide(prs, blank); nav(s, 2, 8, total); title(s, "效果阶梯：吃掉 82%，但没有反超")
     tbl = table(s, 0.55, 1.72, 6.55, 7, 3, [2.6, 1.95, 2.0], row_h=0.46)
     rows = [("模型", "MAE", "说明"), ("无信息（常数）", "32.65", "训练均值"),
             ("候选人均值", "32.35", "corr 0.155"), ("base Qwen", "24.15", "同一批测试行"),
@@ -359,10 +368,10 @@ def build() -> None:
         ("换分母：", "从无信息起算 95%；去掉 2018 是 77%。"),
         ("没吃掉的 18%：", "corr 0.666 对 0.703；tie-aware choice 0.481 对 0.555。"),
     ], size=12, gap=10)
-    footer(s); slide_number(s, 7, total)
+    footer(s); slide_number(s, 8, total)
 
     # 8 profile ---------------------------------------------------------------
-    s = new_slide(prs, blank); nav(s, 2, 8, total); title(s, "误差剖面：两端赢，中间输")
+    s = new_slide(prs, blank); nav(s, 2, 9, total); title(s, "误差剖面：两端赢，中间输")
     tbl = table(s, 0.55, 1.72, 6.4, 5, 5, [1.35, 1.3, 1.3, 1.3, 1.15], row_h=0.58)
     rows = [("年份", "Q1 最低", "Q2", "Q3", "Q4 最高"),
             ("2016", "19.4 / 25.7", "27.1 / 18.4", "19.7 / 16.5", "24.6 / 30.0"),
@@ -381,10 +390,10 @@ def build() -> None:
         ("误差-极值相关：", "LLM −0.184，HistGB +0.251。"),
     ], size=12.5, gap=12)
     note(s, "每格是 LLM / HistGB 的 MAE；Q1 最低、Q4 最高真值分段。", y=6.3, size=10.5)
-    footer(s); slide_number(s, 8, total)
+    footer(s); slide_number(s, 9, total)
 
     # 9 population ------------------------------------------------------------
-    s = new_slide(prs, blank); nav(s, 2, 9, total); title(s, "群体层面：接近先验，但没有超过")
+    s = new_slide(prs, blank); nav(s, 2, 10, total); title(s, "群体层面：接近先验，但没有超过")
     tbl = table(s, 0.55, 1.8, 7.1, 4, 4, [1.5, 1.55, 1.55, 2.5], row_h=0.55)
     rows = [("配置", "prior-only", "LLM 最佳（v3）", "结论"),
             ("EDC 边际 / 联合", "0.0004 / 0.0076", "0.0040 / 0.0215", "prior 更准"),
@@ -402,10 +411,10 @@ def build() -> None:
         ("价值在哪：", "条件生成与自然语言控制，当前评测还没隔离出来。"),
     ], size=12, gap=12)
     note(s, "400 行合成样本 vs 真实 2024 参照（EDC 1,601 / EHC 1,552）；JS 越低越好。", y=5.9, size=10.5)
-    footer(s); slide_number(s, 9, total)
+    footer(s); slide_number(s, 10, total)
 
     # 10 temporal -------------------------------------------------------------
-    s = new_slide(prs, blank); nav(s, 3, 10, total); title(s, "时间层面：没有干净的外推证据")
+    s = new_slide(prs, blank); nav(s, 3, 11, total); title(s, "时间层面：没有干净的外推证据")
     body_bullets(s, 0.55, 1.7, 7.0, [
         ("表观下降：", "2019 的 0.722 → 2020 的 0.478 → 2022 的 0.408 → 2024 的 −0.056；HistGB 同样下降。"),
         ("三个波次不能用：", "2020 没有 5 点意识形态、党派刻度反向；2022 只有 194 行；2024 的政治变量在表里全丢。"),
@@ -419,18 +428,18 @@ def build() -> None:
     para(kb, "条 prompt，只有 1 种政治档案", 12, color=GRAY, space_after=14, line=1.25)
     para(kb, "0.714 → 0.166", 24, bold=True, color=NAVY, space_after=2)
     para(kb, "抹掉政治块后的 2019 相关性", 12, color=GRAY, line=1.25)
-    footer(s); slide_number(s, 10, total)
+    footer(s); slide_number(s, 11, total)
 
     # 11 boundaries -----------------------------------------------------------
-    s = new_slide(prs, blank); nav(s, 3, 11, total); title(s, "三项边界，写在 Limitations 里")
+    s = new_slide(prs, blank); nav(s, 3, 12, total); title(s, "三项边界，写在 Limitations 里")
     card(s, 0.55, 1.7, 4.02, 2.9, "01 · 身份", "编号 ≠ 人物", "发布文件 caseid 是波内编号，跨年出生年一致率仅 1.2–2.6%。R 是编号留出，不是人物留出。", accent=False)
     card(s, 4.71, 1.7, 4.02, 2.9, "02 · 输入", "同一张表，两种渲染", "814 行（29.9%）上，文本说\u201cIndependent\u201d而表格说\u201c同党\u201d；这个差异对 LLM 不利。", accent=True)
     card(s, 8.87, 1.7, 4.02, 2.9, "03 · 修复", "已修表，未重训", "2024 恢复 pid7 94%、ideo5 90%、educ 100%（档案 1 → 575），但旧特征管线不可复现，重训列为 future work。", accent=False)
     note(s, "三项都写进了 Limitations：前两项决定主张的边界，第三项是 future work。", y=5.05, size=12, color=NAVY)
-    footer(s); slide_number(s, 11, total)
+    footer(s); slide_number(s, 12, total)
 
     # 12 conclusions ----------------------------------------------------------
-    s = new_slide(prs, blank); nav(s, 3, 12, total); title(s, "结论：买到\u201c能用\u201d，没买到\u201c更好\u201d")
+    s = new_slide(prs, blank); nav(s, 3, 13, total); title(s, "结论：买到\u201c能用\u201d，没买到\u201c更好\u201d")
     lines = [
         ("多少", "微调吃掉 82%（77–95%）的差距，但没有反超强基线。"),
         ("哪里", "增益在量表两端，损失在中间；两个模型的误差方向相反。"),
@@ -444,10 +453,10 @@ def build() -> None:
         b = textbox(s, 2.35, y, 10.2, 0.95, anchor=MSO_ANCHOR.MIDDLE)
         para(b, text, 17, color=INK, first=True, line=1.2)
     note(s, "一句话：结构化对齐是必要的，但不是充分的；它的收益是局部的、有形状的。", y=6.2, size=12.5, color=NAVY)
-    footer(s); slide_number(s, 12, total)
+    footer(s); slide_number(s, 13, total)
 
     # 13 decisions ------------------------------------------------------------
-    s = new_slide(prs, blank); nav(s, 3, 13, total); title(s, "请老师定三件事")
+    s = new_slide(prs, blank); nav(s, 3, 14, total); title(s, "请老师定三件事")
     items = [
         ("01", "页数", "正文 18 页（共约 41 页）是否符合学院要求？如需要，我按附录压缩。"),
         ("02", "是否补修复表重训", "2–3 天：先做单年 parity test，再重训；会把时间章从\u201c没有证据\u201d变成\u201c残余为 X\u201d。"),
@@ -463,7 +472,7 @@ def build() -> None:
         db = textbox(s, 1.75, y + 0.42, 10.8, 0.6)
         para(db, desc, 13, color=GRAY, first=True, line=1.2)
     note(s, "谢谢老师。", y=6.35, size=16, color=NAVY)
-    footer(s); slide_number(s, 13, total)
+    footer(s); slide_number(s, 14, total)
 
     prs.save(OUT)
     print("saved", OUT, "slides:", len(prs.slides))
