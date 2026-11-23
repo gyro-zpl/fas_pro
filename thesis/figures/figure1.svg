@@ -223,7 +223,7 @@
 <text x="48" y="800" font-size="17" fill="#55606B" font-weight="600" font-family="'Source Sans 3', 'DejaVu Sans', sans-serif">train (80%)</text>
 <text x="432" y="800" font-size="17" fill="#A63A2E" font-weight="600" font-family="'Source Sans 3', 'DejaVu Sans', sans-serif">held out (20%)</text>
 <text x="32" y="858" font-size="18" fill="#55606B" font-weight="400" font-family="'Source Sans 3', 'DejaVu Sans', sans-serif">MAE  ·  Pearson r  ·  choice accuracy (argmax + tie-aware)</text>
-<rect x="34" y="884" width="268" height="32" rx="8" fill="#E7F0FA" stroke="#C6DBF0" stroke-width="1.2"/>
+<rect x="34" y="884" width="320" height="32" rx="8" fill="#E7F0FA" stroke="#C6DBF0" stroke-width="1.2"/>
 <text x="48" y="906" font-size="17" fill="#1D4E89" font-weight="600" font-family="'Source Sans 3', 'DejaVu Sans', sans-serif">Results: Table 3.1</text>
 <rect x="590" y="616" width="540" height="320" rx="12" fill="#FFFFFF" stroke="#DCE0E4" stroke-width="1.2"/>
 <rect x="590" y="616" width="540" height="5" rx="2" fill="#1D4E89"/>
@@ -240,7 +240,7 @@
 <text x="862" y="766" font-size="17" fill="#55606B" font-weight="400" font-family="'Source Sans 3', 'DejaVu Sans', sans-serif">vs. real 2024 GSS</text>
 <text x="862" y="790" font-size="17" fill="#8A939C" font-weight="400" font-family="'Source Sans 3', 'DejaVu Sans', sans-serif">marginal  ·  joint  ·  coverage</text>
 <text x="612" y="858" font-size="18" fill="#55606B" font-weight="400" font-family="'Source Sans 3', 'DejaVu Sans', sans-serif">marginals and pairwise joints, one held-out reference</text>
-<rect x="612" y="884" width="268" height="32" rx="8" fill="#E7F0FA" stroke="#C6DBF0" stroke-width="1.2"/>
+<rect x="612" y="884" width="320" height="32" rx="8" fill="#E7F0FA" stroke="#C6DBF0" stroke-width="1.2"/>
 <text x="626" y="906" font-size="17" fill="#1D4E89" font-weight="600" font-family="'Source Sans 3', 'DejaVu Sans', sans-serif">Results: Tables 3.2 and C.1</text>
 <rect x="1150" y="616" width="538" height="320" rx="12" fill="#FFFFFF" stroke="#DCE0E4" stroke-width="1.2"/>
 <rect x="1150" y="616" width="538" height="5" rx="2" fill="#4E7A52"/>
@@ -283,6 +283,6 @@
 <text x="1538" y="838" font-size="17" fill="#8A939C" font-weight="600" font-family="'Source Sans 3', 'DejaVu Sans', sans-serif" text-anchor="middle">val</text>
 <text x="1620" y="838" font-size="17" fill="#A63A2E" font-weight="600" font-family="'Source Sans 3', 'DejaVu Sans', sans-serif" text-anchor="middle">test</text>
 <text x="1172" y="858" font-size="18" fill="#55606B" font-weight="400" font-family="'Source Sans 3', 'DejaVu Sans', sans-serif">per-year Pearson r and MAE across survey waves</text>
-<rect x="1172" y="884" width="268" height="32" rx="8" fill="#E7F0FA" stroke="#C6DBF0" stroke-width="1.2"/>
+<rect x="1172" y="884" width="320" height="32" rx="8" fill="#E7F0FA" stroke="#C6DBF0" stroke-width="1.2"/>
 <text x="1186" y="906" font-size="17" fill="#1D4E89" font-weight="600" font-family="'Source Sans 3', 'DejaVu Sans', sans-serif">Results: Table B.1 and Figure 4.1</text>
 </svg>
