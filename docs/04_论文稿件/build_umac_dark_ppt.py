@@ -38,7 +38,7 @@ LATIN = "Times New Roman"
 EA = "黑体"
 
 W, H = 13.333, 7.5
-SECTIONS = ["1  研究问题", "2  方法", "3  结果", "4  边界"]
+SECTIONS = ["1  Research Question", "2  Method", "3  Results", "4  Boundaries"]
 
 
 # --------------------------------------------------------------------------- helpers
@@ -195,10 +195,10 @@ def note(slide, text, y=6.55, size=10.5, color=GRAY):
     para(box, text, size, color=color, first=True)
 
 
-def footer(slide, text="澳门大学 · 科技学院 · 计算机科学系"):
+def footer(slide, text="University of Macau  ·  Faculty of Science and Technology  ·  Department of Computer Science"):
     rect(slide, 0, H - 0.36, W, 0.012, RGBColor(0xC9, 0xD6, 0xE4))
     box = textbox(slide, 0.45, H - 0.33, 9.0, 0.24)
-    para(box, text, 9, color=GRAY, first=True)
+    para(box, text, 8.5, color=GRAY, first=True)
 
 
 # --------------------------------------------------------------------------- build
