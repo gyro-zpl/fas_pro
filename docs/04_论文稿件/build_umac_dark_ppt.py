@@ -1,7 +1,11 @@
 """Build the advisor briefing deck in the UMAC navy template style.
 
 Base: ppt/深色澳门大学PhD申博面试PPT模板.pptx (master, theme, logo).
-Output: docs/04_论文稿件/导师阶段汇报_UMAC_2026-11-23.pptx
+Output: docs/04_论文稿件/导师阶段汇报_UMAC_2026-11-23_generated.pptx
+
+NOTE: this always writes a fresh copy under *_generated.pptx so it never
+overwrites the hand-edited working deck. To refresh only the architecture
+figure inside the working deck, run sync_deck_figure.py instead.
 
 Usage:
     python docs/04_论文稿件/build_umac_dark_ppt.py
@@ -22,7 +26,7 @@ from pptx.util import Inches, Pt, Emu
 
 ROOT = Path(__file__).resolve().parents[2]
 TEMPLATE = ROOT.parent / "ppt" / "深色澳门大学PhD申博面试PPT模板.pptx"
-OUT = Path(__file__).resolve().parent / "导师阶段汇报_UMAC_2026-11-23.pptx"
+OUT = Path(__file__).resolve().parent / "导师阶段汇报_UMAC_2026-11-23_generated.pptx"
 ASSETS = Path(__file__).resolve().parent / "_assets"
 
 NAVY = RGBColor(0x00, 0x2C, 0x54)
