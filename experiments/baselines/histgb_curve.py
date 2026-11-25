@@ -18,6 +18,7 @@ import argparse
 import json
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 from sklearn.ensemble import HistGradientBoostingRegressor
 
@@ -45,8 +46,11 @@ def main() -> None:
     )
     model.fit(X, y)
 
-    train_curve = [float(v) for v in model.train_score_]
-    val_curve = [float(v) for v in model.validation_score_]
+    # sklearn stores the negative of its training loss. For squared_error the
+    # per-sample loss is 0.5 * (y - pred)^2, so -2 * score is the MSE.
+    train_curve = [-2.0 * float(v) for v in model.train_score_]
+    val_curve = [-2.0 * float(v) for v in model.validation_score_]
+    best_idx = int(np.argmin(val_curve))
 
     out = {
         "train_split": args.train_split,
@@ -54,11 +58,16 @@ def main() -> None:
         "n_features": int(X.shape[1]),
         "max_iter": 60,
         "n_iter_used": int(model.n_iter_),
-        "loss": "squared_error (sklearn default)",
-        "train_score": train_curve,
-        "validation_score": val_curve,
-        "final_train": train_curve[-1] if train_curve else None,
-        "final_validation": val_curve[-1] if val_curve else None,
+        "loss": "MSE (converted from sklearn's negative half-MSE score)",
+        "train_mse": train_curve,
+        "validation_mse": val_curve,
+        "final_train_mse": train_curve[-1] if train_curve else None,
+        "final_validation_mse": val_curve[-1] if val_curve else None,
+        "best_validation_mse": val_curve[best_idx] if val_curve else None,
+        "best_validation_iter": best_idx + 1,
+        "train_validation_gap_mse": (
+            val_curve[-1] - train_curve[-1] if train_curve else None),
+        "early_stopped": bool(model.n_iter_ < 60),
     }
 
     out_dir = Path(config.RESULTS) / "paper_tables"
@@ -71,10 +80,15 @@ def main() -> None:
         "# HistGB training curve",
         "",
         f"- split: `{args.train_split}`, rows {out['n_rows']:,}, features {out['n_features']}",
-        f"- early stopping stopped at **{out['n_iter_used']} / 60** trees",
-        f"- final train loss {out['final_train']:.2f}, final validation loss {out['final_validation']:.2f}",
+        f"- early stopping used **{out['n_iter_used']} / 60** trees"
+        f" ({'triggered' if out['early_stopped'] else 'not triggered'})",
+        f"- final train MSE {out['final_train_mse']:.2f}, "
+        f"final validation MSE {out['final_validation_mse']:.2f}",
+        f"- best validation MSE {out['best_validation_mse']:.2f} at point "
+        f"{out['best_validation_iter']}; train--validation gap "
+        f"{out['train_validation_gap_mse']:.2f} MSE",
         "",
-        "| tree | train | validation |",
+        "| iteration | train MSE | validation MSE |",
         "|---:|---:|---:|",
     ]
     for i, (tr, va) in enumerate(zip(train_curve, val_curve), 1):
@@ -89,8 +103,8 @@ def main() -> None:
         fig, ax = plt.subplots(figsize=(6, 3.6))
         ax.plot(range(1, len(train_curve) + 1), train_curve, label="train")
         ax.plot(range(1, len(val_curve) + 1), val_curve, label="validation (10%)")
-        ax.axvline(out["n_iter_used"], ls=":", lw=1, color="grey")
-        ax.set_xlabel("trees"); ax.set_ylabel("squared error")
+        ax.axvline(out["best_validation_iter"], ls=":", lw=1, color="grey")
+        ax.set_xlabel("iteration"); ax.set_ylabel("MSE")
         ax.set_title(f"HistGB training curve ({out['n_iter_used']}/60 trees)")
         ax.legend(frameon=False)
         fig.tight_layout()
@@ -99,7 +113,10 @@ def main() -> None:
         print(f"[warn] plot skipped: {exc}")
 
     print(json.dumps({k: out[k] for k in
-                      ("n_rows", "n_features", "n_iter_used", "final_train", "final_validation")}))
+                      ("n_rows", "n_features", "n_iter_used",
+                       "final_train_mse", "final_validation_mse",
+                       "best_validation_mse", "best_validation_iter",
+                       "train_validation_gap_mse", "early_stopped")}))
 
 
 if __name__ == "__main__":

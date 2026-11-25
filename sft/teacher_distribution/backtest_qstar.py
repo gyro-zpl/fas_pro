@@ -31,6 +31,7 @@ import pandas as pd
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import get_distribution as gd  # noqa: E402
+from get_distribution_nonlinear import project_to_year_nonlinear  # noqa: E402
 
 LEVELS = ["1", "2", "3"]
 
@@ -71,10 +72,43 @@ def scores(Q: np.ndarray, real: np.ndarray, real_parts: dict) -> dict:
     }
 
 
+def target_bootstrap(real_df: pd.DataFrame, qstar: np.ndarray,
+                     qpersist: np.ndarray, n_boot: int, seed: int) -> dict:
+    """Paired bootstrap over target rows for qstar minus persistence.
+
+    Negative values mean qstar is closer to the target. The historical waves
+    are held fixed; only target-sampling uncertainty is quantified.
+    """
+    rng = np.random.default_rng(seed)
+    diffs = {"marginal": [], "pair": [], "three_way": []}
+    for _ in range(n_boot):
+        boot = real_df.iloc[rng.integers(0, len(real_df), len(real_df))]
+        qreal, parts = empirical(boot)
+        a = scores(qstar, qreal, parts)
+        b = scores(qpersist, qreal, parts)
+        for key in diffs:
+            diffs[key].append(a[f"{key}_js"] - b[f"{key}_js"])
+    out = {}
+    for key, vals in diffs.items():
+        v = np.asarray(vals)
+        out[key] = {
+            "estimate": float(v.mean()),
+            "ci": [float(np.percentile(v, 2.5)), float(np.percentile(v, 97.5))],
+            "p_qstar_better": float((v < 0).mean()),
+        }
+    return out
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--cutoff", type=int, default=2018)
     ap.add_argument("--data-dir", default=gd.DATA_DIR)
+    ap.add_argument("--bootstrap", type=int, default=2000,
+                    help="paired target-row bootstrap resamples (0 disables)")
+    ap.add_argument("--projection", choices=["nonlinear", "linear"],
+                    default="nonlinear",
+                    help="projection used by the production pipeline (default: nonlinear)")
+    ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--attrs", nargs=3, default=None,
                     help="A B C attribute names, default = module setting")
     args = ap.parse_args()
@@ -90,8 +124,11 @@ def main() -> None:
     if len(before) < 4:
         raise SystemExit(f"need >= 4 waves before {args.cutoff}, got {sorted(before)}")
 
-    # reconstruction with the production recipe
-    Pa, Pb, Pc, Pbc = gd.project_to_year_linear(before, args.cutoff)
+    # reconstruction with the production projection
+    if args.projection == "nonlinear":
+        Pa, Pb, Pc, Pbc = project_to_year_nonlinear(before, args.cutoff)
+    else:
+        Pa, Pb, Pc, Pbc = gd.project_to_year_linear(before, args.cutoff)
     Q_star = gd.ipf_joint(Pa, Pb, Pc, Pbc, iters=300)
 
     # references
@@ -109,12 +146,16 @@ def main() -> None:
 
     report = {
         "cutoff": args.cutoff,
+        "projection": args.projection,
         "waves_used": sorted(before),
         "persistence_from": last_year,
         "n_real": int(len(real_df)),
         "qstar": scores(Q_star, real, parts),
         "persistence": scores(Q_persist, real, parts),
         "independence": scores(Q_indep, real, parts),
+        "bootstrap": (
+            target_bootstrap(real_df, Q_star, Q_persist, args.bootstrap, args.seed)
+            if args.bootstrap else None),
         "internal": {
             "A_marginal_gap": float(np.abs(np.asarray(Pa) - Q_star.sum(axis=(1, 2))).sum()),
             "B_marginal_gap": float(np.abs(np.asarray(Pb) - Q_star.sum(axis=(0, 2))).sum()),
@@ -141,14 +182,34 @@ def main() -> None:
     for name in ("qstar", "persistence", "independence"):
         s = report[name]
         lines.append(f"| {name} | {s['marginal_js']:.4f} | {s['pair_js']:.4f} | {s['three_way_js']:.4f} |")
+    if report["bootstrap"]:
+        lines += [
+            "",
+            f"Paired target bootstrap ({args.bootstrap:,} resamples; "
+            "negative = qstar closer):",
+            "",
+            "| metric | qstar - persistence [95% CI] | P(qstar better) |",
+            "|---|---|---:|",
+        ]
+        for key in ("marginal", "pair", "three_way"):
+            b = report["bootstrap"][key]
+            lines.append(
+                f"| {key} | {b['estimate']:+.5f} "
+                f"[{b['ci'][0]:+.5f}, {b['ci'][1]:+.5f}] | "
+                f"{b['p_qstar_better']:.3f} |")
     lines += [
         "",
-        "Internal consistency of Q* (L1 gaps, should be ~0 for the constrained terms):",
+        "Internal consistency of Q* (L1 gaps):",
         "",
-        f"- A marginal gap {report['internal']['A_marginal_gap']:.4f}",
-        f"- B marginal gap {report['internal']['B_marginal_gap']:.4f}",
-        f"- C marginal gap {report['internal']['C_marginal_gap']:.4f}",
-        f"- B-C joint gap {report['internal']['BC_gap']:.4f}",
+        f"- A marginal gap {report['internal']['A_marginal_gap']:.6f}",
+        f"- B marginal gap {report['internal']['B_marginal_gap']:.6f}",
+        f"- C marginal gap {report['internal']['C_marginal_gap']:.6f}",
+        f"- B-C joint gap {report['internal']['BC_gap']:.6f}",
+        "",
+        "With the nonlinear projection, B/C marginal gaps can be nonzero because "
+        "IPF only constrains the A marginal and the B-C joint; with the linear "
+        "projection they are near zero because projection commutes with "
+        "marginalization. Large A or B-C gaps indicate a projection bug.",
         "",
     ]
     md = out_dir / "qstar_backtest.md"
