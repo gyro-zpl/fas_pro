@@ -17,7 +17,7 @@
 | `prior_baseline.md/.json` | prior-only 基线、CI、10 个采样种子范围、与 LLM 条件的独立 bootstrap 差 | `prior_baseline.py` | FAS |
 | `pas_by_year.md` | T 协议按年（时间分析用） | `paper_tables.py` | T |
 | `ablation.md` | 消融 A1–A3 | `ablation_table.py` | T，1 seed |
-| `histgb_curve.md/.json/.png` + `_400` | HistGB 60/400 预算训练曲线与 test_r 主年份指标 | `histgb_curve.py` | R |
+| `histgb_curve.md/.json/.png` + `_400` / `_t400` | HistGB 60/400 预算训练曲线与 test_r 主年份指标；`_t400` 为 T 模型同预算复核 | `histgb_curve.py` | R / T |
 | `qstar_backtest_2018/2022.json` + `.md` | Q* 回测、persistence/independence、target bootstrap | `backtest_qstar.py` | FAS |
 
 ## legacy/（勿引用）
