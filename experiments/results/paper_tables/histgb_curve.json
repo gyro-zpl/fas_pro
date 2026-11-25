@@ -4,6 +4,7 @@
   "n_features": 138,
   "max_iter": 60,
   "n_iter_used": 60,
+  "early_stopped": false,
   "loss": "MSE (converted from sklearn's negative half-MSE score)",
   "train_mse": [
     1162.6244527212036,
@@ -134,7 +135,21 @@
   "final_train_mse": 485.1744238889553,
   "final_validation_mse": 662.1136486545097,
   "best_validation_mse": 661.1577705704283,
-  "best_validation_iter": 60,
+  "best_tree": 59,
   "train_validation_gap_mse": 176.9392247655544,
-  "early_stopped": false
+  "test": {
+    "split": "test_r",
+    "n": 6014,
+    "mae": 22.96805031082983,
+    "corr": 0.6078296921740041,
+    "main_years": [
+      2016,
+      2018,
+      2019
+    ],
+    "main_n": 2726,
+    "main_mae": 20.731205871061007,
+    "main_corr": 0.7027815979549108,
+    "main_choice": 0.5430622009569378
+  }
 }

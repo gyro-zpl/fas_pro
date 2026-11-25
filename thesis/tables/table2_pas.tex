@@ -13,19 +13,19 @@ Candidate mean (train) & 32.35 & 0.155 & 0.304 \\
 Base LLM & 24.15 & 0.594 & 0.478 \\
 Ridge & 22.86 & 0.639 & 0.450 \\
 Fine-tuned LLM (3 seeds) & 21.35 & 0.666 & 0.525 \\
-HistGB & \textbf{20.73} & \textbf{0.703} & \textbf{0.543} \\
+HistGB & \textbf{20.63} & \textbf{0.702} & \textbf{0.538} \\
 DeepSeek-R1-Distill (1 seed) & 21.37 & 0.665 & 0.572 \\
 \bottomrule
 \end{tabular}
 \par\smallskip\footnotesize
-Fine-tuning closes 82\% of the MAE gap between the base model and HistGB
-(66\% of the correlation gap and 72\% of the choice gap), but 0.62 MAE remains.
+Fine-tuning closes 79.5\% of the MAE gap between the base model and HistGB
+(66.8\% of the correlation gap and 78.0\% of the choice gap), but 0.72 MAE remains.
 The no-information row predicts the training mean for every row; its correlation
 is undefined and its choice is at chance. The candidate-mean row predicts each
 candidate's training mean, so it carries candidate identity but no respondent
 information. Choice is the mean of three per-seed
 rating-induced accuracies (standard deviation 0.033; range 0.490--0.569);
-tie-aware scoring gives 0.481 for the LLM and 0.555 for HistGB. The R protocol
+tie-aware scoring gives 0.481 for the LLM and 0.550 for HistGB. The R protocol
 holds out respondent numbers within each wave; the same person may appear under
 another number in another wave (Appendix~\ref{app:data}).
 \end{table}

@@ -629,7 +629,7 @@
       <article class="level">
         <span class="level-tag">个体 · PAS</span>
         <div class="level-num">21.35</div>
-        <p>微调 Qwen3-8B 的 MAE；强 GBM 是 20.73。吃掉 base→GBM 差距的 82%，但不反超。</p>
+        <p>微调 Qwen3-8B 的 MAE；强 GBM 是 20.63。吃掉 base→GBM 差距的 79.5%，但不反超。</p>
       </article>
       <article class="level">
         <span class="level-tag">群体 · FAS</span>
@@ -771,7 +771,7 @@
         <thead><tr><th>模型</th><th class="num">MAE ↓</th><th class="num">corr ↑</th><th class="num">choice</th><th class="num">tie-aware</th></tr></thead>
         <tbody>
           <tr class="highlight"><td>Qwen3-8B r（3 seeds）</td><td class="num">21.35 ± 0.19</td><td class="num">0.666 ± 0.003</td><td class="num">0.525 ± 0.033</td><td class="num">0.481</td></tr>
-          <tr><td>HistGB r</td><td class="num">20.73</td><td class="num"><strong>0.703</strong></td><td class="num"><strong>0.543</strong></td><td class="num"><strong>0.555</strong></td></tr>
+          <tr><td>HistGB r</td><td class="num">20.63</td><td class="num"><strong>0.702</strong></td><td class="num"><strong>0.538</strong></td><td class="num"><strong>0.550</strong></td></tr>
           <tr><td>Ridge r</td><td class="num">22.86</td><td class="num">0.639</td><td class="num">0.450</td><td class="num">0.474</td></tr>
           <tr><td>Base Qwen</td><td class="num">24.15</td><td class="num">0.594</td><td class="num">0.478</td><td class="num">0.432</td></tr>
           <tr><td>DeepSeek-R1-Distill r（1 seed）</td><td class="num">21.37</td><td class="num">0.665</td><td class="num">0.572</td><td class="num">0.526</td></tr>
@@ -784,7 +784,7 @@
       <div>
         <h3>怎么读</h3>
         <div class="prose">
-          <p>MAE 越低越好；LLM 比 GBM 高 0.62。corr 越高越好；GBM 高 0.037。choice 和 chance 0.163 比，模型确实学到了东西，但和 GBM 的 0.543 很接近。tie-aware 后 LLM 0.481、GBM 0.555。</p>
+          <p>MAE 越低越好；LLM 比 GBM 高 0.72。corr 越高越好；GBM 高 0.036。choice 和 chance 0.163 比，模型确实学到了东西，但和 GBM 的 0.538 很接近。tie-aware 后 LLM 0.481、GBM 0.550。</p>
           <p>配对 bootstrap：MAE 差 seed42 +0.59 [−0.17, +1.32]、seed43 +0.42 [−0.34, +1.19]、seed44 +0.89 [+0.10, +1.67]；差异很小，GBM 从不更差。corr 差三个 seed 都为负（−0.040 / −0.033 / −0.039）。</p>
         </div>
       </div>
@@ -983,7 +983,7 @@
       <li><span class="time">1 min</span><span><strong>问题</strong>：三个层面（个体、群体、时间），三个 RQ。</span></li>
       <li><span class="time">1.5 min</span><span><strong>数据</strong>：ANES 审计 132,948 → 98,159；面板结构；T/R 两套协议。</span></li>
       <li><span class="time">1.5 min</span><span><strong>方法</strong>：PAS = prompt + LoRA + 读出；FAS = 外推 + IPF + 合成 + SFT；prior-only 基线。</span></li>
-      <li><span class="time">1.5 min</span><span><strong>个体结果</strong>：21.35 vs 20.73；corr 0.666 vs 0.703；tie-aware choice 0.481 vs 0.555；competitive, not superior。</span></li>
+      <li><span class="time">1.5 min</span><span><strong>个体结果</strong>：21.35 vs 20.63；corr 0.666 vs 0.702；tie-aware choice 0.481 vs 0.550；competitive, not superior。</span></li>
       <li><span class="time">1.5 min</span><span><strong>群体结果</strong>：prior 0.0076 vs LLM 0.0215（EDC joint）；LLM 接近但不超越；EHC KL。</span></li>
       <li><span class="time">1.5 min</span><span><strong>时间结果</strong>：0.722 → −0.056；GBM 也塌；常数基线 35.05；recency 不缓解。</span></li>
       <li><span class="time">0.5 min</span><span><strong>结论 / 局限 / 下一步</strong>：结构化对齐必要不充分；条件生成、更多模型家族、时间自适应、真实投票验证。</span></li>
@@ -1014,7 +1014,7 @@
       <div class="qa"><p class="q">为什么 prior 比 LLM 还准？</p><p class="a">因为 prior 就是用历史 GSS 外推 + IPF 重建出来的；LLM 是在学习这个 prior 的采样。直接采样 prior 当然更准。LLM 的潜在价值在条件生成 / 自然语言控制，不是无条件分布匹配。</p></div>
       <div class="qa"><p class="q">2024 塌缩是不是因为模型没看过 2024？</p><p class="a">不是。2024 的党派、意识形态、教育在处理表里全丢了，3,421 条 prompt 只有 1 种政治档案。把 2019 的政治块抹掉，相关性从 0.714 掉到 0.166——输入缺失本身就能复现大部分损失。所以是输入退化，不是干净的时间结论。</p></div>
       <div class="qa"><p class="q">“LLM 与 GBM 持平”是不是说明 LLM 没用？</p><p class="a">不是。它说明在这个任务、这个数据、这个 8B 模型上，LLM 没有超过强特征工程；但 LLM 提供了统一接口和分布输出，且能扩展到群体生成。论文的价值是把边界说清楚，而不是夸大。</p></div>
-      <div class="qa"><p class="q">这篇论文最大的贡献是什么？</p><p class="a">三件事：可复现的基准与两套协议；用“阶梯 + 误差剖面”回答结构化对齐买到了什么（82%、两端更好中间更差）；两项有效性审计（人物级链接、协变量可用性），说明表观的时间塌缩主要来自输入退化。</p></div>
+      <div class="qa"><p class="q">这篇论文最大的贡献是什么？</p><p class="a">三件事：可复现的基准与两套协议；用“阶梯 + 误差剖面”回答结构化对齐买到了什么（79.5%、两端更好中间更差）；两项有效性审计（人物级链接、协变量可用性），说明表观的时间塌缩主要来自输入退化。</p></div>
     </div>
   </section>
 
@@ -1025,7 +1025,7 @@
         <li><strong>问题</strong>：LLM 能不能当虚拟受访者？不是“演得像不像”，而是个体、群体、时间三个层面。</li>
         <li><strong>数据</strong>：ANES 2016–2024（132,948 → 98,159 行）；GSS 2004–2022 → 2024。</li>
         <li><strong>方法</strong>：Qwen3-8B + LoRA；R 协议主结果；T 协议时间；FAS 外推 + IPF + SFT；prior-only 基线。</li>
-        <li><strong>结果</strong>：阶梯 32.65 → 24.15 → 21.35 → 20.73（吃掉 82% 差距、不反超）；误差剖面两端 LLM 更好、中间 HistGB 更好；群体 prior 0.0076/0.0225 vs LLM 0.0215/0.0363；时间没有干净证据。</li>
+        <li><strong>结果</strong>：阶梯 32.65 → 24.15 → 21.35 → 20.63（吃掉 79.5% 差距、不反超）；误差剖面两端 LLM 更好、中间 HistGB 更好；群体 prior 0.0076/0.0225 vs LLM 0.0215/0.0363；时间没有干净证据。</li>
         <li><strong>结论</strong>：结构化对齐买到“能用”，没买到“更好”；评测要同时看平均、看位置、看输入是否有效。</li>
         <li><strong>态度</strong>：不夸大、不隐藏负面结果；把边界量化，让后续工作更容易校准。</li>
       </ul>

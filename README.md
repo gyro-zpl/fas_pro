@@ -14,7 +14,7 @@
 
 | 层面 | 结果 |
 |---|---|
-| PAS 分布内（2016–2019，held-out respondent numbers） | 微调 Qwen3-8B：MAE **21.35**、corr **0.666**、choice **0.525**（tie-aware 0.481；chance 0.163）；HistGB：20.73 / 0.703 / 0.543；MAE 差异小且 seed-dependent，GBM corr 更高、tie-aware choice 更优 |
+| PAS 分布内（2016–2019，held-out respondent numbers） | 微调 Qwen3-8B：MAE **21.35**、corr **0.666**、choice **0.525**（tie-aware 0.481；chance 0.163）；HistGB：20.63 / 0.702 / 0.538；MAE 差异小且 seed-dependent，GBM corr 更高、tie-aware choice 更优 |
 | PAS 微调必要性 | base Qwen：MAE 24.15、corr 0.594；微调相对 base 的 ΔMAE **−2.5～−3.0**、Δcorr **+0.07**、Δchoice **+0.01～+0.09**（seed-dependent） |
 | FAS（GSS） | **Prior-only 优于 LLM**：EDC 边际/联合 JS **0.0004 / 0.0076**，EHC **0.0011 / 0.0225**；LLM v3 为 EDC 0.0040 / 0.0215、EHC 0.0077 / 0.0363。SFT 让 LLM 接近 prior，但没有超过它 |
 | 时间边界 | LLM corr：2019 **0.722** → 2020 0.478 → 2022 0.408 → 2024 **−0.056**；GBM 同样塌缩（−0.008）；recency + 2022 不缓解 |
@@ -119,7 +119,7 @@ bash experiments/run_eval_r_suite.sh 3 44:test_r:generate 44:test_t:generate
 $PY -m experiments.eval.r_protocol_tables --seeds 42,43,44
 ```
 
-结果：`experiments/results/paper_tables/r_protocol.md`（主表 21.35/0.666/0.525；HistGB 20.73/0.703/0.543）、`r_pas_by_year.md`、`r_cross_pressure.md`、`r_test_t.md`、`r_test_tr.md`。runs 登记见 `experiments/runs.csv` r030–r043。R 协议的预测与日志已提交；87MB 的 LoRA adapter 因体积未提交，配置和 SHA256 见 `sft/sft_models/README.md`。
+结果：`experiments/results/paper_tables/r_protocol.md`（主表 21.35/0.666/0.525；HistGB 20.63/0.702/0.538）、`r_pas_by_year.md`、`r_cross_pressure.md`、`r_test_t.md`、`r_test_tr.md`。runs 登记见 `experiments/runs.csv` r030–r043。R 协议的预测与日志已提交；87MB 的 LoRA adapter 因体积未提交，配置和 SHA256 见 `sft/sft_models/README.md`。
 
 论文表与图：
 
@@ -166,7 +166,7 @@ python -m experiments.eval.cross_pressure
 ### 英文毕业论文（UMAC 模板）
 
 - `thesis/main.tex`：UMAC FST 硕士论文模板（A4、12pt Times、1.5 倍行距）
-- 编译产物**不入库**：Overleaf 包 `fas_pro_overleaf_thesis.zip`；本地 `tectonic main.tex`（最近一次编译 **正文 18 页**，总 40 页）
+- 编译产物**不入库**：Overleaf 包 `fas_pro_overleaf_thesis.zip`；本地 `tectonic main.tex`（最近一次编译 **正文 18 页**，总 41 页）
 - `thesis/chapters/`：5 章正文；`thesis/appendix/`：4 个附录（含第二模型 checkpoint DeepSeek-R1-Distill-Llama-8B）
 - 编译：`cd thesis && tectonic main.tex`
 - 作者：CHENYU YUAN；导师：PENGYANG WANG；日期：April 2027

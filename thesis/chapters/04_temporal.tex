@@ -34,14 +34,14 @@ and its partisanship scale is reversed, so the model receives contradictory
 inputs. Second, 2022 is a validation wave with only 194 held-out rows, and the
 protocol changes the picture: the temporal-protocol model reaches a correlation
 of 0.408, while the R models on the same rows reach 0.55--0.68 and HistGB reaches
-0.59. Third, 2024 loses the political covariates in the processed table. The
+0.61. Third, 2024 loses the political covariates in the processed table. The
 per-year table is therefore descriptive; it is not a clean four-year
 extrapolation.
 
 \section{The 2024 Case: Input Availability, Not a Clean Temporal Test}
 
 On the full 2024 test set the fine-tuned LLM reaches an MAE of 36.47 $\pm$ 0.75
-but a correlation of $-0.029$ $\pm$ 0.021; HistGB reaches 35.06 and $-0.030$. A
+but a correlation of $-0.029$ $\pm$ 0.021; HistGB reaches 35.27 and $+0.022$. A
 constant prediction of 50 reaches an MAE of 35.05 on the same rows, and a
 candidate-mean baseline reaches 34.84; the LLM's and HistGB's aggregate MAEs are
 therefore at or above the no-signal baseline. The MAE should not be read as
@@ -68,7 +68,7 @@ A covariate-dropout probe estimates the size of this input effect
 political block in the 2019 held-out prompts with the 2024 defaults lowers the
 LLM correlation from 0.714 to 0.166 and HistGB from 0.734 to 0.172; MAE rises
 from 19.34 to 31.67 and from 19.04 to 31.46. The actual 2024 values for the same
-seed-42 R model and HistGB are $-0.055$/$+0.015$ correlation and 37.78/35.11 MAE.
+seed-42 R model and HistGB are $-0.055$/$+0.022$ correlation and 37.78/35.27 MAE.
 Missing covariates therefore account for most, but not all, of the collapse: a
 smaller residual year or candidate-set shift remains. The 2024 case is a
 validity warning, not the thesis's temporal headline.

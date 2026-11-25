@@ -38,7 +38,7 @@ pdflatex main
 pdflatex main
 ```
 
-The compiled PDF is **not committed**; build it with `tectonic main.tex` (40 pages
+The compiled PDF is **not committed**; build it with `tectonic main.tex` (41 pages
 total, 18-page main body at the last build). The Overleaf package is
 `fas_pro_overleaf_thesis.zip`.
 

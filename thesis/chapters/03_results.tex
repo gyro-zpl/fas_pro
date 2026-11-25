@@ -22,34 +22,34 @@ baseline, which predicts the training mean for every row, reaches an MAE of
 32.65. Predicting each candidate's training mean instead reaches 32.35 with a
 correlation of 0.155 and a choice accuracy of 0.304, so candidate identity alone
 supplies some signal. The base model reaches 24.15, so prompting alone already
-carries substantial signal. Fine-tuning lowers MAE to 21.35, and HistGB reaches 20.73.
-The fine-tuned model therefore closes 82\% of the MAE gap between the base model
-and HistGB, 66\% of the correlation gap, and 72\% of the choice gap, but it does
-not close the remaining 18\% of that gap: the MAE difference is 0.62, the correlation
-is 0.037 lower, and tie-aware choice also favors HistGB (0.481 versus 0.555).
+carries substantial signal. Fine-tuning lowers MAE to 21.35, and HistGB reaches 20.63.
+The fine-tuned model therefore closes 79.5\% of the MAE gap between the base model
+and HistGB, 66.8\% of the correlation gap, and 78.0\% of the choice gap, but it does
+not close the remaining 20.5\% of that gap: the MAE difference is 0.72, the correlation
+is 0.036 lower, and tie-aware choice also favors HistGB (0.481 versus 0.550).
 Measured against the no-information baseline rather than the base model,
-fine-tuning closes 95\% of the total distance to HistGB, and prompting alone
+fine-tuning closes 94\% of the total distance to HistGB, and prompting alone
 already closes 71\%; the two denominators answer different questions and both
 are reported. Removing the 2018 wave, whose processed partisanship is a
 placeholder, leaves 1,999 rows on which the base model reaches 22.23, the
-fine-tuned model 20.76, and HistGB 20.31: fine-tuning then closes 77\% of that
-gap instead of 82\%, and the ordering is unchanged. Both denominators compare
+fine-tuned model 20.76, and HistGB 20.23: fine-tuning then closes 74\% of that
+gap instead of 79.5\%, and the ordering is unchanged. Both denominators compare
 two models trained and read on the same processed table, so the ladder measures
 relative distance on these inputs, not distance to an absolute ceiling; the
-77--82\% bracket is the honest range.
+74--80\% bracket is the honest range.
 A second checkpoint, DeepSeek-R1-Distill-Llama-8B, trained under the same recipe
 reaches 21.37, 0.665, and 0.572 (Appendix~\ref{app:second},
 Table~\ref{tab:second}); the signal is not
 specific to Qwen3-8B.
 
 The paired bootstrap tells the same story. The LLM--GBM MAE difference is
-$+0.59$ $[-0.17,+1.32]$ for seed 42, $+0.42$ $[-0.34,+1.19]$ for seed 43, and
-$+0.89$ $[+0.10,+1.67]$ for seed 44; only the seed-44 interval excludes zero,
+$+0.69$ $[-0.09,+1.42]$ for seed 42, $+0.53$ $[-0.24,+1.29]$ for seed 43, and
+$+0.99$ $[+0.23,+1.77]$ for seed 44; only the seed-44 interval excludes zero,
 with the baseline never worse. The correlation difference is consistently
-negative ($-0.040$, $-0.033$, and $-0.039$), and tie-aware choice consistently
-favors the baseline ($-0.057$, $-0.082$, and $-0.083$). A respondent-level
-cluster bootstrap on seed 42 widens the MAE interval to $[-0.40,+1.61]$ and
-keeps the correlation interval negative ($[-0.062,-0.019]$). The honest reading
+negative ($-0.039$, $-0.032$, and $-0.038$), and tie-aware choice consistently
+favors the baseline ($-0.052$, $-0.077$, and $-0.078$). A respondent-level
+cluster bootstrap on seed 42 widens the MAE interval to $[-0.32,+1.66]$ and
+keeps the correlation interval negative ($[-0.060,-0.016]$). The honest reading
 is that structured alignment buys a usable predictor, not a uniformly better
 one.
 
@@ -61,22 +61,24 @@ The average hides a structural pattern. Table~\ref{tab:profile} divides each
 wave into true-score quartiles. In every year the LLM is better than HistGB in
 Q1 and Q4, the lowest and highest true scores, and worse in Q2 and Q3, the middle
 of the scale. The pattern is not a small fluctuation: in 2019 the LLM's Q1 MAE
-is 13.6 against 19.5 for HistGB, and its Q4 MAE is 17.8 against 24.2, while its
-Q2 and Q3 MAEs are 26.4 and 22.0 against 16.9 and 15.5. The same crossing
+is 13.6 against 18.9 for HistGB, and its Q4 MAE is 17.8 against 23.8, while its
+Q2 and Q3 MAEs are 26.4 and 22.0 against 17.2 and 15.6. The same crossing
 appears in 2016 and 2018 and in all three seeds.
 
 The crossing is not a small-sample artefact. Across the 12 year-by-quartile
 cells the predicted sign holds in all 12 (paired permutation $p=0.0003$, 20,000
 permutations), and every cell remains significant after Holm correction
-(maximum $p=0.0139$). The middle-minus-tail contrast is $+16.45$ MAE
-points $[14.78, 18.09]$, one-sided $p<0.0001$; this contrast is the primary
-hypothesis test of the thesis, as fixed in Section~\ref{ch:method}. Per-cell respondent-cluster
-bootstrap intervals for the LLM--HistGB difference exclude zero in every cell.
+(maximum $p=0.0176$). The middle-minus-tail contrast is $+16.02$ MAE
+points $[14.33, 17.66]$, one-sided $p<0.0001$; this contrast is the primary
+hypothesis test of the thesis, as fixed in Section~\ref{ch:method}. Per-cell
+respondent-cluster bootstrap intervals exclude zero in 11 of the 12 cells; the
+exception is 2016 Q3, whose interval includes zero but whose permutation test
+remains significant after Holm correction ($p=0.0176$).
 
 The error--extremity correlation summarizes the shape. Across the in-distribution
 rows, the correlation between absolute error and distance from the mean true
-score is $-0.184$ $[-0.241, -0.127]$ for the LLM and $+0.251$ $[0.204, 0.297]$
-for HistGB; the difference is $-0.435$ $[-0.479, -0.392]$ (paired permutation
+score is $-0.184$ $[-0.241, -0.127]$ for the LLM and $+0.232$ $[0.184, 0.278]$
+for HistGB; the difference is $-0.416$ $[-0.460, -0.373]$ (paired permutation
 $p<0.0001$). The two models make errors in opposite regions: the LLM is
 relatively accurate at the tails and loses in the middle; HistGB is accurate in
 the middle and regresses toward the mean at the tails. Part of the pattern is

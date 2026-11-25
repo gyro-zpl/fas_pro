@@ -261,7 +261,7 @@ def build() -> None:
     s = new_slide(prs, blank); nav(s, 0, 3, total); title(s, "论文地图：六件事，一句话一件")
     items = [
         ("01", "数据", "132,948 → 98,159 行；T / R 两套协议。", True),
-        ("02", "阶梯", "微调吃掉 82% 差距（77–95%），但不反超。", False),
+        ("02", "阶梯", "微调吃掉 79.5% 差距（74–94%），但不反超。", False),
         ("03", "剖面", "两端赢、中间输；12/12 格同向。", False),
         ("04", "群体", "先验更准：0.0076 对 0.0215（EDC）。", False),
         ("05", "时间", "表观塌缩来自输入缺失，不是时间结论。", False),
@@ -348,16 +348,16 @@ def build() -> None:
     for line in ["数值 pid7、party_match，加上相似度等派生列", "同一个 pid7 越界时，表格看到数字、文本看到\u201cIndependent\u201d",
                  "结果：814 行（29.9%）上，两边信息不同"]:
         para(rb, "· " + line, 12.5, color=INK, space_after=8, line=1.25)
-    note(s, "这个差异对 LLM 不利，所以 82% 是下限；去掉 2018 后是 77%。", y=5.78, size=12, color=NAVY)
+    note(s, "这个差异对 LLM 不利，所以 79.5% 是下限；去掉 2018 后是 74%。", y=5.78, size=12, color=NAVY)
     footer(s); slide_number(s, 7, total)
 
     # 7 ladder ----------------------------------------------------------------
-    s = new_slide(prs, blank); nav(s, 2, 8, total); title(s, "效果阶梯：吃掉 82%，但没有反超")
+    s = new_slide(prs, blank); nav(s, 2, 8, total); title(s, "效果阶梯：吃掉 79.5%，但没有反超")
     tbl = table(s, 0.55, 1.72, 6.55, 7, 3, [2.6, 1.95, 2.0], row_h=0.46)
     rows = [("模型", "MAE", "说明"), ("无信息（常数）", "32.65", "训练均值"),
             ("候选人均值", "32.35", "corr 0.155"), ("base Qwen", "24.15", "同一批测试行"),
             ("Ridge", "22.86", "线性对照"), ("微调 Qwen ×3", "21.35", "± 0.19"),
-            ("HistGB", "20.73", "强基线")]
+            ("HistGB", "20.63", "强基线")]
     for r, row in enumerate(rows):
         for c, val in enumerate(row):
             fill_cell(tbl.cell(r, c), val, size=12, bold=(r == 0 or r == 5),
@@ -365,12 +365,12 @@ def build() -> None:
                       bg=NAVY if r == 0 else (RGBColor(0xDC, 0xE6, 0xF0) if r == 5 else (LIGHT if r % 2 == 0 else WHITE)))
     rect(s, 7.45, 1.75, 5.35, 1.55, NAVY, shape=MSO_SHAPE.ROUNDED_RECTANGLE, radius=0.05)
     nb = textbox(s, 7.75, 1.92, 4.8, 1.2)
-    para(nb, "82%", 40, bold=True, color=WHITE, first=True, space_after=2)
+    para(nb, "79.5%", 40, bold=True, color=WHITE, first=True, space_after=2)
     para(nb, "吃掉 base → HistGB 的 MAE 差距", 12, color=RGBColor(0xC9, 0xD6, 0xE4), space_after=0)
     body_bullets(s, 7.45, 3.55, 5.4, [
         ("同一张表：", "两个模型都读这张处理表，所以是相对距离，不是绝对上限。"),
-        ("换分母：", "从无信息起算 95%；去掉 2018 是 77%。"),
-        ("没吃掉的 18%：", "corr 0.666 对 0.703；tie-aware choice 0.481 对 0.555。"),
+        ("换分母：", "从无信息起算 94%；去掉 2018 是 74%。"),
+        ("没吃掉的 20.5%：", "corr 0.666 对 0.702；tie-aware choice 0.481 对 0.550。"),
     ], size=12, gap=10)
     footer(s); slide_number(s, 8, total)
 
@@ -390,8 +390,8 @@ def build() -> None:
     body_bullets(s, 7.3, 1.72, 5.5, [
         ("机制：", "HistGB 预测标准差 24、真值 36，所以两端必错；LLM 是 40，两端跟得上但中间更吵。"),
         ("检验：", "三年 × 三 seed，12/12 格同向，置换检验 p=0.0003。"),
-        ("主检验：", "中间减两端 +16.45 MAE [14.78, 18.09]。"),
-        ("误差-极值相关：", "LLM −0.184，HistGB +0.251。"),
+        ("主检验：", "中间减两端 +16.02 MAE [14.33, 17.66]。"),
+        ("误差-极值相关：", "LLM −0.184，HistGB +0.232。"),
     ], size=12.5, gap=12)
     note(s, "每格是 LLM / HistGB 的 MAE；Q1 最低、Q4 最高真值分段。", y=6.3, size=10.5)
     footer(s); slide_number(s, 9, total)
@@ -445,7 +445,7 @@ def build() -> None:
     # 12 conclusions ----------------------------------------------------------
     s = new_slide(prs, blank); nav(s, 3, 13, total); title(s, "结论：买到\u201c能用\u201d，没买到\u201c更好\u201d")
     lines = [
-        ("多少", "微调吃掉 82%（77–95%）的差距，但没有反超强基线。"),
+        ("多少", "微调吃掉 79.5%（74–94%）的差距，但没有反超强基线。"),
         ("哪里", "增益在量表两端，损失在中间；两个模型的误差方向相反。"),
         ("没买到", "群体不如直接抽样；跨期没有干净证据——表观塌缩主要来自输入退化。"),
     ]

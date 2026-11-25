@@ -22,7 +22,7 @@ Model & MAE & corr & choice & MAE & corr & choice \\
 \midrule
 Qwen3-8B (3 seeds) & 21.35 & 0.666 & 0.525 & 36.90 & $-0.037$ & 0.524 \\
 DeepSeek-R1-Distill (1 seed) & 21.37 & 0.665 & 0.572 & 38.95 & $-0.040$ & 0.523 \\
-HistGB & 20.73 & 0.703 & 0.543 & 35.11 & $+0.015$ & 0.485 \\
+HistGB & 20.63 & 0.702 & 0.538 & 35.27 & $+0.022$ & 0.487 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -34,7 +34,7 @@ Qwen has a slightly lower MAE and a slightly higher correlation; DeepSeek has a
 higher choice accuracy (0.572 versus 0.525). With one seed for the second
 checkpoint, these differences should be read as descriptive. On the strict
 T$\times$R cell (226 rows, 113 respondents), the Qwen correlations are $-0.151$,
-$-0.111$, and $-0.091$ and DeepSeek is $-0.121$, while HistGB is $+0.104$; the
+$-0.111$, and $-0.091$ and DeepSeek is $-0.121$, while HistGB is $+0.109$; the
 cell is small, so we do not rank the models there. The result supports the claim
 that the in-distribution signal and the temporal failure are not specific to
 Qwen3-8B, while a broader multi-family study remains future work.

@@ -231,14 +231,14 @@ Ablated & HistGB & 31.46 & 0.172 & 0.356 & 7.0 \\
 $n=1{,}302$ rows and 191 respondent groups per condition. The ablated LLM emits
 only three values (50, 99, and 0); 1,219 of 1,302 predictions are exactly 50.
 For reference, the same seed-42 R model on the actual 2024 test set reaches MAE
-37.78 and correlation $-0.055$, and HistGB reaches 35.11 and $+0.015$.
+37.78 and correlation $-0.055$, and HistGB reaches 35.27 and $+0.022$.
 \end{table}
 
 Removing the political block lowers the LLM correlation from 0.714 to 0.166 and
 HistGB from 0.734 to 0.172; MAE rises by 12.3 and 12.4 points. Most of the 2024
 loss is therefore reproduced by input removal alone. The residual difference
 between the ablated 2019 rows and the actual 2024 rows (correlation 0.166 versus
-$-0.055$ for the LLM, 0.172 versus $+0.015$ for HistGB) is smaller but not zero,
+$-0.055$ for the LLM, 0.172 versus $+0.022$ for HistGB) is smaller but not zero,
 so a year or candidate-set shift remains. The 2024 result should be read as
 mostly an input-availability artifact with a smaller temporal component, not as
 a clean measurement of political change.

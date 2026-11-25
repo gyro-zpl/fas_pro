@@ -1836,7 +1836,7 @@
         <i data-lucide="trending-up" class="lucide"></i>
         <span class="nb-corner">02</span>
         <h3 class="ttl">阶梯</h3>
-        <p class="desc">微调吃掉 82% 差距（77–95%），但不反超。</p>
+        <p class="desc">微调吃掉 79.5% 差距（74–94%），但不反超。</p>
       </article>
       <article class="sub-card">
         <i data-lucide="activity" class="lucide"></i>
@@ -1973,9 +1973,9 @@
   <div class="canvas-card">
     <header class="chrome-min" data-anim="line">
       <div class="l">07 / 13 · PAS 主结果</div>
-      <div class="r">R 切分 · n = 2,726 · 微调吃掉 82% 差距</div>
+      <div class="r">R 切分 · n = 2,726 · 微调吃掉 79.5% 差距</div>
     </header>
-    <h2 class="h-xl-zh">吃掉 82%，但没有反超</h2>
+    <h2 class="h-xl-zh">吃掉 79.5%，但没有反超</h2>
     <div class="bar-towers">
       <div class="bar-tower">
         <div class="cap"><i data-lucide="message-square" class="lucide"></i></div>
@@ -2005,7 +2005,7 @@
         <div class="cap"><i data-lucide="chart-no-axes-column" class="lucide"></i></div>
         <div class="body-block b-accent" style="min-height:22vh">
           <span class="lbl">HistGB</span>
-          <span class="nb">20.73</span>
+          <span class="nb">20.63</span>
           <span class="sub">误差、r、tie-aware 都更好</span>
         </div>
       </div>
@@ -2055,7 +2055,7 @@
         <i data-lucide="shield-check" class="lucide"></i>
         <span class="nb-corner">检验</span>
         <h3 class="ttl">12/12</h3>
-        <p class="desc">同向，p=0.0003；主检验 +16.45 MAE。</p>
+        <p class="desc">同向，p=0.0003；主检验 +16.02 MAE。</p>
       </article>
     </div>
   </div>
@@ -2275,13 +2275,13 @@ const SPEAKER_NOTES = [
    purpose:'拦住“大模型不如树模型”这句话讲得过满。',
    talk:['HistGB 现在是强对照，还不是同输入对照。','多出来的是综合相似度这类派生列。','对齐实验还没跑，这页只立边界。'],
    transition:'在这个前提下，看主表的误差。'},
-  {id:'pas-results', title:'吃掉 82%，但没有反超', section:'PAS', minutes:1.4,
+  {id:'pas-results', title:'吃掉 79.5%，但没有反超', section:'PAS', minutes:1.4,
    purpose:'把效果说成阶梯：无信息→base→微调→HistGB。',
-   talk:['柱子越矮越好，因为画的是 MAE。','无信息 32.65，base 24.15，微调 21.35，HistGB 20.73；微调吃掉 base→HistGB 差距的 82%。','但最后 18% 没吃掉：r 是 0.666 对 0.703，tie-aware choice 是 0.481 对 0.555。','换分母：从无信息起算是 95%，去掉 2018 是 77%；三个数一起报，因为分母不同回答的问题不同。','更关键的是形状：两端 LLM 更准，中间更差，误差-极值相关符号相反。'],
+   talk:['柱子越矮越好，因为画的是 MAE。','无信息 32.65，base 24.15，微调 21.35，HistGB 20.63；微调吃掉 base→HistGB 差距的 79.5%。','但最后 20.5% 没吃掉：r 是 0.666 对 0.702，tie-aware choice 是 0.481 对 0.550。','换分母：从无信息起算是 94%，去掉 2018 是 74%；三个数一起报，因为分母不同回答的问题不同。','更关键的是形状：两端 LLM 更准，中间更差，误差-极值相关符号相反。'],
    transition:'个体结果停在这里。群体任务是另一套数据。'},
   {id:'profile', title:'两端赢，中间输', section:'PAS · 剖面', minutes:1.3,
    purpose:'把“平均打平”拆开：增益在两端，损失在中间。',
-   talk:['按真值分四段看 MAE，2019 年 Q1 是 13.6 对 19.5，Q4 是 17.8 对 24.2，中间两段反过来。','三年 × 三个种子，12 个格子方向全部一致，置换检验 p=0.0003，Holm 校正后每格仍显著。','机制：HistGB 的预测标准差只有 24，真值 36，所以两端必错；LLM 是 40，两端跟得上但中间更吵。','这个“中间减两端”的对比是论文事先声明的主检验：+16.45 MAE，单侧 p<0.0001。'],
+   talk:['按真值分四段看 MAE，2019 年 Q1 是 13.6 对 18.9，Q4 是 17.8 对 23.8，中间两段反过来。','三年 × 三个种子，12 个格子方向全部一致，置换检验 p=0.0003，Holm 校正后每格仍显著。','机制：HistGB 的预测标准差只有 24，真值 36，所以两端必错；LLM 是 40，两端跟得上但中间更吵。','这个“中间减两端”的对比是论文事先声明的主检验：+16.02 MAE，单侧 p<0.0001。'],
    transition:'个体这边讲完了：买到了什么、买在哪儿。下面看群体和时间买到了没有。'},
   {id:'fas-flow', title:'2024 真卷只接到评估端', section:'FAS', minutes:1.1,
    purpose:'说明模型学的是重建分布，不是真卷。',

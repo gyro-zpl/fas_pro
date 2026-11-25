@@ -45,18 +45,18 @@
 - **已完成**：原始数据审计与清洗（132,948 → 98,159 行）；4 套候选人切分 + 2 套群体切分；HistGB / Ridge 表格基线；Qwen3-8B base 的 `test_t` zero-shot 评测。
 - **已完成**：补充实验（r026–r030）。recency + 2022 未缓解 2024 塌缩；A1/A2/A3 消融完成；base `test_r` 对照完成。
 - **进行中**：论文写作。已生成 `experiments/results/paper_tables/` 下 5 张表与 `docs/04_论文稿件/初稿提纲_2026-11-08.md`。
-- **主结果已出**：分布内 2016–2019（R 协议，held-out respondent numbers）LLM MAE 21.35、corr 0.666、choice 0.525（tie-aware 0.481）；GBM 20.73/0.703/0.543；2024 两者都塌缩（corr≈0）。R 协议结果见 `experiments/results/paper_tables/r_protocol.md`；旧 t 协议见 [论文可用结果](03_进度与执行/论文可用结果_2026-11-07.md)。
+- **主结果已出**：分布内 2016–2019（R 协议，held-out respondent numbers）LLM MAE 21.35、corr 0.666、choice 0.525（tie-aware 0.481）；GBM 20.63/0.702/0.538；2024 两者都塌缩（corr≈0）。R 协议结果见 `experiments/results/paper_tables/r_protocol.md`；旧 t 协议见 [论文可用结果](03_进度与执行/论文可用结果_2026-11-07.md)。
 - **第二轮 review 已完成**：`03_进度与执行/论文评审_第二轮_2026-11-12.md`；已按其中 P0 修改正文（choice 口径、FAS prior-only 基线、数据审计表、方法描述、split 说明）。
 - **已完成**：`train_t` × 3 seeds（seed42/43/44）全部训练完成，最终 adapter 齐全。
 - **已停止**：base 模型 8 组评测（r003–r009）因 Qwen3-8B 关闭 thinking 时严重偏高分而中止；已有结果在 `experiments/runs.csv` 标记为 `done_legacy`，仅作参考。
 - **关键数字**：
-  - HistGB `test_r`：MAE 22.73，choice 0.497（随机基线 0.228）
-  - HistGB `test_t`（2024）：MAE 35.06，choice 0.456
+  - HistGB `test_r`：MAE 22.85，choice 0.528（随机基线 0.228）
+  - HistGB `test_t`（2024）：MAE 35.27，choice 0.487
   - Qwen3-8B base `test_t` zero-shot：MAE 46.20，choice 52.3%
   - **seed42 微调（100 条快速检查）**：`generate` MAE 34.56 / choice 0.64；`anchor` MAE 32.60 / choice 0.54；base 为 MAE 43.52、pred mean 86.7
 - **LaTeX 版本**：源码 `doc_latex/main.tex` + `body_final.tex`（ACL 模板，最近一次编译 18 页）；Overleaf 包 `fas_pro_overleaf_acl.zip`，PDF 不入库。
-- **英文毕业论文（UMAC 模板）**：`thesis/`（源码，正文 18 页、总 40 页；5 章 + 4 附录）；Overleaf 包 `fas_pro_overleaf_thesis.zip`，PDF 不入库。
-- **关键判断（11-22 更新）**：叙事已改为“多少 / 哪里 / 没买到”——微调吃掉 base→HistGB 差距的 82%，但不反超；增益集中在量表两端（U 形）；群体接近 prior 但不超越；时间没有干净证据（2024 表观塌缩主要来自协变量缺失）。见 [口径总表](口径总表_2026-11-21.md) 与 [论文骨架 v2](02_计划与清单/论文骨架_v2_效果剖面_2026-11-22.md)。
+- **英文毕业论文（UMAC 模板）**：`thesis/`（源码，正文 18 页、总 41 页；5 章 + 4 附录）；Overleaf 包 `fas_pro_overleaf_thesis.zip`，PDF 不入库。
+- **关键判断（11-22 更新）**：叙事已改为“多少 / 哪里 / 没买到”——微调吃掉 base→HistGB 差距的 79.5%，但不反超；增益集中在量表两端（U 形）；群体接近 prior 但不超越；时间没有干净证据（2024 表观塌缩主要来自协变量缺失）。见 [口径总表](口径总表_2026-11-21.md) 与 [论文骨架 v2](02_计划与清单/论文骨架_v2_效果剖面_2026-11-22.md)。
 - **阻塞 / 已定决策**：Llama-3.1-8B 权重缺失，默认底座改为 Qwen3-8B；群体任务降为附录；配额退火不进正文。
 
 **Gate 状态**

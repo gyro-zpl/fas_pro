@@ -84,7 +84,8 @@ def main() -> None:
 
     models = {
         "histgb": HistGradientBoostingRegressor(
-            max_iter=60, learning_rate=0.08, max_bins=64,
+            # 400-tree budget; early stopping selected 80 trees on train_r.
+            max_iter=400, learning_rate=0.08, max_bins=64,
             early_stopping=True, validation_fraction=0.1,
             n_iter_no_change=5, random_state=42,
         ),
