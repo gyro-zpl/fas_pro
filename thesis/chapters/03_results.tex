@@ -9,8 +9,9 @@ model is closed by structured alignment, and where that gain sits. The main
 in-distribution evaluation uses the respondent protocol restricted to the 2016,
 2018, and 2019 waves: 2,726 rating rows from the 20\% hash holdout, whose
 respondent numbers do not appear in \texttt{train\_r}. Baselines are HistGB, a
-gradient-boosting model \citep{friedman2001gbm}, and Ridge trained on
-\texttt{train\_r} with the same features, plus the base model with the same
+gradient-boosting model \citep{friedman2001gbm} fitted with a 400-tree budget, in
+which early stopping stopped at 80 trees and kept the best iteration (75;
+validation MSE 653.8), and Ridge trained on \texttt{train\_r} with the same features, plus the base model with the same
 prompts but no fine-tuning. Confidence intervals are bootstrap 95\% intervals
 based on the nonparametric bootstrap \citep{efron1993bootstrap}, over rows for
 MAE and correlation and over respondent--year groups for choice.
